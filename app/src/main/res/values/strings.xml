@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">mobile_6vkusov</string>
+    <string name="app_name">6 Вкусов</string>
+
+    <!--Для RegistrationActivity-->
+    <string name="reg_title">Регистрация</string>
+    <string name="reg_first_name">Имя</string>
+    <string name="reg_email">Email</string>
+    <string name="reg_password">Пароль</string>
+    <string name="reg_password_confirm">Повторить пароль</string>
+    <string name="reg_promo">Промокод (не обязательно)</string>
+    <string name="reg_before_label">Перед регистрацией ознакомьтесь с</string>
+    <string name="reg_license_btn">пользовательским соглашением</string>
+    <string name="reg_button">Зарегистрироваться</string>
+    <string name="reg_button_maybe_login">У Вас уже есть созданный профиль? ВОЙДИТЕ</string>
+    <!--Для RegistrationActivity END-->
+
+    <!--Для REST API-->
+    <string name="api_login">https://6vkusov.by/api/login</string>
+    <string name="api_registration">https://6vkusov.by/api/register</string>
+    <!--Для REST API END-->
+
 </resources>
