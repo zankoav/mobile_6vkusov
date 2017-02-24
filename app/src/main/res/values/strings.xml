@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">6 Вкусов</string>
+    <!--Для LoginActivity-->
+    <string name="login_email">Email</string>
+    <string name="login_password">Пароль</string>
+    <string name="login_button">Войти</string>
+    <string name="login_title">Вход</string>
+    <string name="login_button_maybe_reg">У Вас еще нет аккаунта? ЗАРЕГИСТРИРОВАТЬСЯ</string>
+    <!--Для LoginActivity END-->
 
     <!--Для RegistrationActivity-->
     <string name="reg_title">Регистрация</string>
@@ -8,8 +15,9 @@
     <string name="reg_password">Пароль</string>
     <string name="reg_password_confirm">Повторить пароль</string>
     <string name="reg_promo">Промокод (не обязательно)</string>
-    <string name="reg_before_label">Перед регистрацией ознакомьтесь с</string>
-    <string name="reg_license_btn">пользовательским соглашением</string>
+    <string name="reg_license_btn">Условия пользовательского соглашения и основных документов</string>
+    <string name="reg_news">Получать новости</string>
+    <string name="reg_license">Я прочитал и принимаю</string>
     <string name="reg_button">Зарегистрироваться</string>
     <string name="reg_button_maybe_login">У Вас уже есть созданный профиль? ВОЙДИТЕ</string>
     <!--Для RegistrationActivity END-->
@@ -18,5 +26,19 @@
     <string name="api_login">https://6vkusov.by/api/login</string>
     <string name="api_registration">https://6vkusov.by/api/register</string>
     <!--Для REST API END-->
+
+    <!--Errors-->
+    <string name="error_server">Ошибка соединения, попробуйте еще раз</string>
+    <string name="error_min_name_length">Слишком короткое имя</string>
+    <string name="error_name_only_literals">Имя должно состоять только из букв</string>
+    <string name="error_email">Не верный формат email</string>
+    <string name="error_min_password_length">Пороль должен состоять не менее чем из 6 символов</string>
+    <string name="error_not_equals_passwords">Пороли не совпадают</string>
+    <string name="error_max_name_length">Слишком длинное имя</string>
+    <string name="error_max_password_length">Слишком длинный пароль</string>
+    <string name="error_max_promo_code">Слишком длинный промокод</string>
+    <string name="error_promo_code_symbols_and_numbers">Промокод может состоять только из букв и/или цифр</string>
+    <string name="error_license_agree">Подтвердите согласие с условием пользовательского соглашения</string>
+    <!--Errors end-->
 
 </resources>

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorHeader">#ad2322</color>
+    <color name="colorDarkHeader">#591211</color>
+    <color name="colorButtons">#a2c644</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorLightGray">#EEEEEE</color>
+    <color name="colorGray">#999999</color>
+    <color name="colorDarkGray">#202020</color>
+    <color name="colorBlack">#000000</color>
 </resources>

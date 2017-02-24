@@ -28,6 +28,8 @@ import javax.net.ssl.X509TrustManager;
 
 public class JsonHelperLoad extends AsyncTask<Void, Void, JSONObject> {
 
+    private final String TAG = this.getClass().getSimpleName();
+
     private String url, name;
     private JSONObject params;
     private LoadJson act;
