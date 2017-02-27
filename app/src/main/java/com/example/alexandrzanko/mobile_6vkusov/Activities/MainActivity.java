@@ -1,8 +1,11 @@
-package com.example.alexandrzanko.mobile_6vkusov;
+package com.example.alexandrzanko.mobile_6vkusov.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.RegistrationActivity;
+import com.example.alexandrzanko.mobile_6vkusov.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.alexandrzanko.mobile_6vkusov;
+package com.example.alexandrzanko.mobile_6vkusov.Activities.AuthActivities;
 
 import android.graphics.Color;
 import android.graphics.Point;
@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;

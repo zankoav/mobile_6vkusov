@@ -8,4 +8,12 @@
     <color name="colorGray">#999999</color>
     <color name="colorDarkGray">#202020</color>
     <color name="colorBlack">#000000</color>
+
+    <!--social-->
+    <color name="colorOdnoklasniki">#FF7F00</color>
+    <color name="colorGoogle">#DC4E41</color>
+    <color name="colorVk">#4D7198</color>
+    <color name="colorFacebook">#3B5998</color>
+    <!--social end-->
+
 </resources>
