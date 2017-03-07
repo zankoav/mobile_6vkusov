@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity implements LoadJson {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginBtn = (Button)findViewById(R.id.btn_login);
         addToolBarToScreen();
         initFields();
     }
@@ -102,6 +101,7 @@ public class LoginActivity extends AppCompatActivity implements LoadJson {
     private void initFields(){
         email = (EditText)findViewById(R.id.et_email);
         password = (EditText)findViewById(R.id.et_password);
+        loginBtn = (Button)findViewById(R.id.btn_login);
     }
 
 
@@ -109,7 +109,6 @@ public class LoginActivity extends AppCompatActivity implements LoadJson {
         loginBtn.setEnabled(false);
         String email = this.email.getText().toString().trim();
         String password = this.password.getText().toString().trim();
-        Log.i(TAG, "loginPressed: ");
         if(!Validation.email(email)){
             Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(R.string.error_email), Toast.LENGTH_SHORT);
             toast.show();

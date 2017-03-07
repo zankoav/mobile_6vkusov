@@ -5,13 +5,17 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.alexandrzanko.mobile_6vkusov.Activities.MainActivity;
+import com.example.alexandrzanko.mobile_6vkusov.Models.Category;
 import com.example.alexandrzanko.mobile_6vkusov.Users.General;
 import com.example.alexandrzanko.mobile_6vkusov.Users.Register;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by alexandrzanko on 3/1/17.
@@ -109,4 +113,57 @@ public class LocalStorage implements LoadJson{
         }
     }
 
+
+    public ArrayList<Category> getMainCategories(){
+        ArrayList<Category> categories = new ArrayList<>();
+        String catsSTR = getStringValueStorage(APP_CATEGORIES);
+        JSONObject categoriesHash = null;
+        try {
+            categoriesHash = new JSONObject(catsSTR);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            String img_path = categoriesHash.getString("img_path");
+            JSONArray cats = categoriesHash.getJSONArray("categories");
+            for (int i=0; i<cats.length(); i++) {
+                int type = cats.getJSONObject(i).getInt("type");
+                String name = cats.getJSONObject(i).getString("name");
+                String slug = cats.getJSONObject(i).getString("slug");
+                if (type == 1) {
+                    String image = cats.getJSONObject(i).getString("image");
+                    String url = this.context.getResources().getString(R.string.api_base_uri) + img_path + "/" + image;
+                    categories.add(new Category(name, slug, url));
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return categories;
+    }
+
+    public ArrayList<Category> getSecondaryCategories(){
+        ArrayList<Category> categories = new ArrayList<>();
+        String catsSTR = getStringValueStorage(APP_CATEGORIES);
+        JSONObject categoriesHash = null;
+        try {
+            categoriesHash = new JSONObject(catsSTR);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONArray cats = categoriesHash.getJSONArray("categories");
+            for (int i=0; i<cats.length(); i++) {
+                int type = cats.getJSONObject(i).getInt("type");
+                String name = cats.getJSONObject(i).getString("name");
+                String slug = cats.getJSONObject(i).getString("slug");
+                if (type == 2) {
+                    categories.add(new Category(name, slug, null));
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return categories;
+    }
 }

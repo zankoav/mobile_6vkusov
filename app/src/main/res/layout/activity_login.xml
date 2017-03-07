@@ -135,6 +135,7 @@
         android:textColor="@color/colorWhite"
         android:minHeight="40dp"
         android:onClick="loginPressed"
+        android:clickable="true"
         android:layout_below="@+id/et_password"
         android:background="@drawable/buttons_style"
         android:layout_width="match_parent"

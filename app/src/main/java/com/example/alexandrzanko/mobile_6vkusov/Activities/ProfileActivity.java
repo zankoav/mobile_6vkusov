@@ -21,7 +21,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);addToolBarToScreen();
         addToolBarToScreen();
-        Log.i(TAG, "CategoriesActivity Load ");
+        Log.i(TAG, "ProfileActivity Load ");
 
     }
 
