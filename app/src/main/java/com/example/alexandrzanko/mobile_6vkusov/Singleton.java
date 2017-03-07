@@ -1,7 +1,10 @@
 package com.example.alexandrzanko.mobile_6vkusov;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.View;
 
+import com.example.alexandrzanko.mobile_6vkusov.Activities.MainActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Users.UserInterface;
 
 /**
@@ -15,6 +18,7 @@ public class Singleton {
     private static Singleton instance;
     private LocalStorage store;
     private UserInterface user;
+    private Context context;
 
     private Singleton(){}
 
@@ -26,7 +30,11 @@ public class Singleton {
     }
 
     public void initStore(Context context) {
-        store = new LocalStorage(context);
+        if(context != null){
+            this.context = context;
+        }
+        ((MainActivity)this.context).lunchScreen.setVisibility(View.VISIBLE);
+        store = new LocalStorage(this.context);
     }
 
     public UserInterface getUser() {
@@ -40,5 +48,4 @@ public class Singleton {
     public LocalStorage getStore() {
         return store;
     }
-
 }

@@ -1,6 +1,7 @@
 package com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -61,7 +62,8 @@ public class JsonHelperLoad extends AsyncTask<Void, Void, JSONObject> {
     @Override
     protected JSONObject doInBackground(Void... voids) {
         try {
-            return openConnection();
+            JSONObject obj = openConnection();
+            return obj;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,6 +103,7 @@ public class JsonHelperLoad extends AsyncTask<Void, Void, JSONObject> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return res;
     }
 

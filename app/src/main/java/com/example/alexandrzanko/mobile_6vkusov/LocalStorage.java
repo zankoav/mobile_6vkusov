@@ -2,7 +2,6 @@ package com.example.alexandrzanko.mobile_6vkusov;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.nfc.Tag;
 import android.util.Log;
 
 import com.example.alexandrzanko.mobile_6vkusov.Activities.MainActivity;
@@ -34,27 +33,31 @@ public class LocalStorage implements LoadJson{
     public LocalStorage(Context context){
         this.store = context.getSharedPreferences(APP_STORE, Context.MODE_PRIVATE);
         this.context = context;
+        Singleton.currentState().setUser(null);
         clearKeyStorage(APP_CATEGORIES);
         clearKeyStorage(APP_RESTAURANTS);
-        new JsonHelperLoad(context.getResources().getString(R.string.api_categories), null, this, APP_CATEGORIES).execute();
+        String urlCat = context.getResources().getString(R.string.api_categories);
+        new JsonHelperLoad(urlCat, null, this, APP_CATEGORIES).execute();
 
         JSONObject paramsRestaurants = new JSONObject();
         try {
             paramsRestaurants.put("slug", "all");
-            new JsonHelperLoad(context.getResources().getString(R.string.api_restaurants), paramsRestaurants, this, APP_RESTAURANTS).execute();
+            String urlRest = context.getResources().getString(R.string.api_restaurants);
+            new JsonHelperLoad(urlRest, paramsRestaurants, this, APP_RESTAURANTS).execute();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         String userProfile = getStringValueStorage(APP_PROFILE);
+
         if(userProfile != null){
-            JSONObject params = null;
+            JSONObject params = new JSONObject();
             try {
                 JSONObject userProfileJson = new JSONObject(userProfile);
                 String session = userProfileJson.getString("session");
                 params.put("session", session);
-                new JsonHelperLoad(context.getResources().getString(R.string.api_profile), params, this, APP_PROFILE).execute();
-                Log.i(TAG,"userProfile = " + userProfile);
+                String url = context.getResources().getString(R.string.api_user);
+                new JsonHelperLoad(url, params, this, APP_PROFILE).execute();
             } catch (JSONException e) {
                 Singleton.currentState().setUser(new General());
                 Log.i(TAG,"initial General User Exception");
@@ -62,7 +65,6 @@ public class LocalStorage implements LoadJson{
             }
         }else{
             Singleton.currentState().setUser(new General());
-            Log.i(TAG,"initial General User");
         }
     }
 
@@ -90,26 +92,16 @@ public class LocalStorage implements LoadJson{
     @Override
     public void loadComplete(JSONObject obj, String sessionName) {
         if(obj != null){
-            switch (sessionName){
-                case APP_CATEGORIES:
-                    setStringValueStorage(APP_CATEGORIES, obj.toString());
-                    Log.i(TAG,obj.toString());
-                    break;
-                case APP_RESTAURANTS:
-                    setStringValueStorage(APP_RESTAURANTS, obj.toString());
-                    Log.i(TAG,obj.toString());
-                    break;
-                case APP_PROFILE:
-                    setStringValueStorage(APP_PROFILE, obj.toString());
-                    Singleton.currentState().setUser(new Register());
-                    Log.i(TAG,obj.toString());
-                    break;
-                default:break;
+            setStringValueStorage(sessionName, obj.toString());
+            Log.i(TAG,obj.toString());
+            if (sessionName == APP_PROFILE) {
+                Singleton.currentState().setUser(new Register());
             }
             if(Singleton.currentState().getUser() != null &&
                getStringValueStorage(APP_CATEGORIES) != null &&
                getStringValueStorage(APP_RESTAURANTS) != null)
             {
+                Log.i(TAG, "loadComplete: ");
                 ((MainActivity)context).loadComplete();
             }
         }else{

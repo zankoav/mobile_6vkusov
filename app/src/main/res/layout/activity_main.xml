@@ -7,5 +7,85 @@
     android:background="@drawable/ic_background"
     tools:context="com.example.alexandrzanko.mobile_6vkusov.Activities.MainActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_avatar"
+        android:id="@+id/iv_user"
+        android:layout_above="@+id/btn_login"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Вход"
+        android:textColor="@color/colorWhite"
+        android:padding="5dp"
+        android:clickable="true"
+        android:gravity="center_horizontal"
+        android:onClick="loginButtonClick"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/registerMenu"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_login"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:id="@+id/generalMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_centerInParent="true">
+        <TextView
+            android:text="Еда"
+            android:padding="5dp"
+            android:clickable="true"
+            android:textSize="19sp"
+            android:onClick="foodMenuPressed"
+            android:textColor="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_hamburger"
+            android:drawablePadding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:id="@+id/registerMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+        <TextView
+            android:text="Еда"
+            android:padding="5dp"
+            android:clickable="true"
+            android:textSize="19sp"
+            android:onClick="foodMenuPressed"
+            android:textColor="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_hamburger"
+            android:drawablePadding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="Выход"
+            android:padding="5dp"
+            android:clickable="true"
+            android:textSize="19sp"
+            android:onClick="exitMenuPressed"
+            android:textColor="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_logout"
+            android:drawablePadding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_lunchscreen"
+        android:id="@+id/iv_lunchScreen" />
 
 </RelativeLayout>

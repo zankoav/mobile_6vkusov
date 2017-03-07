@@ -9,6 +9,10 @@
     <string name="categories_title">Категории</string>
     <!--Для CategoriesActivity END-->
 
+    <!--Для ProfileActivity-->
+    <string name="profile_title">Профиль</string>
+    <!--Для ProfileActivity END-->
+
     <!--Для RememberActivity-->
     <string name="remember_email">Email</string>
     <string name="remember_title">Восстановить пароль</string>
@@ -46,7 +50,7 @@
     <string name="api_remember">https://6vkusov.by/api/remember</string>
     <string name="api_categories">https://6vkusov.by/api/categories</string>
     <string name="api_restaurants">https://6vkusov.by/api/restaurants</string>
-    <string name="api_profile">https://6vkusov.by/api/profile</string>
+    <string name="api_user">https://6vkusov.by/api/user</string>
     <!--Для REST API END-->
 
     <!--Errors-->

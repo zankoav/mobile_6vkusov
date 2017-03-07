@@ -1,5 +1,11 @@
 package com.example.alexandrzanko.mobile_6vkusov.Users;
 
+import android.util.Log;
+
+import com.example.alexandrzanko.mobile_6vkusov.LocalStorage;
+import com.example.alexandrzanko.mobile_6vkusov.Singleton;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -7,6 +13,8 @@ import org.json.JSONObject;
  */
 
 public class Register implements UserInterface {
+
+    private final String TAG = this.getClass().getSimpleName();
 
     private Basket basket;
 
@@ -21,7 +29,15 @@ public class Register implements UserInterface {
 
     @Override
     public JSONObject getProfile() {
-        return null;
+        LocalStorage store = Singleton.currentState().getStore();
+        JSONObject profile = null;
+        try {
+            profile = new JSONObject(store.getStringValueStorage(store.APP_PROFILE));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d(TAG, "load profile from local storage error");
+        }
+        return profile;
     }
 
     @Override
