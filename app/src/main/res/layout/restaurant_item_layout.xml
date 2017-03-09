@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:padding="16dp"
+    android:background="@color/colorWhite"
+    android:minHeight="130dp">
+
+    <ImageView
+        android:id="@+id/restaurants_icon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:id="@+id/restaurants_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:layout_toRightOf="@+id/restaurants_icon"
+        android:layout_alignTop="@+id/restaurants_icon"
+        android:textColor="@color/colorHeader"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/restaurants_kitchen_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:layout_alignLeft="@+id/restaurants_name"
+        android:layout_below="@+id/restaurants_name" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="30dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/restaurants_card_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_credit_card"
+            android:scaleType="centerCrop"
+            android:layout_alignParentBottom="true" />
+
+        <ImageView
+            android:id="@+id/restaurants_delivery_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_delivery_man"
+            android:scaleType="centerCrop"
+            android:layout_toRightOf="@+id/restaurants_card_icon"
+            android:layout_alignParentBottom="true" />
+
+        <TextView
+            android:id="@+id/restaurants_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="4dp"
+            android:text="@string/restaurants_time"
+            android:layout_toRightOf="@+id/restaurants_delivery_icon"
+            android:layout_alignParentBottom="true" />
+
+        <TextView
+            android:id="@+id/restaurants_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:text="40 мин."
+            android:layout_toRightOf="@+id/restaurants_time_title"
+            android:layout_alignParentBottom="true" />
+
+        <TextView
+            android:id="@+id/restaurants_delivery_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="4dp"
+            android:layout_alignParentTop="true"
+            android:text="@string/restaurants_delivery"
+            android:layout_toRightOf="@+id/restaurants_delivery_icon" />
+
+        <TextView
+            android:id="@+id/restaurants_delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:text="5 руб"
+            android:layout_toRightOf="@+id/restaurants_delivery_title" />
+
+        <TextView
+            android:id="@+id/restaurants_dislikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:text="7"
+            android:layout_margin="4dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true" />
+
+        <ImageView
+            android:id="@+id/restaurants_like_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_thumb_down"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/restaurants_dislikes"
+            />
+        <TextView
+            android:id="@+id/restaurants_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:layout_margin="4dp"
+            android:text="26"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/restaurants_like_icon" />
+
+        <ImageView
+            android:id="@+id/restaurants_dislikes_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_thumbs_up"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/restaurants_likes" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

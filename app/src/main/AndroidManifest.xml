@@ -16,6 +16,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,13 +29,13 @@
         <activity
             android:name=".Activities.AuthActivities.RememberActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".Activities.CategoriesActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.ProfileActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.RestaurantsActivity"></activity>
     </application>
 
 </manifest>

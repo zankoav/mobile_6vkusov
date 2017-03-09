@@ -9,6 +9,12 @@
     <string name="categories_title">Категории</string>
     <!--Для CategoriesActivity END-->
 
+    <!--Для RestaurantsActivity-->
+    <string name="restaurants_title">Рестораны</string>
+    <string name="restaurants_time">Время:</string>
+    <string name="restaurants_delivery">Доставка:</string>
+    <!--Для RestaurantsActivity END-->
+
     <!--Для ProfileActivity-->
     <string name="profile_title">Профиль</string>
     <!--Для ProfileActivity END-->
