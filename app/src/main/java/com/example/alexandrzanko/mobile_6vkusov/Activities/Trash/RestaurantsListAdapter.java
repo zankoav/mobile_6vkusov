@@ -1,10 +1,12 @@
-package com.example.alexandrzanko.mobile_6vkusov.Adapters;
+package com.example.alexandrzanko.mobile_6vkusov.Activities.Trash;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,13 +20,18 @@ import java.util.ArrayList;
  * Created by alexandrzanko on 3/9/17.
  */
 
-public class RestaurantsListAdapter extends BaseAdapter {
-    private ArrayList<Restaurant> listData;
+public class RestaurantsListAdapter extends BaseAdapter implements Filterable {
+    private ArrayList<Restaurant> listData, filterList;
+
     private LayoutInflater layoutInflater;
+
     private Context context;
+    private RestaurantsFilter filter;
+
 
     public RestaurantsListAdapter(Context context, ArrayList<Restaurant> listData) {
         this.listData = listData;
+        this.filterList = listData;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
     }
@@ -70,6 +77,7 @@ public class RestaurantsListAdapter extends BaseAdapter {
                 .placeholder(R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
                 .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
                 .into(holder.imageView);
+
         return convertView;
     }
 
@@ -88,6 +96,14 @@ public class RestaurantsListAdapter extends BaseAdapter {
         }
     }
 
+    @Override
+    public Filter getFilter() {
+        if(filter == null){
+            filter = new RestaurantsFilter();
+        }
+        return filter;
+    }
+
     static class ViewHolder {
         TextView nameTV;
         TextView kitchenType;
@@ -96,6 +112,38 @@ public class RestaurantsListAdapter extends BaseAdapter {
         TextView likesTV;
         TextView dislikesTV;
         ImageView imageView;
+    }
+
+    class RestaurantsFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults filterResults = new FilterResults();
+            if(constraint != null && constraint.length() > 0){
+
+                constraint = constraint.toString().toUpperCase();
+                ArrayList<Restaurant> filters = new ArrayList<>();
+
+                for (int i = 0; i < filterList.size(); i++){
+                    if(filterList.get(i).getName().toUpperCase().contains(constraint)){
+                        Restaurant restaurant = new Restaurant(filterList.get(i).getBaseUrl(), filterList.get(i).getJson());
+                        filters.add(restaurant);
+                    }
+                }
+                filterResults.count = filters.size();
+                filterResults.values = filters;
+            }else {
+                filterResults.count = filterList.size();
+                filterResults.values = filterList;
+            }
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            listData = (ArrayList<Restaurant>)results.values;
+            notifyDataSetInvalidated();
+        }
     }
 
 }

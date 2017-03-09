@@ -78,17 +78,20 @@
                 android:text="Скидки"/>
 
         </LinearLayout>
-        <ListView
-            android:id="@+id/restaurants_list"
+
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@color/colorLightGray"
-            android:dividerHeight="1dp"
             android:layout_below="@+id/filter_view"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
-        </ListView>
+
+        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
     <include layout="@layout/action_bar"/>
 </RelativeLayout>
+
+

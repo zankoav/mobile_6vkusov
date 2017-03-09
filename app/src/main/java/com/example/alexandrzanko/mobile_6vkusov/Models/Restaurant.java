@@ -118,4 +118,12 @@ public class Restaurant {
     public String getUrl() {
         return url;
     }
+
+    public JSONObject getJson(){
+        return json;
+    }
+
+    public String getBaseUrl(){
+        return baseUrl;
+    }
 }

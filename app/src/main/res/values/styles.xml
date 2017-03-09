@@ -1,6 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/colorHeader</item>
     </style>
@@ -20,6 +21,17 @@
     <style name="CheckBox" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/colorGray</item>
         <item name="colorControlActivated">@color/colorButtons</item>
+    </style>
+
+    <style name="CheckBoxFilter" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="colorControlActivated">@color/colorButtons</item>
+    </style>
+
+    <style name="AppTheme.SeekBar">
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorButtons</item>
+        <item name="colorAccent">@color/colorButtons</item>
     </style>
 
 </resources>

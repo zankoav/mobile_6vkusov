@@ -44,7 +44,7 @@ public class CategoriesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Category category = (Category)listView.getItemAtPosition(position);
                 Log.i(TAG, "onItemClick: " + category.getSlug());
-                Intent intent = new Intent(CategoriesActivity.this, RestaurantsActivity.class);
+                Intent intent = new Intent(CategoriesActivity.this, RestaurantCardActivity.class);
                 String slug = category.getSlug();
                 intent.putExtra("slug", slug);
                 startActivity(intent);
