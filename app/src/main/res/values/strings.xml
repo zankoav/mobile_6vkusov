@@ -11,8 +11,8 @@
 
     <!--Для RestaurantsActivity-->
     <string name="restaurants_title">Рестораны</string>
-    <string name="restaurants_time">Время:</string>
-    <string name="restaurants_delivery">Доставка:</string>
+    <string name="restaurants_time">Время доставки:</string>
+    <string name="restaurants_delivery">Минимальный заказ:</string>
     <!--Для RestaurantsActivity END-->
 
     <!--Для ProfileActivity-->

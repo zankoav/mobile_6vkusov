@@ -1,7 +1,9 @@
 package com.example.alexandrzanko.mobile_6vkusov.Activities;
 
 import android.animation.Animator;
+import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,7 +41,7 @@ public class RestaurantsCardActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private TextView seekBarResult;
     private CheckBox checkNew, checkFreeFood, checkFlash, checkSale;
-
+    private int toolBarHeight;
 
     private MenuItem search;
 
@@ -51,6 +53,7 @@ public class RestaurantsCardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_new);
+        toolBarHeight = Build.VERSION.SDK_INT > 18 ? 0: getToolBarHeight();
         addToolBarToScreen();
         Bundle bundle = getIntent().getExtras();
         String slug = bundle.getString("slug");
@@ -60,6 +63,27 @@ public class RestaurantsCardActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RestaurantRecycleAdapter(restaurants,this);
         recyclerView.setAdapter(adapter);
+        allView.animate().translationY(toolBarHeight).setDuration(0).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {}
+
+            @Override
+            public void onAnimationEnd(Animator animation) {}
+
+            @Override
+            public void onAnimationCancel(Animator animation) {}
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {}
+        });
+    }
+
+    public int getToolBarHeight() {
+        int[] attrs = new int[] {R.attr.actionBarSize};
+        TypedArray ta = this.obtainStyledAttributes(attrs);
+        int toolBarHeight = ta.getDimensionPixelSize(0, -1);
+        ta.recycle();
+        return toolBarHeight;
     }
 
     private void initViews(){
@@ -71,7 +95,7 @@ public class RestaurantsCardActivity extends AppCompatActivity {
         seekBar = (SeekBar) findViewById(R.id.seekBar);
 
         int maxPrice = (int)getMaxPrice() + 20;
-        seekBarResult.setText(maxPrice + " руб.");
+        seekBarResult.setText("0 руб.");
         seekBar.setMax(maxPrice);
         seekBar.setProgress(0);
 
@@ -208,7 +232,7 @@ public class RestaurantsCardActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.menu_filter) {
             if(!menuFilterOpen){
-                allView.animate().translationY(filterView.getHeight()).setDuration(600).setListener(new Animator.AnimatorListener() {
+                allView.animate().translationY(filterView.getHeight() + toolBarHeight).setDuration(600).setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
 
@@ -230,7 +254,7 @@ public class RestaurantsCardActivity extends AppCompatActivity {
                 });
                 menuFilterOpen = true;
             }else{
-                allView.animate().translationY(0).setDuration(600).setListener(new Animator.AnimatorListener() {
+                allView.animate().translationY(toolBarHeight).setDuration(600).setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
 
@@ -255,4 +279,6 @@ public class RestaurantsCardActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
