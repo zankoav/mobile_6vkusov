@@ -16,6 +16,7 @@ import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by alexandrzanko on 3/9/17.
@@ -24,14 +25,100 @@ import java.util.ArrayList;
 public class RestaurantRecycleAdapter extends RecyclerView.Adapter<RestaurantRecycleAdapter.ViewHolder>  implements Filterable{
 
     private final String TAG = this.getClass().getSimpleName();
-    ArrayList<Restaurant> restaurants, filterList;
+    ArrayList<Restaurant> restaurants, filterList, filtersAdd;
     private RestaurantsFilter filter;
     Context context;
 
+    public final String NEW = "new";
+    public final String FREE_FOOD = "free_food";
+    public final String FLASH = "flash";
+    public final String SALE = "sale";
+
+    private HashMap<String,Boolean> rules;
+    private int priceMin;
+
+    public void setPriceMin(int priceMin) {
+        this.priceMin = priceMin;
+        changeRestList();
+    }
+
+    public void setRule(String key, Boolean value){
+        this.rules.put(key,value);
+        changeRestList();
+    }
+
     public RestaurantRecycleAdapter(ArrayList<Restaurant> restaurants, Context context){
             this.restaurants = restaurants;
-             this.filterList = restaurants;
+            this.filterList = restaurants;
             this.context = context;
+
+            rules = new HashMap<>();
+            rules.put(NEW, false);
+            rules.put(FREE_FOOD, false);
+            rules.put(FLASH, false);
+            rules.put(SALE, false);
+            priceMin = 0;
+    }
+
+    private void changeRestList(){
+
+        boolean checkNew = rules.get(NEW);
+        boolean checkFreeFood = rules.get(FREE_FOOD);
+        boolean checkFlash = rules.get(FLASH);
+        boolean checkSale = rules.get(SALE);
+        boolean seekBar = priceMin > 0 ? true: false;
+        if (checkNew || checkFreeFood || checkFlash || checkSale || seekBar){
+            filtersAdd = new ArrayList<>();
+            for(int i = 0 ; i < filterList.size(); i++){
+
+                boolean match = true;
+                Restaurant restaurant = filterList.get(i);
+
+                if (checkNew){
+                    if(!restaurant.isNew()){
+                        match = false;
+                        continue;
+                    }
+                }
+
+                if (checkFreeFood){
+                    if(!restaurant.isFreeFood()){
+                        match = false;
+                        continue;
+                    }
+                }
+
+                if (checkFlash){
+                    if(!restaurant.isFlash()){
+                        match = false;
+                        continue;
+                    }
+                }
+
+                if (checkSale){
+                    if(!restaurant.isSale()){
+                        match = false;
+                        continue;
+                    }
+                }
+
+                if (seekBar){
+                    if(restaurant.getMinimalPrice().intValue() > priceMin){
+                        match = false;
+                        continue;
+                    }
+                }
+
+                if(match){
+                    filtersAdd.add(restaurant);
+                }
+            }
+            restaurants = filtersAdd;
+        }else {
+            filtersAdd = null;
+            restaurants = filterList;
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -59,25 +146,35 @@ public class RestaurantRecycleAdapter extends RecyclerView.Adapter<RestaurantRec
     }
 
     class RestaurantsFilter extends Filter {
+
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults filterResults = new FilterResults();
             if(constraint != null && constraint.length() > 0){
-
                 constraint = constraint.toString().toUpperCase();
                 ArrayList<Restaurant> filters = new ArrayList<>();
-
-                for (int i = 0; i < filterList.size(); i++){
-                    if(filterList.get(i).getName().toUpperCase().contains(constraint)){
-                        Restaurant restaurant = new Restaurant(filterList.get(i).getBaseUrl(), filterList.get(i).getJson());
+                ArrayList<Restaurant> filterX;
+                if(filtersAdd != null){
+                    filterX = filtersAdd.size() < filterList.size() ? filtersAdd : filterList;
+                }else{
+                    filterX = filterList;
+                }
+                for (int i = 0; i < filterX.size(); i++){
+                    if(filterX.get(i).getName().toUpperCase().contains(constraint)){
+                        Restaurant restaurant = new Restaurant(filterX.get(i).getBaseUrl(), filterX.get(i).getJson());
                         filters.add(restaurant);
                     }
                 }
                 filterResults.count = filters.size();
                 filterResults.values = filters;
             }else {
-                filterResults.count = filterList.size();
-                filterResults.values = filterList;
+                if(filtersAdd != null){
+                    filterResults.count = filtersAdd.size();
+                    filterResults.values = filtersAdd;
+                }else{
+                    filterResults.count = filterList.size();
+                    filterResults.values = filterList;
+                }
             }
             return filterResults;
         }
@@ -121,7 +218,7 @@ public class RestaurantRecycleAdapter extends RecyclerView.Adapter<RestaurantRec
                 nameTV.setText(restaurant.getName());
                 timeTV.setText(restaurant.getDeliveryTime() + " мин.");
                 deliveryType.setText(restaurant.getMinimalPrice().toString() + " руб.");
-                kitchenType.setText(join(", ",restaurant.getKitchens()));
+                kitchenType.setText(restaurant.getKitchens());
                 likesTV.setText(restaurant.getLikes() + "");
                 dislikesTV.setText(restaurant.getDislikes() + "");
                 Picasso.with(context)
@@ -130,22 +227,6 @@ public class RestaurantRecycleAdapter extends RecyclerView.Adapter<RestaurantRec
                         .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
                         .into(imageView);
             }
-
-        private String join(String join, String... strings) {
-            if (strings == null || strings.length == 0) {
-                return "";
-            } else if (strings.length == 1) {
-                return strings[0];
-            } else {
-                StringBuilder sb = new StringBuilder();
-                sb.append(strings[0]);
-                for (int i = 1; i < strings.length; i++) {
-                    sb.append(join).append(strings[i]);
-                }
-                return sb.toString();
-            }
-        }
-
 
     }
 }

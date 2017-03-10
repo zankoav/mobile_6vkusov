@@ -9,12 +9,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.example.alexandrzanko.mobile_6vkusov.Adapters.RestaurantRecycleAdapter;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Restaurant;
@@ -23,7 +28,7 @@ import com.example.alexandrzanko.mobile_6vkusov.Singleton;
 
 import java.util.ArrayList;
 
-public class RestaurantCardActivity extends AppCompatActivity {
+public class RestaurantsCardActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName();
     public static final String EXTRA_RESTAURANT = "Restaurant";
@@ -31,7 +36,12 @@ public class RestaurantCardActivity extends AppCompatActivity {
     private ArrayList<Restaurant> restaurants;
     private LinearLayout filterView, allView;
     private boolean menuFilterOpen = false;
+    private SeekBar seekBar;
+    private TextView seekBarResult;
+    private CheckBox checkNew, checkFreeFood, checkFlash, checkSale;
 
+
+    private MenuItem search;
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -45,14 +55,110 @@ public class RestaurantCardActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String slug = bundle.getString("slug");
         restaurants = singleton.getStore().getRestaurants(slug);
-        filterView = (LinearLayout)findViewById(R.id.filter_view);
-        allView = (LinearLayout)findViewById(R.id.all_view);
-
-        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+        initViews();
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RestaurantRecycleAdapter(restaurants,this);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void initViews(){
+        filterView = (LinearLayout)findViewById(R.id.filter_view);
+        allView = (LinearLayout)findViewById(R.id.all_view);
+        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+
+        seekBarResult = (TextView) findViewById(R.id.seekBar_result);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
+
+        int maxPrice = (int)getMaxPrice() + 20;
+        seekBarResult.setText(maxPrice + " руб.");
+        seekBar.setMax(maxPrice);
+        seekBar.setProgress(0);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress = seekBar.getProgress();
+                seekBarResult.setText(progress + " руб");
+                changeIconFilter();
+                adapter.setPriceMin(progress);
+            }
+        });
+
+
+        checkNew = (CheckBox) findViewById(R.id.check_box_new);
+        checkNew.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                changeIconFilter();
+                adapter.setRule(adapter.NEW, isChecked);
+            }
+        });
+        checkFreeFood = (CheckBox) findViewById(R.id.check_box_free_food);
+        checkFreeFood.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                changeIconFilter();
+                adapter.setRule(adapter.FREE_FOOD, isChecked);
+            }
+        });
+        checkFlash = (CheckBox) findViewById(R.id.check_box_flash);
+        checkFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                changeIconFilter();
+                adapter.setRule(adapter.FLASH, isChecked);
+            }
+        });
+        checkSale = (CheckBox) findViewById(R.id.check_box_sale);
+        checkSale.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                changeIconFilter();
+                adapter.setRule(adapter.SALE, isChecked);
+            }
+        });
+    }
+
+
+    private void changeIconFilter(){
+        if(isFilterFull()){
+           search.setIcon(R.drawable.ic_filter_full);
+        }else{
+            search.setIcon(R.drawable.ic_filter_clear);
+        }
+    }
+
+    private boolean isFilterFull(){
+        boolean checkNew = this.checkNew.isChecked();
+        boolean checkFreeFood = this.checkFreeFood.isChecked();
+        boolean checkFlash = this.checkFlash.isChecked();
+        boolean checkSale = this.checkSale.isChecked();
+        boolean seekBar = this.seekBar.getProgress() > 0 ? true: false;
+        return checkNew || checkFreeFood || checkFlash || checkSale || seekBar;
+    }
+
+    private double getMaxPrice(){
+        double max = 0;
+        if(restaurants.size()>0){
+            max = restaurants.get(0).getMinimalPrice();
+            for (int i = 0 ; i< restaurants.size(); i++){
+                if(max < restaurants.get(i).getMinimalPrice()){
+                    max = restaurants.get(i).getMinimalPrice();
+                }
+            }
+        }
+        return max;
     }
 
     private void addToolBarToScreen() {
@@ -78,6 +184,7 @@ public class RestaurantCardActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_bar, menu);
         MenuItem item = menu.findItem(R.id.menu_search);
+        search = menu.findItem(R.id.menu_filter);
         SearchView searchView = (SearchView) item.getActionView();
         EditText editText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         editText.setTextColor(Color.WHITE);
@@ -122,7 +229,6 @@ public class RestaurantCardActivity extends AppCompatActivity {
                     }
                 });
                 menuFilterOpen = true;
-                item.setIcon(R.drawable.ic_filter_full);
             }else{
                 allView.animate().translationY(0).setDuration(600).setListener(new Animator.AnimatorListener() {
                     @Override
@@ -144,7 +250,6 @@ public class RestaurantCardActivity extends AppCompatActivity {
 
                     }
                 });
-                item.setIcon(R.drawable.ic_filter_clear);
                 menuFilterOpen = false;
             }
         }

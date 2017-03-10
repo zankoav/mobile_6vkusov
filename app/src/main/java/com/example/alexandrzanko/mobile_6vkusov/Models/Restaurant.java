@@ -1,5 +1,7 @@
 package com.example.alexandrzanko.mobile_6vkusov.Models;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +15,8 @@ public class Restaurant {
     private String url;
     private String baseUrl;
     private JSONObject json;
+    private final String TAG = this.getClass().getSimpleName();
+
 
     public Restaurant(String url, JSONObject json) {
 
@@ -23,6 +27,22 @@ public class Restaurant {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isNew(){
+        return true;
+    }
+
+    public boolean isFreeFood(){
+        return true;
+    }
+
+    public boolean isFlash(){
+        return true;
+    }
+
+    public boolean isSale(){
+        return false;
     }
 
     public String getSlug() {
@@ -70,19 +90,20 @@ public class Restaurant {
         return null;
     }
 
-    public String[] getKitchens() {
+    public String getKitchens() {
+        String kitchens = "";
         try {
             JSONArray kitchensJson = json.getJSONArray("kitchens");
-            String[] kitchens = new String[kitchensJson.length()];
             for(int j = 0; j < kitchensJson.length(); j++){
-                kitchens[j] = (kitchensJson.getJSONObject(j)).toString();
-                System.out.println(kitchens[j]);
+                kitchens += kitchensJson.getString(j);
+                if(j != kitchensJson.length() - 1){
+                    kitchens += ", ";
+                }
             }
-            return kitchens;
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return kitchens;
     }
 
     public String getDescription() {
@@ -125,5 +146,20 @@ public class Restaurant {
 
     public String getBaseUrl(){
         return baseUrl;
+    }
+
+    private String join(String join, String... strings) {
+        if (strings == null || strings.length == 0) {
+            return "";
+        } else if (strings.length == 1) {
+            return strings[0];
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append(strings[0]);
+            for (int i = 1; i < strings.length; i++) {
+                sb.append(join).append(strings[i]);
+            }
+            return sb.toString();
+        }
     }
 }

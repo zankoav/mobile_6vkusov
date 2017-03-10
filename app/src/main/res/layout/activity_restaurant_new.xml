@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"/>
                 <TextView
+                    android:id="@+id/seekBar_result"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -53,24 +54,28 @@
             </LinearLayout>
 
             <CheckBox
+                android:id="@+id/check_box_new"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:textColor="@color/colorWhite"
                 android:theme="@style/CheckBoxFilter"
                 android:text="Новое"/>
             <CheckBox
+                android:id="@+id/check_box_free_food"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:textColor="@color/colorWhite"
                 android:theme="@style/CheckBoxFilter"
                 android:text="Еда за баллы"/>
             <CheckBox
+                android:id="@+id/check_box_flash"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:textColor="@color/colorWhite"
                 android:theme="@style/CheckBoxFilter"
                 android:text="Акции"/>
             <CheckBox
+                android:id="@+id/check_box_sale"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:textColor="@color/colorWhite"
