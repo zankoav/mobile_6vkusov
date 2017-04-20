@@ -65,15 +65,15 @@ public class RestaurantsListAdapter extends BaseAdapter implements Filterable {
         convertView.setTag(holder);
 
         Restaurant restaurant = listData.get(position);
-        holder.nameTV.setText(restaurant.getName());
-        holder.timeTV.setText(restaurant.getDeliveryTime() + " мин.");
-        holder.deliveryType.setText(restaurant.getMinimalPrice().toString() + " руб.");
-        holder.kitchenType.setText(join(", ",restaurant.getKitchens()));
-        holder.likesTV.setText(restaurant.getLikes() + "");
-        holder.dislikesTV.setText(restaurant.getDislikes() + "");
+        holder.nameTV.setText(restaurant.get_name());
+        holder.timeTV.setText(restaurant.get_delivery_time() + " мин.");
+        holder.deliveryType.setText((new Double(restaurant.get_minimal_price())).toString() + " руб.");
+        holder.kitchenType.setText(join(", ",restaurant.get_kitchens()));
+        holder.likesTV.setText(restaurant.get_comments().get("likes") + "");
+        holder.dislikesTV.setText(restaurant.get_comments().get("dislikes") + "");
 
         Picasso.with(context)
-                .load(restaurant.getUrl())
+                .load(restaurant.get_iconURL())
                 .placeholder(R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
                 .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
                 .into(holder.imageView);
@@ -125,8 +125,8 @@ public class RestaurantsListAdapter extends BaseAdapter implements Filterable {
                 ArrayList<Restaurant> filters = new ArrayList<>();
 
                 for (int i = 0; i < filterList.size(); i++){
-                    if(filterList.get(i).getName().toUpperCase().contains(constraint)){
-                        Restaurant restaurant = new Restaurant(filterList.get(i).getBaseUrl(), filterList.get(i).getJson());
+                    if(filterList.get(i).get_name().toUpperCase().contains(constraint)){
+                        Restaurant restaurant = filterList.get(i);
                         filters.add(restaurant);
                     }
                 }

@@ -28,4 +28,14 @@ public class General implements UserInterface {
     public Basket getBasket() {
         return basket;
     }
+
+    @Override
+    public int getPoints() {
+        return 0;
+    }
+
+    @Override
+    public void setPoints(int points) {
+
+    }
 }

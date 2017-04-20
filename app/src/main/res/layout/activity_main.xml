@@ -8,9 +8,9 @@
     tools:context="com.example.alexandrzanko.mobile_6vkusov.Activities.MainActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_avatar"
         android:id="@+id/iv_user"
         android:layout_above="@+id/btn_login"
         android:layout_centerHorizontal="true" />
@@ -41,10 +41,32 @@
             android:text="Еда"
             android:padding="5dp"
             android:clickable="true"
-            android:textSize="19sp"
+            android:textSize="16sp"
             android:onClick="foodMenuPressed"
             android:textColor="@color/colorWhite"
             android:drawableLeft="@drawable/ic_hamburger"
+            android:drawablePadding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="Бонусная программа"
+            android:padding="5dp"
+            android:clickable="true"
+            android:textSize="16sp"
+            android:onClick="bonusProgramPressed"
+            android:textColor="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_star"
+            android:drawablePadding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="Избранные рестораны"
+            android:padding="5dp"
+            android:clickable="true"
+            android:textSize="16sp"
+            android:onClick="favoriteRestaurants"
+            android:textColor="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_like"
             android:drawablePadding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -62,7 +84,7 @@
             android:text="Еда"
             android:padding="5dp"
             android:clickable="true"
-            android:textSize="19sp"
+            android:textSize="16sp"
             android:onClick="foodMenuPressed"
             android:textColor="@color/colorWhite"
             android:drawableLeft="@drawable/ic_hamburger"
@@ -70,10 +92,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
+            android:text="Бонусная программа"
+            android:padding="5dp"
+            android:clickable="true"
+            android:textSize="16sp"
+            android:onClick="bonusProgramPressed"
+            android:textColor="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_star"
+            android:drawablePadding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="Избранные рестораны"
+            android:padding="5dp"
+            android:clickable="true"
+            android:textSize="16sp"
+            android:onClick="favoriteRestaurants"
+            android:textColor="@color/colorWhite"
+            android:drawableLeft="@drawable/ic_like"
+            android:drawablePadding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
             android:text="Выход"
             android:padding="5dp"
             android:clickable="true"
-            android:textSize="19sp"
+            android:textSize="16sp"
             android:onClick="exitMenuPressed"
             android:textColor="@color/colorWhite"
             android:drawableLeft="@drawable/ic_logout"

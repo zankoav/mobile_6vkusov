@@ -175,10 +175,10 @@ public class RestaurantsCardActivity extends AppCompatActivity {
     private double getMaxPrice(){
         double max = 0;
         if(restaurants.size()>0){
-            max = restaurants.get(0).getMinimalPrice();
+            max = restaurants.get(0).get_minimal_price();
             for (int i = 0 ; i< restaurants.size(); i++){
-                if(max < restaurants.get(i).getMinimalPrice()){
-                    max = restaurants.get(i).getMinimalPrice();
+                if(max < restaurants.get(i).get_minimal_price()){
+                    max = restaurants.get(i).get_minimal_price();
                 }
             }
         }

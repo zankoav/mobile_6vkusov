@@ -17,9 +17,11 @@ public class Register implements UserInterface {
     private final String TAG = this.getClass().getSimpleName();
 
     private Basket basket;
+    private int _points;
 
-    public Register(){
+    public Register(int points){
         this.basket = new Basket();
+        this._points = points;
     }
 
     @Override
@@ -43,5 +45,15 @@ public class Register implements UserInterface {
     @Override
     public Basket getBasket() {
         return basket;
+    }
+
+    @Override
+    public int getPoints() {
+        return this._points;
+    }
+
+    @Override
+    public void setPoints(int points) {
+        this._points = points;
     }
 }

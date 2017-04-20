@@ -57,7 +57,7 @@ public class RestaurantsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 
                 Restaurant restaurant = (Restaurant)listView.getItemAtPosition(position);
-                Log.i(TAG, "onItemClick: " + restaurant.getName());
+                Log.i(TAG, "onItemClick: " + restaurant.get_name());
 //                Intent intent = new Intent(RestaurantsActivity.this, RestaurantActivity.class);
 //                intent.putExtra(EXTRA_RESTAURANT, restaurant.getSlug());
 //                startActivity(intent);

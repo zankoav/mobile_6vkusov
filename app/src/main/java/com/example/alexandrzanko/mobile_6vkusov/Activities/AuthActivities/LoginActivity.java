@@ -50,18 +50,25 @@ public class LoginActivity extends AppCompatActivity implements LoadJson {
     @Override
     public void loadComplete(JSONObject obj, String sessionName) {
         if (obj != null) {
-            int code = 0;
+            String status = "error";
             try {
-                code = obj.getInt("code");
+                status = obj.getString("status");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (code == 1) {
+            if (status.equals("successful")) {
                 LocalStorage store = Singleton.currentState().getStore();
-                store.setStringValueStorage(store.APP_PROFILE,obj.toString());
-                Singleton.currentState().initStore(null);
-                loginBtn.setEnabled(true);
-                finish();
+
+                try {
+                    JSONObject user = obj.getJSONObject("message");
+                    store.setStringValueStorage(store.APP_PROFILE,user.toString());
+                    Singleton.currentState().initStore(null);
+                    loginBtn.setEnabled(true);
+                    finish();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }else{
                 Toast toast = null;
                 try {

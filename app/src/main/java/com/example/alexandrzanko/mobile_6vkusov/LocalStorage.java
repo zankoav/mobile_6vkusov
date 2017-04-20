@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.alexandrzanko.mobile_6vkusov.Activities.MainActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Category;
+import com.example.alexandrzanko.mobile_6vkusov.Models.InfoRestaurant;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Restaurant;
 import com.example.alexandrzanko.mobile_6vkusov.Users.General;
 import com.example.alexandrzanko.mobile_6vkusov.Users.Register;
@@ -17,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by alexandrzanko on 3/1/17.
@@ -41,17 +43,15 @@ public class LocalStorage implements LoadJson{
         Singleton.currentState().setUser(null);
         clearKeyStorage(APP_CATEGORIES);
         clearKeyStorage(APP_RESTAURANTS);
+
+
+        JSONObject paramsCategories = new JSONObject();
         String urlCat = context.getResources().getString(R.string.api_categories);
-        new JsonHelperLoad(urlCat, null, this, APP_CATEGORIES).execute();
+        new JsonHelperLoad(urlCat, paramsCategories, this, APP_CATEGORIES).execute();
 
         JSONObject paramsRestaurants = new JSONObject();
-        try {
-            paramsRestaurants.put("slug", "all");
-            String urlRest = context.getResources().getString(R.string.api_restaurants);
-            new JsonHelperLoad(urlRest, paramsRestaurants, this, APP_RESTAURANTS).execute();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        String urlRest = context.getResources().getString(R.string.api_restaurants);
+        new JsonHelperLoad(urlRest, paramsRestaurants, this, APP_RESTAURANTS).execute();
 
         String userProfile = getStringValueStorage(APP_PROFILE);
 
@@ -100,7 +100,15 @@ public class LocalStorage implements LoadJson{
             setStringValueStorage(sessionName, obj.toString());
             Log.i(TAG,obj.toString());
             if (sessionName == APP_PROFILE) {
-                Singleton.currentState().setUser(new Register());
+                JSONObject user = null;
+                try {
+                    user = obj.getJSONObject("user");
+                    setStringValueStorage(sessionName, user.toString());
+                    int points = user.getInt("points");
+                    Singleton.currentState().setUser(new Register(points));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
             if(Singleton.currentState().getUser() != null &&
                getStringValueStorage(APP_CATEGORIES) != null &&
@@ -120,7 +128,8 @@ public class LocalStorage implements LoadJson{
         String catsSTR = getStringValueStorage(APP_CATEGORIES);
         JSONObject categoriesHash = null;
         try {
-            categoriesHash = new JSONObject(catsSTR);
+            JSONObject hash = new JSONObject(catsSTR);
+            categoriesHash = hash.getJSONObject("message");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -133,8 +142,8 @@ public class LocalStorage implements LoadJson{
                 String slug = cats.getJSONObject(i).getString("slug");
                 if (type == 1) {
                     String image = cats.getJSONObject(i).getString("image");
-                    String url = this.context.getResources().getString(R.string.api_base_uri) + img_path + "/" + image;
-                    categories.add(new Category(name, slug, url));
+                    String url = this.context.getResources().getString(R.string.api_base) + img_path + "/" + image;
+                    categories.add(new Category(name, slug, url, type));
                 }
             }
         } catch (JSONException e) {
@@ -148,7 +157,8 @@ public class LocalStorage implements LoadJson{
         String catsSTR = getStringValueStorage(APP_CATEGORIES);
         JSONObject categoriesHash = null;
         try {
-            categoriesHash = new JSONObject(catsSTR);
+            JSONObject hash = new JSONObject(catsSTR);
+            categoriesHash = hash.getJSONObject("message");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -159,7 +169,7 @@ public class LocalStorage implements LoadJson{
                 String name = cats.getJSONObject(i).getString("name");
                 String slug = cats.getJSONObject(i).getString("slug");
                 if (type == 2) {
-                    categories.add(new Category(name, slug, null));
+                    categories.add(new Category(name, slug, null, type));
                 }
             }
         } catch (JSONException e) {
@@ -190,9 +200,43 @@ public class LocalStorage implements LoadJson{
             if (restaurantsHash.get("restaurants") != null ) {
                 restaurants = new ArrayList<>();
                 JSONArray rests = restaurantsHash.getJSONArray("restaurants");
-                String urlImgPath = context.getResources().getString(R.string.api_base_uri) +  restaurantsHash.getString("img_path") + "/";
+                String urlImgPath = context.getResources().getString(R.string.api_base) +  restaurantsHash.getString("img_path") + "/";
                 for (int i = 0; i < rests.length(); i++) {
-                    restaurants.add(new Restaurant(urlImgPath,rests.getJSONObject(i)));
+
+                    JSONObject rest = rests.getJSONObject(i);
+                    String slug = rest.getString("slug");
+                    String name = rest.getString("name");
+                    String logo = rest.getString("logo");
+                    String working_time = rest.getString("working_time");
+                    double minimal_price = rest.getDouble("minimal_price");
+                    String delivery_time = rest.getString("delivery_time");
+
+                    JSONArray kitchensJson = rest.getJSONArray("categories_slugs");
+                    ArrayList<String> categories_slugs = new ArrayList<>();
+                    for(int j = 0; j < kitchensJson.length(); j++){
+                        categories_slugs.add(kitchensJson.getString(j));
+                    }
+
+                    JSONObject commentsJson = rest.getJSONObject("comments");
+                    HashMap<String, Integer> comments = new HashMap<>();
+                    comments.put("likes",commentsJson.getInt("likes"));
+                    comments.put("dislikes",commentsJson.getInt("dislikes"));
+
+                    JSONObject about = rest.getJSONObject("about");
+                    String kitchens = about.getString("kitchens");
+
+                    JSONObject infoJson = about.getJSONObject("info");
+                    String descriptionInfo = infoJson.getString("description");
+                    String addressInfo = infoJson.getString("address");
+                    String nameInfo = infoJson.getString("name");
+                    String unpInfo = infoJson.getString("unp");
+                    String deliveryDescriptionInfo = infoJson.getString("delivery_description");
+                    String commercialRegisterInfo = infoJson.getString("commercial_register");
+
+                    InfoRestaurant info = new InfoRestaurant(descriptionInfo, addressInfo, nameInfo, unpInfo, deliveryDescriptionInfo, commercialRegisterInfo);
+
+                    Restaurant restaurant = new Restaurant(slug, name, working_time, minimal_price, delivery_time, kitchens, info, urlImgPath+logo, comments, categories_slugs);
+                    restaurants.add(restaurant);
                 }
             }
         } catch (JSONException e) {
@@ -202,32 +246,17 @@ public class LocalStorage implements LoadJson{
     }
 
     private ArrayList<Restaurant> getRestaurantsBySlug(String slug) {
+
         ArrayList<Restaurant> restaurants = new ArrayList<>();
-        String restSTR = getStringValueStorage(APP_RESTAURANTS);
-        JSONObject restaurantsHash = null;
-        try {
-            restaurantsHash = new JSONObject(restSTR);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            if (restaurantsHash.get("restaurants") != null ) {
-                restaurants = new ArrayList<>();
-                JSONArray rests = restaurantsHash.getJSONArray("restaurants");
-                String urlImgPath = context.getResources().getString(R.string.api_base_uri) +  restaurantsHash.getString("img_path") + "/";
-                for (int i = 0; i < rests.length(); i++) {
-                    JSONArray slugs = rests.getJSONObject(i).getJSONArray("slugs");
-                    for(int j = 0; j < slugs.length(); j++){
-                        if (slugs.getString(j).equals(slug)){
-                            restaurants.add(new Restaurant(urlImgPath,rests.getJSONObject(i)));
-                            break;
-                        }
-                    }
-                }
+        ArrayList<Restaurant> allRestaurants = this.getAllRestaurants();
+
+        for(int i=0; i < allRestaurants.size(); i++) {
+            ArrayList<String> categories_slugs = allRestaurants.get(i).get_categoriesSlugs();
+            if (categories_slugs.contains(slug)){
+                restaurants.add(allRestaurants.get(i));
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+
         return restaurants;
     }
 }

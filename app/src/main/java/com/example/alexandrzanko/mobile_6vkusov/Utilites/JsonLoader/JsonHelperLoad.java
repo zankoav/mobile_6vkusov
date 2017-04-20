@@ -3,6 +3,7 @@ package com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -30,6 +31,8 @@ import javax.net.ssl.X509TrustManager;
 public class JsonHelperLoad extends AsyncTask<Void, Void, JSONObject> {
 
     private final String TAG = this.getClass().getSimpleName();
+    private final String KEY = "252cbf79f74f36e0df806817847a0e1b";
+
 
     private String url, name;
     private JSONObject params;
@@ -38,6 +41,11 @@ public class JsonHelperLoad extends AsyncTask<Void, Void, JSONObject> {
     public JsonHelperLoad(String url, JSONObject params, LoadJson act, String sessionName) {
         this.url = url;
         this.params = params;
+        try {
+            this.params.put("key",KEY);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         this.act = act;
         this.name = sessionName;
         try {

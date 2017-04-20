@@ -103,7 +103,8 @@ public class RestaurantRecycleAdapter extends RecyclerView.Adapter<RestaurantRec
                 }
 
                 if (seekBar){
-                    if(restaurant.getMinimalPrice().intValue() > priceMin){
+                    Double pr = new Double(restaurant.get_minimal_price());
+                    if(pr.intValue() > priceMin){
                         match = false;
                         continue;
                     }
@@ -160,8 +161,8 @@ public class RestaurantRecycleAdapter extends RecyclerView.Adapter<RestaurantRec
                     filterX = filterList;
                 }
                 for (int i = 0; i < filterX.size(); i++){
-                    if(filterX.get(i).getName().toUpperCase().contains(constraint)){
-                        Restaurant restaurant = new Restaurant(filterX.get(i).getBaseUrl(), filterX.get(i).getJson());
+                    if(filterX.get(i).get_name().toUpperCase().contains(constraint)){
+                        Restaurant restaurant = filterX.get(i);
                         filters.add(restaurant);
                     }
                 }
@@ -195,7 +196,6 @@ public class RestaurantRecycleAdapter extends RecyclerView.Adapter<RestaurantRec
             TextView dislikesTV;
             ImageView imageView;
 
-
             public ViewHolder(View view){
                 super(view);
                 nameTV = (TextView) view.findViewById(R.id.restaurants_name);
@@ -210,19 +210,20 @@ public class RestaurantRecycleAdapter extends RecyclerView.Adapter<RestaurantRec
                     @Override
                     public void onClick(View v) {
                         int position = getAdapterPosition();
-                        Log.i(TAG, "onClick: " + restaurants.get(position).getName());
+                        Log.i(TAG, "onClick: " + restaurants.get(position).get_name());
                     }
                 });
             }
+
             public void setRestaurant(Restaurant restaurant){
-                nameTV.setText(restaurant.getName());
-                timeTV.setText(restaurant.getDeliveryTime() + " мин.");
-                deliveryType.setText(restaurant.getMinimalPrice().toString() + " руб.");
-                kitchenType.setText(restaurant.getKitchens());
-                likesTV.setText(restaurant.getLikes() + "");
-                dislikesTV.setText(restaurant.getDislikes() + "");
+                nameTV.setText(restaurant.get_name());
+                timeTV.setText(restaurant.get_delivery_time() + " мин.");
+                deliveryType.setText((new Double(restaurant.get_minimal_price())).toString() + " руб.");
+                kitchenType.setText(restaurant.get_kitchens());
+                likesTV.setText(restaurant.get_comments().get("likes") + "");
+                dislikesTV.setText(restaurant.get_comments().get("dislikes") + "");
                 Picasso.with(context)
-                        .load(restaurant.getUrl())
+                        .load(restaurant.get_iconURL())
                         .placeholder(R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
                         .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
                         .into(imageView);

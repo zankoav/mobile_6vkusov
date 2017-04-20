@@ -10,4 +10,6 @@ public interface UserInterface {
     public STATUS getStatus();
     public JSONObject getProfile();
     public Basket getBasket();
+    public int getPoints();
+    public void setPoints(int points);
 }

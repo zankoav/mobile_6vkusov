@@ -93,7 +93,7 @@ public class RememberActivity extends AppCompatActivity implements LoadJson {
             return;
         }
 
-        String url = this.getResources().getString(R.string.api_remember);
+        String url = this.getResources().getString(R.string.api_reset_password);
         (new JsonHelperLoad(url,params,this, TAG)).execute();
     }
 

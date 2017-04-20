@@ -51,13 +51,28 @@
     <!--Для RegistrationActivity END-->
 
     <!--Для REST API-->
-    <string name="api_base_uri">https://6vkusov.by</string>
+    <string name="api_base">https://6vkusov.by</string>
+    <string name="api_key">252cbf79f74f36e0df806817847a0e1b</string>
     <string name="api_login">https://6vkusov.by/api/login</string>
     <string name="api_registration">https://6vkusov.by/api/register</string>
-    <string name="api_remember">https://6vkusov.by/api/remember</string>
+    <string name="api_reset_password">https://6vkusov.by/api/reset_password</string>
     <string name="api_categories">https://6vkusov.by/api/categories</string>
     <string name="api_restaurants">https://6vkusov.by/api/restaurants</string>
     <string name="api_user">https://6vkusov.by/api/user</string>
+    <string name="api_food">https://6vkusov.by/api/food</string>
+    <string name="api_send_order">https://6vkusov.by/api/send_order</string>
+    <string name="api_orders">https://6vkusov.by/api/orders</string>
+    <string name="api_restaurant_comments">https://6vkusov.by/api/restaurant_comments</string>
+    <string name="api_send_comment">https://6vkusov.by/api/send_comment</string>
+    <string name="api_add_variants">https://6vkusov.by/api/add_variants</string>
+    <string name="api_remove_variant">https://6vkusov.by/api/remove_variant</string>
+    <string name="api_remove_item">https://6vkusov.by/api/remove_item</string>
+    <string name="api_checkout_cart">https://6vkusov.by/api/checkout_cart</string>
+    <string name="api_basket_items">https://6vkusov.by/api/basket_items</string>
+    <string name="api_favourite">https://6vkusov.by/api/favourite</string>
+    <string name="api_favourites">https://6vkusov.by/api/favourites</string>
+    <string name="api_invite">https://6vkusov.by/api/invite</string>
+    <string name="api_user_points">https://6vkusov.by/api/user_points</string>
     <!--Для REST API END-->
 
     <!--Errors-->
