@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:background="@color/colorWhite">
+
+    <ImageView
+        android:id="@+id/product_icon"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_thumbs_up"/>
+
+    <TextView
+        android:id="@+id/product_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_toRightOf="@+id/product_icon"
+        android:layout_alignTop="@+id/product_icon"
+        android:textColor="@color/colorHeader"
+        android:text="Пицца темпо"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"/>
+
+    <TextView
+        android:id="@+id/product_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/product_icon"
+        android:layout_below="@+id/product_name"
+        android:layout_alignBottom="@+id/product_icon" />
+
+    <ListView
+        android:id="@+id/product_variants"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/product_icon">
+    </ListView>
+
+    <Button
+        android:id="@+id/product_add_basket"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/shape_corner_green"
+        android:textStyle="bold"
+        android:text="Заказать"
+        android:layout_below="@+id/product_variants"
+        />
+
+</RelativeLayout>

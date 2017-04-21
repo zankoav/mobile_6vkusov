@@ -11,7 +11,7 @@
         android:id="@+id/iv_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/ll_social"
+        android:layout_above="@+id/tv_social"
         android:background="@drawable/ic_logo"
         android:layout_centerHorizontal="true" />
 
@@ -23,6 +23,7 @@
         android:layout_marginRight="16dp"
         android:textSize="14sp"
         android:padding="5dp"
+        android:textAlignment="center"
         android:layout_above="@+id/ll_social"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

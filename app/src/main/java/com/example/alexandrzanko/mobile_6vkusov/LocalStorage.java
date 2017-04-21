@@ -187,6 +187,16 @@ public class LocalStorage implements LoadJson{
         }
     }
 
+    public Restaurant getRestaurantBySlug(String slug){
+        ArrayList<Restaurant> restaurants = getAllRestaurants();
+        for (int i=0; i< restaurants.size(); i++) {
+            if (restaurants.get(i).get_slug().equals(slug)){
+                return restaurants.get(i);
+            }
+        }
+        return null;
+    }
+
     private ArrayList<Restaurant> getAllRestaurants(){
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         String restSTR = getStringValueStorage(APP_RESTAURANTS);

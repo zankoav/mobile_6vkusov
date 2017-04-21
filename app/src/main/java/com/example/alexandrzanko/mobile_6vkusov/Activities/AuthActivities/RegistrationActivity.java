@@ -1,5 +1,7 @@
 package com.example.alexandrzanko.mobile_6vkusov.Activities.AuthActivities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.support.v7.app.ActionBar;
@@ -9,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,6 +30,8 @@ import org.json.JSONObject;
 
 public class RegistrationActivity extends AppCompatActivity implements LoadJson {
 
+    public final static String REGISTRATION = "com.example.alexandrzanko.mobile_6vkusov.REGISTRATION";
+
     private final String TAG = this.getClass().getSimpleName();
     private EditText email,password, confirmPassword, firstName, promoCode;
     private CheckBox checkBoxLicense, checkBoxNews;
@@ -39,9 +45,33 @@ public class RegistrationActivity extends AppCompatActivity implements LoadJson 
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // TODO Auto-generated method stub
+        InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        return super.onTouchEvent(event);
+    }
+
+    @Override
     public void loadComplete(JSONObject obj, String sessionName) {
+        Log.i(TAG,obj.toString());
         if(obj != null){
-            Log.i(TAG,obj.toString());
+            try {
+                String status = obj.getString("status");
+                if (status.equals("successful")){
+                    Intent answerIntent = new Intent();
+                    answerIntent.putExtra(REGISTRATION, "Вы успешно зарегистрированы, Вам на почту " + email.getText().toString() + " отправлено письмо для активации аккаунта");
+                    setResult(RESULT_OK, answerIntent);
+                    finish();
+                }else if(status.equals("error")){
+                    Toast toast = Toast.makeText(getApplicationContext(),obj.getString("message"), Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }else{
             Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT);
             toast.show();

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alexandrzanko.mobile_6vkusov.LocalStorage;
@@ -28,7 +29,12 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity implements LoadJson {
 
     private final String TAG = this.getClass().getSimpleName();
+    static final private int RESET_PASSWORD = 1;
+    static final private int REGISTRATION_USER = 2;
+
+
     private EditText email,password;
+    private TextView message;
     private Button loginBtn;
 
     @Override
@@ -87,6 +93,24 @@ public class LoginActivity extends AppCompatActivity implements LoadJson {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESET_PASSWORD) {
+            if (resultCode == RESULT_OK) {
+                String answer = data.getStringExtra(RememberActivity.RESET);
+                message.setText("На почту " + answer + " отправлено письмо для смены пароля");
+            }
+        }
+
+        if (requestCode == REGISTRATION_USER) {
+            if (resultCode == RESULT_OK) {
+                String answer = data.getStringExtra(RegistrationActivity.REGISTRATION);
+                message.setText(answer);
+            }
+        }
+    }
+
     private void addToolBarToScreen() {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.login_title);
@@ -106,6 +130,7 @@ public class LoginActivity extends AppCompatActivity implements LoadJson {
     }
 
     private void initFields(){
+        message = (TextView)findViewById(R.id.tv_social);
         email = (EditText)findViewById(R.id.et_email);
         password = (EditText)findViewById(R.id.et_password);
         loginBtn = (Button)findViewById(R.id.btn_login);
@@ -154,11 +179,11 @@ public class LoginActivity extends AppCompatActivity implements LoadJson {
 
     public void goToRegistration(View view) {
         Intent intent = new Intent(this, RegistrationActivity.class);
-        this.startActivity(intent);
+        this.startActivityForResult(intent, REGISTRATION_USER);
     }
 
     public void rememberPressed(View view) {
         Intent intent = new Intent(this, RememberActivity.class);
-        this.startActivity(intent);
+        this.startActivityForResult(intent, RESET_PASSWORD);
     }
 }

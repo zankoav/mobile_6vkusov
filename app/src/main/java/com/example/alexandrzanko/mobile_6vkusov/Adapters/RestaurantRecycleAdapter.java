@@ -1,6 +1,7 @@
 package com.example.alexandrzanko.mobile_6vkusov.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,10 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivity;
+import com.example.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity;
+import com.example.alexandrzanko.mobile_6vkusov.Activities.RestaurantsCardActivity;
+import com.example.alexandrzanko.mobile_6vkusov.Activities.Trash.RestaurantsActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Restaurant;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.squareup.picasso.Picasso;
@@ -210,7 +215,9 @@ public class RestaurantRecycleAdapter extends RecyclerView.Adapter<RestaurantRec
                     @Override
                     public void onClick(View v) {
                         int position = getAdapterPosition();
-                        Log.i(TAG, "onClick: " + restaurants.get(position).get_name());
+                        Intent intent = new Intent(context, RestaurantActivity.class);
+                        intent.putExtra(RestaurantsActivity.EXTRA_RESTAURANT, restaurants.get(position).get_slug());
+                        context.startActivity(intent);
                     }
                 });
             }

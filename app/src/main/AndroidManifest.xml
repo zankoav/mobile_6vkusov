@@ -35,10 +35,14 @@
         <activity
             android:name=".Activities.ProfileActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.Trash.RestaurantsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Activities.RestaurantsCardActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activities.Trash.RestaurantsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.RestaurantsCardActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.Restaurant.RestaurantActivity" />
+        <activity android:name=".Activities.Restaurant.ProductActivity"></activity>
     </application>
 
 </manifest>

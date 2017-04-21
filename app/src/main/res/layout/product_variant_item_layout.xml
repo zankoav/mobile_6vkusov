@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp">
+
+    <TextView
+        android:id="@+id/product_width"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Вес 330 г"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        />
+
+    <Button
+        android:id="@+id/product_btn_minus"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:background="@drawable/shape_corner"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:text="-"
+        android:layout_centerHorizontal="true"
+         />
+
+    <TextView
+        android:id="@+id/product_count"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:gravity="center"
+        android:text="0"
+        android:background="@drawable/shape_corner_green"
+        android:textColor="@color/colorWhite"
+        android:layout_marginRight="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_toRightOf="@+id/product_btn_minus"/>
+
+    <Button
+        android:id="@+id/product_btn_plus"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:background="@drawable/shape_corner"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:text="+"
+        android:layout_toRightOf="@id/product_count" />
+
+
+    <TextView
+        android:id="@+id/product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="от 10 руб"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        />
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.example.alexandrzanko.mobile_6vkusov.Activities.AuthActivities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -25,6 +26,8 @@ import org.json.JSONObject;
 public class RememberActivity extends AppCompatActivity implements LoadJson {
 
     private final String TAG = this.getClass().getSimpleName();
+    public final static String RESET = "com.example.alexandrzanko.mobile_6vkusov.RESET";
+
     private EditText email;
 
     @Override
@@ -46,6 +49,24 @@ public class RememberActivity extends AppCompatActivity implements LoadJson {
     @Override
     public void loadComplete(JSONObject obj, String sessionName) {
         Log.i(TAG,obj.toString());
+        if (obj != null) {
+            try {
+                String status = obj.getString("status");
+                if (status.equals("successful")){
+                    Intent answerIntent = new Intent();
+                    answerIntent.putExtra(RESET, obj.getString("email"));
+                    setResult(RESULT_OK, answerIntent);
+                    finish();
+                }else if(status.equals("error")){
+                    Toast toast = Toast.makeText(getApplicationContext(),obj.getString("message"), Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
     }
 
     private void addToolBarToScreen() {

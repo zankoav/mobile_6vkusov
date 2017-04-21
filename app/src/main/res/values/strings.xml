@@ -9,6 +9,17 @@
     <string name="categories_title">Категории</string>
     <!--Для CategoriesActivity END-->
 
+    <!--Для RestaurantActivity-->
+    <string name="rest_menu">Меню</string>
+    <string name="rest_info">Доп.инфо</string>
+    <string name="rest_comments">Отзывы</string>
+    <string name="rest_delivery_price">Доставка:</string>
+    <string name="rest_delivery_time">Отзывы</string>
+    <string name="rest_time">Время:</string>
+    <string name="rest_delivery_price_free">бесплатно</string>
+    <string name="rest_min_delivery_price">Заказ от</string>
+    <string name="rest_working_time">Время работы</string>
+
     <!--Для RestaurantsActivity-->
     <string name="restaurants_title">Рестораны</string>
     <string name="restaurants_time">Время доставки:</string>
