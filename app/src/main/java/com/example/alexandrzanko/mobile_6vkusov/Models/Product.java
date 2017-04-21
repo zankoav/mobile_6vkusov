@@ -1,13 +1,6 @@
 package com.example.alexandrzanko.mobile_6vkusov.Models;
-
-import android.graphics.Bitmap;
-
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by alexandrzanko on 30/11/16.
@@ -15,93 +8,86 @@ import java.util.ArrayList;
 
 public class Product {
 
-    private Bitmap img;
-    private JSONObject product;
-    private String baseUrl;
+    private String _name;
+    private String _icon;
+    private String _description;
+    private int _points;
+    private HashMap<String,String> _category;
+    private ArrayList<Variant> _variants;
 
-    public Product(JSONObject obj, String baseImageUrl){
-        this.baseUrl = baseImageUrl;
-        this.product = obj;
-        try{
-            String url = this.baseUrl + this.product.getString("image");
-//            new BitmapHelperLoad(url,this).execute();
-        }catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public int get_id() {
+        return _id;
     }
 
-    public Integer getId() {
-        try {
-            return product.getInt("id");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public void set_id(int _id) {
+        this._id = _id;
     }
 
-    public String getName() {
-        try {
-            return product.getString("name");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public String get_name() {
+        return _name;
     }
 
-    public String getImageUrl() {
-        try {
-            return baseUrl + product.getString("image");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public void set_name(String _name) {
+        this._name = _name;
     }
 
-    public String getCategory() {
-        try {
-            return product.getString("category");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public String get_icon() {
+        return _icon;
     }
 
-    public String getDescription() {
-        try {
-            return product.getString("description");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public void set_icon(String _icon) {
+        this._icon = _icon;
     }
 
-
-    public ArrayList<Variant> getVariants(){
-        ArrayList<Variant> variants = new ArrayList<>();
-        try {
-            JSONArray variantsJson = product.getJSONArray("variants");
-            for(int i= 0; i < variantsJson.length(); i++){
-                Double price = variantsJson.getJSONObject(i).getDouble("price");
-                String size = variantsJson.getJSONObject(i).getString("size");
-                String weight = variantsJson.getJSONObject(i).getString("weigth");
-                int id = variantsJson.getJSONObject(i).getInt("id");
-                variants.add(new Variant(price, size, weight, id));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return variants;
+    public String get_description() {
+        return _description;
     }
 
-    public Bitmap getImg() {
-        return img;
+    public void set_description(String _description) {
+        this._description = _description;
+    }
+
+    public int get_points() {
+        return _points;
+    }
+
+    public void set_points(int _points) {
+        this._points = _points;
+    }
+
+    public HashMap<String, String> get_category() {
+        return _category;
+    }
+
+    public void set_category(HashMap<String, String> _category) {
+        this._category = _category;
+    }
+
+    public ArrayList<Variant> get_variants() {
+        return _variants;
+    }
+
+    public void set_variants(ArrayList<Variant> _variants) {
+        this._variants = _variants;
+    }
+
+    private int _id;
+
+    public Product(int _id, String _name, String _icon, String _description, int _points, HashMap<String, String> _category, ArrayList<Variant> _variants) {
+        this._id = _id;
+        this._name = _name;
+        this._icon = _icon;
+        this._description = _description;
+        this._points = _points;
+        this._category = _category;
+        this._variants = _variants;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Product){
             Product product = (Product)obj;
-            return  this.getId().equals(product.getId());
+            return  this.get_id() == product.get_id();
         }else{
             return false;
         }

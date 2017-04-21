@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.alexandrzanko.mobile_6vkusov.Activities.MainActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Category;
 import com.example.alexandrzanko.mobile_6vkusov.Models.InfoRestaurant;
+import com.example.alexandrzanko.mobile_6vkusov.Models.Product;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Restaurant;
 import com.example.alexandrzanko.mobile_6vkusov.Users.General;
 import com.example.alexandrzanko.mobile_6vkusov.Users.Register;
@@ -29,6 +30,9 @@ public class LocalStorage implements LoadJson{
     private final String TAG = this.getClass().getSimpleName();
 
     private final String APP_STORE = "store";
+
+    public ArrayList<Product> currentProducts = new ArrayList<Product>();
+
 
     public final String APP_CATEGORIES = "categories";
     public final String APP_RESTAURANTS = "restaurants";

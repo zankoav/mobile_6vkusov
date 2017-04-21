@@ -64,14 +64,14 @@ public class ProductActivity extends AppCompatActivity implements LoadJson {
         tabLayout.setVisibility(View.GONE);
         fragments = new ArrayList<>();
 
-        JSONObject params = new JSONObject();
-        String url = getResources().getString(R.string.api_food);
-        try {
-            params.put("slug", slug);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        new JsonHelperLoad(url, params, this, null).execute();
+//        JSONObject params = new JSONObject();
+//        String url = getResources().getString(R.string.api_food);
+//        try {
+//            params.put("slug", slug);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        new JsonHelperLoad(url, params, this, null).execute();
 
     }
 
@@ -93,7 +93,7 @@ public class ProductActivity extends AppCompatActivity implements LoadJson {
             fragment.setCategory(categories[i]);
             ArrayList<Product> prods = new ArrayList<>();
             for(int j = 0; j< products.size(); j++){
-                if(products.get(j).getCategory().equals(categories[i])){
+                if(products.get(j).get_category().get("name").equals(categories[i])){
                     prods.add(products.get(j));
                 }
             }
@@ -181,20 +181,20 @@ public class ProductActivity extends AppCompatActivity implements LoadJson {
 
     @Override
     public void loadComplete(JSONObject obj, String sessionName) {
-        try {
-            if (obj != null){
-                if (obj.get("food")!= null ) {
-                    String urlImgPath = getResources().getString(R.string.api_base) + obj.getString("img_path") + "/";
-                    JSONArray prods = obj.getJSONArray("food");
-                    int length = prods.length();
-                    for (int i = 0; i < length; i++) {
-                        products.add(new Product(prods.getJSONObject(i), urlImgPath));
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        setupViewPager(viewPager);
+//        try {
+//            if (obj != null){
+//                if (obj.get("food")!= null ) {
+//                    String urlImgPath = getResources().getString(R.string.api_base) + obj.getString("img_path") + "/";
+//                    JSONArray prods = obj.getJSONArray("food");
+//                    int length = prods.length();
+//                    for (int i = 0; i < length; i++) {
+//                        products.add(new Product(prods.getJSONObject(i), urlImgPath));
+//                    }
+//                }
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        setupViewPager(viewPager);
     }
 }

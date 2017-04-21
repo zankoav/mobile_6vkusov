@@ -63,15 +63,15 @@ public class VariantsAdapter extends BaseAdapter {
 
         final Variant variant = listData.get(position);
         holder.productCount.setText("0");
-        String weight = variant.getWeight();
-        String size = variant.getSize();
+        String weight = variant.get_weigth();
+        String size = variant.get_size();
         if(weight != "null"){
             holder.productType.setText("Вес " + weight);
         }
         if(size != "null"){
             holder.productType.setText(size);
         }
-        holder.productPrice.setText(variant.getPrice() + " р.");
+        holder.productPrice.setText(variant.get_price() + " р.");
 
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +80,7 @@ public class VariantsAdapter extends BaseAdapter {
                     count++;
                 btn.setVisibility(View.VISIBLE);
                 holder.productCount.setText(count + "");
-                double price = count * variant.getPrice();
+                double price = count * variant.get_price();
                 holder.productPrice.setText(price + " р.");
             }
         });
@@ -92,13 +92,13 @@ public class VariantsAdapter extends BaseAdapter {
                 count--;
                 if(count > 0) {
                     holder.productCount.setText(count + "");
-                    double price = count * variant.getPrice();
+                    double price = count * variant.get_price();
                     holder.productPrice.setText(price + " р.");
                 }else{
                     holder.productCount.setText("0");
                     if (getCountListViewProducts() == 0){
                         btn.setVisibility(View.GONE);
-                        holder.productPrice.setText(variant.getPrice() + " р.");
+                        holder.productPrice.setText(variant.get_price() + " р.");
                     }
                 }
             }

@@ -34,8 +34,6 @@ import java.util.ArrayList;
 
 public class ProductsAdapter extends BaseAdapter implements LoadJson {
 
-    private final String BASKET_ADD = "https://6vkusov.by/api/cart_add";
-
     private ArrayList<Product> listData;
     private LayoutInflater layoutInflater;
     private final String slug;
@@ -80,24 +78,17 @@ public class ProductsAdapter extends BaseAdapter implements LoadJson {
 
         convertView.setTag(holder);
         final Product product = listData.get(position);
-        holder.productName.setText(product.getName());
-        holder.productDescription.setText(product.getDescription());
+        holder.productName.setText(product.get_name());
+        holder.productDescription.setText(product.get_description());
 
-        final ArrayList<Variant> variants = product.getVariants();
+        final ArrayList<Variant> variants = product.get_variants();
         VariantsAdapter adapter = new VariantsAdapter(this.context, variants, holder.variantsListView ,holder.addToBasketButton);
         holder.variantsListView.setAdapter(adapter);
         float density = context.getResources().getDisplayMetrics().density;
         ViewGroup.LayoutParams params = holder.variantsListView.getLayoutParams();
         params.height = Math.round(50 * density * variants.size());
         holder.variantsListView.setLayoutParams(params);
-        Bitmap img = product.getImg();
-        String imgUrl = product.getImageUrl();
 
-        if(img != null){
-            holder.productImg.setImageBitmap(img);
-        }else if(imgUrl !=  null){
-            //new ImageViewDownloadTask(holder.productImg).execute(imgUrl);
-        }
 
         holder.addToBasketButton.setOnClickListener(new View.OnClickListener() {
             @Override

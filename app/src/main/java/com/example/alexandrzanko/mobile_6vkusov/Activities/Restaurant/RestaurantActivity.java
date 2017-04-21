@@ -22,12 +22,25 @@ import com.example.alexandrzanko.mobile_6vkusov.Fragments.CommentsFragment;
 import com.example.alexandrzanko.mobile_6vkusov.Fragments.InfoFragment;
 import com.example.alexandrzanko.mobile_6vkusov.Fragments.MenusFragment;
 import com.example.alexandrzanko.mobile_6vkusov.Fragments.ViewPageAdapter;
+import com.example.alexandrzanko.mobile_6vkusov.Models.Product;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Restaurant;
+import com.example.alexandrzanko.mobile_6vkusov.Models.Variant;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.example.alexandrzanko.mobile_6vkusov.Singleton;
+import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
+import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 import com.squareup.picasso.Picasso;
 
-public class RestaurantActivity extends AppCompatActivity {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
+
+public class RestaurantActivity extends AppCompatActivity implements LoadJson {
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -44,23 +57,31 @@ public class RestaurantActivity extends AppCompatActivity {
     private TextView workingTime, nameRest, kitchenType, minDeliveryPrice, deliveryTime, deliveryPrice, commentsLike,commentsDislike;
     private ImageView imgView;
     private RelativeLayout notificationCount;
+    private ArrayList<String> categories;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant);
-        Log.i(TAG, "onCreate: ");
         this.singleton = Singleton.currentState();
         String slug = getIntent().getStringExtra(RestaurantsActivity.EXTRA_RESTAURANT);
-        Log.i(TAG, slug);
         this.restaurant = singleton.getStore().getRestaurantBySlug(slug);
-        Log.i(TAG, restaurant.get_name());
         loadHeaderRestaurant();
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         tabLayout= (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
-        setupViewPager(viewPager);
         addToolBarToScreen();
+
+        JSONObject params = new JSONObject();
+        try {
+            params.put("slug", slug);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url = this.getResources().getString(R.string.api_food);
+        new JsonHelperLoad(url, params, this, getResources().getString(R.string.api_food)).execute();
+
     }
 
     private void loadHeaderRestaurant() {
@@ -114,7 +135,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager){
         ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
 
-        menusFragment = new MenusFragment();
+        menusFragment = new MenusFragment(categories);
         commentsFragment = new CommentsFragment();
         infoFragment = new InfoFragment();
 
@@ -183,4 +204,79 @@ public class RestaurantActivity extends AppCompatActivity {
             return sb.toString();
         }
     }
+
+    @Override
+    public void loadComplete(JSONObject obj, String sessionName) {
+        if (obj != null){
+            try {
+                String status = obj.getString("status");
+                if (status.equals("successful")){
+                    String img_path = obj.getString("img_path");
+                    JSONArray prod = obj.getJSONArray("food");
+                    Singleton.currentState().getStore().currentProducts = initProducts(prod,img_path);
+                    categories = initCategories(Singleton.currentState().getStore().currentProducts);
+                    setupViewPager(viewPager);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private ArrayList<Product> initProducts(JSONArray prod, String img_path){
+        ArrayList<Product> prods = new ArrayList<>();
+        String baseUrl = getResources().getString(R.string.api_base);
+        for(int i=0; i < prod.length(); i++){
+            try {
+                JSONObject prJson = prod.getJSONObject(i);
+                int id = prJson.getInt("id");
+                String name = prJson.getString("name");
+                int points = 0;
+                if (!prJson.getString("points").equals("null")){
+                    points = prJson.getInt("points");
+                }
+                String icon = baseUrl + img_path + "/" + prJson.getString("image");
+                String description = prJson.getString("description");
+                JSONObject categoryJson = prJson.getJSONObject("category");
+                HashMap<String,String> category = new HashMap<>();
+                category.put("name",categoryJson.getString("name"));
+                category.put("slug",categoryJson.getString("slug"));
+
+                JSONArray variantsJson = prJson.getJSONArray("variants");
+                ArrayList<Variant> variants = new ArrayList<>();
+
+//                for (int j = 0; j< variantsJson.length(); j++){
+//
+//                    JSONObject variantJson = variantsJson.getJSONObject(j);
+//                    int idVariant = variantJson.getInt("id");
+//                    double priceVariant = variantJson.getDouble("price");
+//                    String sizeVariant = variantJson.getString("size");
+//                    String weightVariant = variantJson.getString("weigth");
+//                    int countVariant = 1;
+//
+//                    Variant variant = new Variant(idVariant,priceVariant, sizeVariant, weightVariant, countVariant);
+//                    variants.add(variant);
+//                }
+
+                Product product = new Product(id, name, icon, description, points, category, variants);
+                prods.add(product);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.i(TAG, "initProducts: error");
+            }
+        }
+        return prods;
+    }
+
+    private ArrayList<String> initCategories(ArrayList<Product> prods){
+        ArrayList<String> categories = new ArrayList<>();
+        for(int i = 0; i < prods.size(); i++){
+            String name = prods.get(i).get_category().get("name");
+            if (!categories.contains(name)){
+                categories.add(name);
+            }
+        }
+        return categories;
+    }
+
 }

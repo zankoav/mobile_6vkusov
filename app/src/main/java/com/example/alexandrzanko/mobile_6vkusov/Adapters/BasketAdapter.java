@@ -69,7 +69,7 @@ public class BasketAdapter extends BaseAdapter {
                 count++;
                 holder.countProducts.setText(count + "");
                 order.setCount(count);
-                double price = count * order.getVariant().getPrice();
+                double price = count * order.getVariant().get_price();
                 holder.productPrice.setText(price + " р.");
             }
         });
@@ -82,7 +82,7 @@ public class BasketAdapter extends BaseAdapter {
                 if (count > 0) {
                     holder.countProducts.setText(count + "");
                     order.setCount(count);
-                    double price = count * order.getVariant().getPrice();
+                    double price = count * order.getVariant().get_price();
                     holder.productPrice.setText(price + " р.");
                 }else{
                     listData.remove(order);
@@ -90,21 +90,13 @@ public class BasketAdapter extends BaseAdapter {
                 }
             }
         });
-        double price = order.getCount() * order.getVariant().getPrice();
-        holder.productDescription.setText(order.getProduct().getDescription());
+        double price = order.getCount() * order.getVariant().get_price();
+        holder.productDescription.setText(order.getProduct().get_description());
         holder.productPrice.setText(price + " р.");
-        holder.productWidth.setText("Вес " + order.getVariant().getWeight());
+        holder.productWidth.setText("Вес " + order.getVariant().get_weigth());
         holder.countProducts.setText(order.getCount() + "");
-        holder.productName.setText( order.getProduct().getName());
-        Bitmap img = order.getProduct().getImg();
-        String imgUrl = order.getProduct().getImageUrl();
+        holder.productName.setText( order.getProduct().get_name());
 
-
-        if(img != null){
-            holder.productImg.setImageBitmap(img);
-        }else if(imgUrl !=  null){
-//            new ImageViewDownloadTask(holder.productImg).execute(imgUrl);
-        }
         return convertView;
     }
 
