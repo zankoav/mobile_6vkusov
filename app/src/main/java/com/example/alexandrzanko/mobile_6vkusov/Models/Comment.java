@@ -37,7 +37,7 @@ public class Comment {
     }
 
     public String getTime() {
-        return time.substring(0, time.length() - 6);
+        return time;
     }
 
 

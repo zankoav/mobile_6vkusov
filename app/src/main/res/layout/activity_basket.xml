@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_basket"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.alexandrzanko.mobile_6vkusov.Activities.BasketActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_actionbar"
+            app:theme="@style/ToolbarColoredBackArrow"
+            app:popupTheme="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/colorHeader"
+            app:layout_scrollFlags="scroll|enterAlways"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ListView
+        android:id="@+id/listView_basket"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/checkOut"
+        android:layout_below="@+id/action_bar" />
+
+    <RelativeLayout
+        android:id="@+id/checkOut"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorCheckOut"
+        >
+
+        <TextView
+            android:id="@+id/checkPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сумма заказа"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            />
+
+        <TextView
+            android:id="@+id/checkPriceR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="26.00"
+            android:textColor="@color/colorDarkGray"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="4dp"
+            android:layout_toLeftOf="@+id/checkPriceRub"
+            />
+
+        <TextView
+            android:id="@+id/checkPriceRub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:text="руб."
+            />
+
+        <TextView
+            android:id="@+id/checkDeliveryPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Стоимость доставки"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/checkPrice"
+             />
+
+        <TextView
+            android:id="@+id/checkDeliveryPriceRub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:text="бесплатно"
+            android:layout_below="@+id/checkPriceRub"
+            />
+
+        <TextView
+            android:id="@+id/checkTotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Итого"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="6dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/checkDeliveryPrice"
+            />
+
+        <TextView
+            android:id="@+id/checkTotalPriceR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="26.00"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorDarkGray"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="4dp"
+            android:layout_toLeftOf="@+id/checkTotalPriceRub"
+            android:layout_below="@+id/checkDeliveryPriceRub"
+            />
+
+        <TextView
+            android:id="@+id/checkTotalPriceRub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:text="руб."
+            android:layout_below="@+id/checkDeliveryPriceRub"
+            />
+
+        <TextView
+            android:id="@+id/checkTotalPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Вы заработаете"
+            android:textColor="@color/colorOdnoklasniki"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_below="@+id/checkTotalPrice"/>
+
+        <TextView
+            android:id="@+id/checkTotalPointsR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="260"
+            android:textColor="@color/colorOdnoklasniki"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="4dp"
+            android:layout_toLeftOf="@+id/checkTotalPointsRub"
+            android:layout_below="@+id/checkTotalPriceR"
+            />
+
+        <TextView
+            android:id="@+id/checkTotalPointsRub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:text="баллов"
+            android:textColor="@color/colorOdnoklasniki"
+            android:layout_below="@+id/checkTotalPriceRub"
+            />
+
+        <Button
+            android:text="@string/basket_button_get_order"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:onClick="orderButtonPressed"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/buttons_style"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:id="@+id/button" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

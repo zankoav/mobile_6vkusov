@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity;
+import com.example.alexandrzanko.mobile_6vkusov.Models.InfoRestaurant;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 
 /**
@@ -25,7 +26,14 @@ public class InfoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        description = ((RestaurantActivity)this.getActivity()).getRestaurant().getDescription();
+        InfoRestaurant info = ((RestaurantActivity)this.getActivity()).getRestaurant().get_info();
+        description = "";
+        if (info != null){
+            description = info.get_descriptionInfo();
+            if (description == null){
+                description = "";
+            }
+        }
     }
 
     @Override
@@ -33,7 +41,9 @@ public class InfoFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_restaurant_info_layout, container, false);
         textView = (TextView)rootView.findViewById(R.id.textView);
         textView.setMovementMethod(new ScrollingMovementMethod());
-        textView.setText(description);
+        if (!description.equals("null")){
+            textView.setText(description);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             textView.setNestedScrollingEnabled(true);
         }

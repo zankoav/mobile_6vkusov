@@ -17,16 +17,19 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.alexandrzanko.mobile_6vkusov.Activities.BasketActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Activities.Trash.RestaurantsActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Fragments.CommentsFragment;
 import com.example.alexandrzanko.mobile_6vkusov.Fragments.InfoFragment;
 import com.example.alexandrzanko.mobile_6vkusov.Fragments.MenusFragment;
 import com.example.alexandrzanko.mobile_6vkusov.Fragments.ViewPageAdapter;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Product;
+import com.example.alexandrzanko.mobile_6vkusov.Models.ProductItem;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Restaurant;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Variant;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.example.alexandrzanko.mobile_6vkusov.Singleton;
+import com.example.alexandrzanko.mobile_6vkusov.Users.BasketViewInterface;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 import com.squareup.picasso.Picasso;
@@ -35,12 +38,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
-public class RestaurantActivity extends AppCompatActivity implements LoadJson {
+public class RestaurantActivity extends AppCompatActivity implements LoadJson, BasketViewInterface {
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -59,12 +60,12 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson {
     private RelativeLayout notificationCount;
     private ArrayList<String> categories;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant);
         this.singleton = Singleton.currentState();
+        singleton.getUser().getBasket().setDelegateContext(this);
         String slug = getIntent().getStringExtra(RestaurantsActivity.EXTRA_RESTAURANT);
         this.restaurant = singleton.getStore().getRestaurantBySlug(slug);
         loadHeaderRestaurant();
@@ -159,9 +160,8 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson {
         notificationCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "onClick: basket button");
-//                Intent intent = new Intent(RestaurantActivity.this, BasketActivity.class);
-//                startActivityForResult(intent,1);
+                Intent intent = new Intent(RestaurantActivity.this, BasketActivity.class);
+                startActivityForResult(intent,1);
             }
         });
         this.updateCountBasket();
@@ -170,7 +170,7 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson {
 
     private void updateCountBasket(){
         TextView countProducts = (TextView) notificationCount.findViewById(R.id.notif_count);
-        int count = 1;//this.singleton.getUser().getBasket().getCountProducts();
+        int count = this.singleton.getUser().getBasket().getTotalCount();
         if (count>0){
             countProducts.setText(count + "");
             countProducts.setVisibility(View.VISIBLE);
@@ -209,6 +209,7 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson {
     public void loadComplete(JSONObject obj, String sessionName) {
         if (obj != null){
             try {
+                Log.i(TAG, "loadComplete: " + obj.toString());
                 String status = obj.getString("status");
                 if (status.equals("successful")){
                     String img_path = obj.getString("img_path");
@@ -219,6 +220,7 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+                Log.i(TAG, "loadComplete: error" + e);
             }
         }
     }
@@ -245,24 +247,27 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson {
                 JSONArray variantsJson = prJson.getJSONArray("variants");
                 ArrayList<Variant> variants = new ArrayList<>();
 
-//                for (int j = 0; j< variantsJson.length(); j++){
-//
-//                    JSONObject variantJson = variantsJson.getJSONObject(j);
-//                    int idVariant = variantJson.getInt("id");
-//                    double priceVariant = variantJson.getDouble("price");
-//                    String sizeVariant = variantJson.getString("size");
-//                    String weightVariant = variantJson.getString("weigth");
-//                    int countVariant = 1;
-//
-//                    Variant variant = new Variant(idVariant,priceVariant, sizeVariant, weightVariant, countVariant);
-//                    variants.add(variant);
-//                }
+                for (int j = 0; j< variantsJson.length(); j++){
+
+                    JSONObject variantJson = variantsJson.getJSONObject(j);
+                    int idVariant = variantJson.getInt("id");
+                    double priceVariant = variantJson.getDouble("price");
+                    String sizeVariant = variantJson.getString("size");
+                    String weightVariant = variantJson.getString("weigth");
+                    int countVariant = 1;
+                    if(variantsJson.length() > 1){
+                        countVariant = 0;
+                    }
+
+                    Variant variant = new Variant(idVariant,priceVariant, sizeVariant, weightVariant, countVariant);
+                    variants.add(variant);
+                }
 
                 Product product = new Product(id, name, icon, description, points, category, variants);
                 prods.add(product);
             } catch (JSONException e) {
                 e.printStackTrace();
-                Log.i(TAG, "initProducts: error");
+                Log.i(TAG, "initProducts: error" + e);
             }
         }
         return prods;
@@ -270,13 +275,30 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson {
 
     private ArrayList<String> initCategories(ArrayList<Product> prods){
         ArrayList<String> categories = new ArrayList<>();
+        String freeFood = null;
         for(int i = 0; i < prods.size(); i++){
             String name = prods.get(i).get_category().get("name");
+            int points = prods.get(i).get_points();
+            if (points > 0){
+                freeFood = "Еда за баллы";
+            }
             if (!categories.contains(name)){
                 categories.add(name);
             }
         }
+        if (freeFood != null){
+            categories.add(0,freeFood);
+        }
         return categories;
     }
 
+    @Override
+    public void updateBasket(int count) {
+        updateCountBasket();
+    }
+
+    @Override
+    public void showAlert(ProductItem product, String slug) {
+
+    }
 }

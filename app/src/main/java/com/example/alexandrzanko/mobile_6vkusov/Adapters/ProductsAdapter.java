@@ -1,9 +1,6 @@
 package com.example.alexandrzanko.mobile_6vkusov.Adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +12,20 @@ import android.widget.TextView;
 
 import com.example.alexandrzanko.mobile_6vkusov.Activities.Restaurant.ProductActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Product;
+import com.example.alexandrzanko.mobile_6vkusov.Models.ProductItem;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Variant;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.example.alexandrzanko.mobile_6vkusov.Singleton;
 import com.example.alexandrzanko.mobile_6vkusov.Users.Basket;
-import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
-import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import com.example.alexandrzanko.mobile_6vkusov.Users.STATUS;
+import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
  * Created by alexandrzanko on 01/12/16.
  */
 
-public class ProductsAdapter extends BaseAdapter implements LoadJson {
+public class ProductsAdapter extends BaseAdapter{
 
     private ArrayList<Product> listData;
     private LayoutInflater layoutInflater;
@@ -40,14 +33,19 @@ public class ProductsAdapter extends BaseAdapter implements LoadJson {
     private Context context;
     private Basket basket;
     private Singleton singleton;
+    private String category;
 
-    public ProductsAdapter(Context context, ArrayList<Product> listData) {
+    private final String TAG = this.getClass().getSimpleName();
+
+
+    public ProductsAdapter(Context context, ArrayList<Product> listData, String category) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.slug = ((ProductActivity)context).getSlug();
         this.singleton = Singleton.currentState();
         this.basket = singleton.getUser().getBasket();
+        this.category = category;
     }
 
     @Override
@@ -80,113 +78,64 @@ public class ProductsAdapter extends BaseAdapter implements LoadJson {
         final Product product = listData.get(position);
         holder.productName.setText(product.get_name());
         holder.productDescription.setText(product.get_description());
+        Picasso.with(context)
+                .load(product.get_icon())
+                .placeholder(R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
+                .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
+                .into(holder.productImg);
 
-        final ArrayList<Variant> variants = product.get_variants();
-        VariantsAdapter adapter = new VariantsAdapter(this.context, variants, holder.variantsListView ,holder.addToBasketButton);
-        holder.variantsListView.setAdapter(adapter);
-        float density = context.getResources().getDisplayMetrics().density;
-        ViewGroup.LayoutParams params = holder.variantsListView.getLayoutParams();
-        params.height = Math.round(50 * density * variants.size());
-        holder.variantsListView.setLayoutParams(params);
+        if (category.equals("Еда за баллы")){
+            if (Singleton.currentState().getUser().getStatus() == STATUS.GENERAL){
+                holder.addToBasketButton.setEnabled(false);
+                holder.addToBasketButton.setBackgroundResource(R.drawable.shape_corner);
+                holder.addToBasketButton.setText("Зарегистрируйтесь");
+            }
+            holder.productDescription.setText(product.get_points() + " баллов");
+            holder.addToBasketButton.setVisibility(View.VISIBLE);
 
+        }else{
+            final ArrayList<Variant> variants = product.get_variants();
+            VariantsAdapter adapter = new VariantsAdapter(this.context, variants,holder.addToBasketButton);
+            if (variants.size() > 1){
+                if (isEmptyVariants(variants)){
+                    holder.addToBasketButton.setVisibility(View.GONE);
+                }else{
+                    holder.addToBasketButton.setVisibility(View.VISIBLE);
+                }
+            }else{
+                holder.addToBasketButton.setVisibility(View.VISIBLE);
+            }
+            holder.variantsListView.setAdapter(adapter);
+            float density = context.getResources().getDisplayMetrics().density;
+            ViewGroup.LayoutParams params = holder.variantsListView.getLayoutParams();
+            params.height = Math.round(50 * density * variants.size());
+            holder.variantsListView.setLayoutParams(params);
+        }
 
         holder.addToBasketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (basket.getSlug() == null){
-//                    basket.setSlug(slug);
-//                    addOrderToBasket(variants, product, holder.variantsListView);
-//                }else{
-//                    if (basket.getSlug().equals(slug)){
-//                        addOrderToBasket(variants, product, holder.variantsListView);
-//                    }else{
-//                        if (basket.getCountProducts() == 0){
-//                            singleton.getStore().getUser().initBasket();
-//                            basket = singleton.getStore().getUser().getBasket();
-//                            basket.setSlug(slug);
-//                            addOrderToBasket(variants, product, holder.variantsListView);
-//                            ((ProductActivity) context).updateCountOrdersMenu();
-//                        }else {
-//                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                            builder.setTitle("Внимание!");
-//                            builder.setMessage("При выборе еды из другого ресторана ваша корзина очистится!");
-//                            builder.setPositiveButton("Продолжить", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int arg1) {
-//                                    singleton.getStore().getUser().initBasket();
-//                                    basket = singleton.getStore().getUser().getBasket();
-//                                    basket.setSlug(slug);
-//                                    addOrderToBasket(variants, product, holder.variantsListView);
-//                                    ((ProductActivity) context).updateCountOrdersMenu();
-//                                }
-//                            });
-//                            builder.setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int arg1) {
-//                                }
-//                            });
-//                            builder.setCancelable(true);
-//                            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//                                public void onCancel(DialogInterface dialog) {
-//                                }
-//                            });
-//
-//                            AlertDialog alert = builder.create();
-//                            alert.show();
-//                        }
-//                    }
-//                }
-                holder.addToBasketButton.setVisibility(View.GONE);
+                for(int i =0; i < product.get_variants().size();i++){
+                    if ( product.get_variants().get(i).get_count() > 0){
+                        ProductItem productItem = new ProductItem(product.get_id(), product.get_name(), product.get_icon(), product.get_description(), product.get_points(), product.get_category(), product.get_variants().get(i));
+                        basket.addProductItem(productItem, slug);
+                    }
+                }
                 ((ProductActivity)context).updateCountOrdersMenu();
             }
         });
+
         return convertView;
     }
 
-    private void addOrderToBasket(ArrayList<Variant> variants, Product product, ListView listView){
-//        JSONArray vars = new JSONArray();
-//        for(int i = 0; i < variants.size(); i++){
-//            int count = getCountProducts(i, listView);
-//            if (count > 0){
-//                Variant variant = variants.get(i);
-//                JSONObject item = new JSONObject();
-//                try {
-//                    item.put("id", variant.getId());
-//                    item.put("count", count);
-//                    vars.put(item);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                basket.addOrder(new Order(product, variants.get(i), count));
-//            }
-//        }
-//        JSONObject params = new JSONObject();
-//        try {
-//
-//            params.put("id", product.getId());
-//            params.put("variants", vars);
-//            params.put("session", singleton.getStore().getUser().get_session());
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(params.toString());
-//        new JsonHelperLoad(BASKET_ADD,params,this,null).execute();
-
-    }
-
-    private int getCountProducts(int position, ListView listView){
-        int count = 0;
-//        View view = listView.getChildAt(position);
-//        TextView tv = (TextView) view.findViewById(R.id.product_count);
-//        if (tv != null){
-//            count = Integer.parseInt(tv.getText().toString());
-//            tv.setText("0");
-//        }
-        return count;
-    }
-
-    @Override
-    public void loadComplete(JSONObject obj, String sessionName) {
-        System.out.println(obj.toString());
+    private boolean isEmptyVariants(ArrayList<Variant> variants){
+        boolean isEmpty = true;
+        for(int i = 0; i<variants.size(); i++ ){
+            if(variants.get(i).get_count() > 0){
+                return false;
+            }
+        }
+        return isEmpty;
     }
 
     static class ViewHolder {

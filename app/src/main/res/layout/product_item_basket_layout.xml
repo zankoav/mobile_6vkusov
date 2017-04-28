@@ -48,6 +48,20 @@
         />
 
     <Button
+        android:id="@+id/product_btn_remove"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:background="@drawable/shape_corner"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:text="x"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        />
+
+    <Button
         android:id="@+id/product_btn_minus"
         android:layout_width="36dp"
         android:layout_height="36dp"

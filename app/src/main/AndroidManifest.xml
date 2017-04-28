@@ -42,7 +42,9 @@
             android:name=".Activities.RestaurantsCardActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Activities.Restaurant.RestaurantActivity" />
-        <activity android:name=".Activities.Restaurant.ProductActivity"></activity>
+        <activity android:name=".Activities.Restaurant.ProductActivity" />
+        <activity android:name=".Activities.BasketActivity" />
+        <activity android:name=".Activities.CheckOutActivity"></activity>
     </application>
 
 </manifest>

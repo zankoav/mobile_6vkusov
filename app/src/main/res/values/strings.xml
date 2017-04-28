@@ -9,6 +9,27 @@
     <string name="categories_title">Категории</string>
     <!--Для CategoriesActivity END-->
 
+    <!--Для CheckOutActivity-->
+    <string name="order_title">Оформление заказа</string>
+    <string name="order_name">Имя</string>
+    <string name="order_phone">Номер телефона</string>
+    <string name="order_street">Улица</string>
+    <string name="order_house">Дом</string>
+    <string name="order_block">Корпус</string>
+    <string name="order_flat">Квартира</string>
+    <string name="order_comment">Место для комментария</string>
+    <string name="order_button">Заказать</string>
+    <!--Для CheckOutActivity END-->
+
+    <!--Для BasketActivity -->
+    <string name="basket">Корзина</string>
+    <string name="basket_clear">Очистить</string>
+    <string name="basket_for_pay">К оплате</string>
+    <string name="basket_many_type">руб.</string>
+    <string name="basket_product_cost">руб. / 1 шт.</string>
+    <string name="basket_button_get_order">Оформить заказ</string>
+    <!--Для BasketActivity END-->
+
     <!--Для RestaurantActivity-->
     <string name="rest_menu">Меню</string>
     <string name="rest_info">Доп.инфо</string>

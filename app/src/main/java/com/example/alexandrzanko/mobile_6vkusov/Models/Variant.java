@@ -10,7 +10,7 @@ public class Variant {
     private double _price;
     private String _size;
     private String _weight;
-    private int _count = 1;
+    private int _count;
 
     public Variant(int _id, double _price, String _size, String _weight, int _count) {
         this._id = _id;
@@ -58,6 +58,16 @@ public class Variant {
 
     public void set_count(int _count) {
         this._count = _count;
+    }
+
+    public void addCount(){
+        _count += 1;
+    }
+
+    public void minusCount(){
+        if (_count > 0){
+            _count -= 1;
+        }
     }
 
     @Override

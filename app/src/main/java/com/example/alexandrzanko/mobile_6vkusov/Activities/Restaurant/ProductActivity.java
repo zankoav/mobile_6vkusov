@@ -1,25 +1,34 @@
 package com.example.alexandrzanko.mobile_6vkusov.Activities.Restaurant;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.alexandrzanko.mobile_6vkusov.Activities.BasketActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Adapters.ProductsAdapter;
 import com.example.alexandrzanko.mobile_6vkusov.Fragments.ProductFragment;
 import com.example.alexandrzanko.mobile_6vkusov.Fragments.ViewPageAdapter;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Product;
+import com.example.alexandrzanko.mobile_6vkusov.Models.ProductItem;
+import com.example.alexandrzanko.mobile_6vkusov.Models.Variant;
 import com.example.alexandrzanko.mobile_6vkusov.R;
+import com.example.alexandrzanko.mobile_6vkusov.Singleton;
+import com.example.alexandrzanko.mobile_6vkusov.Users.Basket;
+import com.example.alexandrzanko.mobile_6vkusov.Users.BasketViewInterface;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 
@@ -28,8 +37,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class ProductActivity extends AppCompatActivity implements LoadJson {
+public class ProductActivity extends AppCompatActivity implements BasketViewInterface {
+
+    private final String TAG = this.getClass().getSimpleName();
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -40,14 +52,13 @@ public class ProductActivity extends AppCompatActivity implements LoadJson {
     private int category;
     private RelativeLayout notificationCount;
     private TextView countProducts;
-    private String[] categories;
+    private ArrayList<String> categories;
     private ArrayList<Product> products;
     private ArrayList<ProductFragment> fragments;
     private ViewPageAdapter adapter;
 
 
     public static final String EXTRA_CATEGORY = "Category";
-    public static final String EXTRA_CATEGORIES = "Categories";
     public static final String EXTRA_SLUG = "Slug";
 
     @Override
@@ -55,28 +66,19 @@ public class ProductActivity extends AppCompatActivity implements LoadJson {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         addToolBarToScreen();
-        products = new ArrayList<>();
         slug = getIntent().getStringExtra(EXTRA_SLUG);
         category = getIntent().getIntExtra(EXTRA_CATEGORY,0);
-        categories = getIntent().getStringArrayExtra(EXTRA_CATEGORIES);
         viewPager = (ViewPager)findViewById(R.id.viewpager_products);
         tabLayout= (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setVisibility(View.GONE);
         fragments = new ArrayList<>();
 
-//        JSONObject params = new JSONObject();
-//        String url = getResources().getString(R.string.api_food);
-//        try {
-//            params.put("slug", slug);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        new JsonHelperLoad(url, params, this, null).execute();
+        products = Singleton.currentState().getStore().currentProducts;
+        categories = initCategories(products);
 
-    }
+        setupViewPager(viewPager);
+        Singleton.currentState().getUser().getBasket().setDelegateContext(this);
 
-    public TextView getNotifCount() {
-        return countProducts;
     }
 
 
@@ -88,18 +90,24 @@ public class ProductActivity extends AppCompatActivity implements LoadJson {
 
     private void setupViewPager(ViewPager viewPager){
         adapter = new ViewPageAdapter(getSupportFragmentManager());
-        for (int i = 0; i < categories.length; i++){
+        for (int i = 0; i < categories.size(); i++){
             ProductFragment fragment = new ProductFragment();
-            fragment.setCategory(categories[i]);
+            fragment.setCategory(categories.get(i));
             ArrayList<Product> prods = new ArrayList<>();
             for(int j = 0; j< products.size(); j++){
-                if(products.get(j).get_category().get("name").equals(categories[i])){
+
+                if (products.get(j).get_points() > 0 && categories.get(i).equals("Еда за баллы")){
+                    prods.add(products.get(j));
+                    continue;
+                }
+
+                if(products.get(j).get_category().get("name").equals(categories.get(i)) && products.get(j).get_points() == 0){
                     prods.add(products.get(j));
                 }
             }
             fragment.setProducts(prods);
             fragments.add(fragment);
-            adapter.addFragment(fragment, categories[i]);
+            adapter.addFragment(fragment, categories.get(i));
         }
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(category);
@@ -149,8 +157,8 @@ public class ProductActivity extends AppCompatActivity implements LoadJson {
         notificationCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(ProductActivity.this, BasketActivity.class);
-//                startActivityForResult(intent,1);
+                Intent intent = new Intent(ProductActivity.this, BasketActivity.class);
+                startActivityForResult(intent,1);
             }
         });
         countProducts = (TextView) notificationCount.findViewById(R.id.notif_count);
@@ -159,7 +167,7 @@ public class ProductActivity extends AppCompatActivity implements LoadJson {
     }
 
     public void updateCountOrdersMenu(){
-        int count = 1;//Singleton.currentUser().getStore().getUser().getBasket().getCountProducts();
+        int count = Singleton.currentState().getUser().getBasket().getTotalCount();
         if (count>0){
             countProducts.setText(count + "");
             countProducts.setVisibility(View.VISIBLE);
@@ -179,22 +187,52 @@ public class ProductActivity extends AppCompatActivity implements LoadJson {
         return super.onOptionsItemSelected(item);
     }
 
+    private ArrayList<String> initCategories(ArrayList<Product> prods){
+        ArrayList<String> categories = new ArrayList<>();
+        String freeFood = null;
+        for(int i = 0; i < prods.size(); i++){
+            String name = prods.get(i).get_category().get("name");
+            int points = prods.get(i).get_points();
+            if (points > 0){
+                freeFood = "Еда за баллы";
+            }
+            if (!categories.contains(name)){
+                categories.add(name);
+            }
+        }
+        if (freeFood != null){
+            categories.add(0,freeFood);
+        }
+        return categories;
+    }
+
     @Override
-    public void loadComplete(JSONObject obj, String sessionName) {
-//        try {
-//            if (obj != null){
-//                if (obj.get("food")!= null ) {
-//                    String urlImgPath = getResources().getString(R.string.api_base) + obj.getString("img_path") + "/";
-//                    JSONArray prods = obj.getJSONArray("food");
-//                    int length = prods.length();
-//                    for (int i = 0; i < length; i++) {
-//                        products.add(new Product(prods.getJSONObject(i), urlImgPath));
-//                    }
-//                }
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        setupViewPager(viewPager);
+    public void updateBasket(int count) {
+        updateCountOrdersMenu();
+    }
+
+    @Override
+    public void showAlert(final ProductItem product,final String slug) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                            builder.setTitle("Внимание!");
+                            builder.setMessage("В Вашей корзине присутствуют товары из другого ресторана. Очистить корзину ?");
+                            builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int arg1) {
+                                    Singleton.currentState().getUser().getBasket().setProductItems(new ArrayList<ProductItem>());
+                                    Singleton.currentState().getUser().getBasket().addProductItem(product, slug);
+                                }
+                            });
+                            builder.setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int arg1) {
+                                }
+                            });
+                            builder.setCancelable(true);
+                            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                public void onCancel(DialogInterface dialog) {
+                                }
+                            });
+
+                            AlertDialog alert = builder.create();
+                            alert.show();
     }
 }

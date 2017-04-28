@@ -14,8 +14,11 @@ import android.widget.TextView;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Comment;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.NetImageCircleView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by alexandrzanko on 08/12/16.
@@ -55,7 +58,7 @@ public class CommentsAdapter extends BaseAdapter {
         holder.timeCreateComment = (TextView) convertView.findViewById(R.id.comment_time);
         holder.textComment       = (TextView) convertView.findViewById(R.id.text_comment);
         holder.likesTitle        = (TextView) convertView.findViewById(R.id.likes_title);
-        holder.userIcon          = (NetImageCircleView) convertView.findViewById(R.id.user_icon);
+        holder.userIcon          = (CircleImageView) convertView.findViewById(R.id.user_icon);
         holder.likeIcon          = (ImageView) convertView.findViewById(R.id.likes_icon);
         convertView.setTag(holder);
         Comment comment = listData.get(position);
@@ -75,18 +78,20 @@ public class CommentsAdapter extends BaseAdapter {
         if(icon != null) {
             holder.likeIcon.setImageDrawable(icon);
         }
-        ///Bitmap img = comment.getBitmap();
-//        holder.userIcon.loadImage(comment.getUrlLogo(), R.drawable.user, R.drawable.user, false);
-//        if(img != null){
-//            holder.userIcon.setImageBitmap(img);
-//        }
+
+        Picasso.with(context)
+                .load(comment.getUrlLogo())
+                .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
+                .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
+                .into(holder.userIcon);
+
         return convertView;
     }
 
 
     static class ViewHolder {
         TextView  userFirstName, timeCreateComment, textComment, likesTitle;
-        NetImageCircleView userIcon;
+        CircleImageView userIcon;
         ImageView likeIcon;
     }
 

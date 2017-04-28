@@ -35,10 +35,6 @@ public class ProductFragment extends Fragment {
     }
 
 
-    public String getCategory() {
-        return category;
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +56,7 @@ public class ProductFragment extends Fragment {
             listView.setNestedScrollingEnabled(true);
         }
         if(products != null){
-            adapter  = new ProductsAdapter(getActivity(),products);
+            adapter  = new ProductsAdapter(getActivity(), products, category);
             listView.setAdapter(adapter);
         }
     }

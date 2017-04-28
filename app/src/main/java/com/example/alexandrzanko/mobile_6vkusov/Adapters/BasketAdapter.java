@@ -10,8 +10,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.alexandrzanko.mobile_6vkusov.Activities.BasketActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Order;
+import com.example.alexandrzanko.mobile_6vkusov.Models.ProductItem;
+import com.example.alexandrzanko.mobile_6vkusov.Models.Variant;
 import com.example.alexandrzanko.mobile_6vkusov.R;
+import com.example.alexandrzanko.mobile_6vkusov.Singleton;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -21,11 +26,11 @@ import java.util.ArrayList;
  */
 
 public class BasketAdapter extends BaseAdapter {
-    private ArrayList<Order> listData;
+    private ArrayList<ProductItem> listData;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public BasketAdapter(Context context, ArrayList<Order> listData) {
+    public BasketAdapter(Context context, ArrayList<ProductItem> listData) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
@@ -58,46 +63,78 @@ public class BasketAdapter extends BaseAdapter {
         holder.countProducts   = (TextView) convertView.findViewById(R.id.product_count);
         holder.btnPlus         = (Button) convertView.findViewById(R.id.product_btn_plus);
         holder.btnMinus        = (Button) convertView.findViewById(R.id.product_btn_minus);
+
+        holder.btnRemove       = (Button) convertView.findViewById(R.id.product_btn_remove);
+
         convertView.setTag(holder);
 
-        final Order order = listData.get(position);
+        final ProductItem productItem = listData.get(position);
 
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int count =  Integer.parseInt(holder.countProducts.getText().toString());
-                count++;
-                holder.countProducts.setText(count + "");
-                order.setCount(count);
-                double price = count * order.getVariant().get_price();
-                holder.productPrice.setText(price + " р.");
+                productItem.addCount();
+                holder.countProducts.setText(productItem.get_count() + "");
+                holder.productPrice.setText(getTotalPriceVariant(productItem) + " р.");
+                ((BasketActivity)context).checkOutUpdateView();
             }
         });
 
         holder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int count =  Integer.parseInt(holder.countProducts.getText().toString());
-                count--;
+                productItem.minusCount();
+                int count = productItem.get_count();
                 if (count > 0) {
                     holder.countProducts.setText(count + "");
-                    order.setCount(count);
-                    double price = count * order.getVariant().get_price();
-                    holder.productPrice.setText(price + " р.");
+                    holder.productPrice.setText(getTotalPriceVariant(productItem) + " р.");
                 }else{
-                    listData.remove(order);
+                    listData.remove(productItem);
                     notifyDataSetChanged();
+                    Singleton.currentState().getUser().getBasket().getDelegateContext().updateBasket(0);
                 }
+                ((BasketActivity)context).checkOutUpdateView();
+
             }
         });
-        double price = order.getCount() * order.getVariant().get_price();
-        holder.productDescription.setText(order.getProduct().get_description());
-        holder.productPrice.setText(price + " р.");
-        holder.productWidth.setText("Вес " + order.getVariant().get_weigth());
-        holder.countProducts.setText(order.getCount() + "");
-        holder.productName.setText( order.getProduct().get_name());
 
+        holder.btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listData.remove(productItem);
+                notifyDataSetChanged();
+                Singleton.currentState().getUser().getBasket().getDelegateContext().updateBasket(0);
+                ((BasketActivity)context).checkOutUpdateView();
+            }
+        });
+
+        holder.productDescription.setText(productItem.get_description());
+        holder.productPrice.setText(getTotalPriceVariant(productItem) + " р.");
+        Variant variant = productItem.get_variant();
+        String weight = variant.get_weigth();
+        String size = variant.get_size();
+        if(!weight.equals("null")){
+            holder.productWidth.setText("Вес " + weight);
+        }
+        if(!size.equals("null")){
+            holder.productWidth.setText(size);
+        }
+        holder.countProducts.setText(productItem.get_count() + "");
+        holder.productName.setText(productItem.get_name());
+        Picasso.with(context)
+                .load(productItem.get_icon())
+                .placeholder(R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
+                .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
+                .into(holder.productImg);
         return convertView;
+    }
+
+    private String getTotalPriceVariant(ProductItem item){
+        int count = item.get_count();
+        double price = item.get_variant().get_price() * count;
+        double pr = (double) Math.round(price * 100);
+        double prD = pr/100;
+        return pr%10 == 0 ? prD + "0" : prD + "";
     }
 
 
@@ -108,7 +145,7 @@ public class BasketAdapter extends BaseAdapter {
         TextView  productDescription;
         ImageView productImg;
         TextView  countProducts;
-        Button    btnPlus, btnMinus;
+        Button    btnPlus, btnMinus, btnRemove;
     }
 
 }

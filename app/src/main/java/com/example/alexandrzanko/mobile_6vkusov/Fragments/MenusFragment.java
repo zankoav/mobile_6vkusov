@@ -36,7 +36,6 @@ public class MenusFragment extends Fragment {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    public static final String EXTRA_CATEGORIES = "Categories";
     public static final String EXTRA_CATEGORY = "Category";
     public static final String EXTRA_SLUG = "Slug";
 
@@ -65,7 +64,6 @@ public class MenusFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         slug = ((RestaurantActivity)this.getActivity()).getRestaurant().get_slug();
 
         listView = (ListView) getView().findViewById(R.id.list1);
@@ -81,9 +79,6 @@ public class MenusFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ProductActivity.class);
                 intent.putExtra(EXTRA_SLUG, slug);
                 intent.putExtra(EXTRA_CATEGORY, position);
-                String[] catArray = new String [categories.size()];
-                categories.toArray(catArray);
-                intent.putExtra(EXTRA_CATEGORIES, catArray);
                 startActivityForResult(intent,1);
             }
         });

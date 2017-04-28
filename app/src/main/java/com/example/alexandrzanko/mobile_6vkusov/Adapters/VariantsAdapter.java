@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.alexandrzanko.mobile_6vkusov.Models.Product;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Variant;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 
@@ -23,13 +24,11 @@ public class VariantsAdapter extends BaseAdapter {
 
     private ArrayList<Variant> listData;
     private LayoutInflater layoutInflater;
-    private ListView listView;
     private Button btn;
 
-    public VariantsAdapter(Context context, ArrayList<Variant> listData, ListView listView, Button btn) {
+    public VariantsAdapter(Context context, ArrayList<Variant> listData, Button btn) {
         this.listData = listData;
         this.layoutInflater = LayoutInflater.from(context);
-        this.listView = listView;
         this.btn = btn;
     }
 
@@ -62,43 +61,46 @@ public class VariantsAdapter extends BaseAdapter {
         convertView.setTag(holder);
 
         final Variant variant = listData.get(position);
-        holder.productCount.setText("0");
+        holder.productCount.setText(variant.get_count() + "");
         String weight = variant.get_weigth();
         String size = variant.get_size();
-        if(weight != "null"){
+        if(!weight.equals("null")){
             holder.productType.setText("Вес " + weight);
         }
-        if(size != "null"){
+        if(!size.equals("null")){
             holder.productType.setText(size);
         }
-        holder.productPrice.setText(variant.get_price() + " р.");
+
+        String price = getTotalPriceVariant(variant);
+        holder.productPrice.setText(price + " р.");
 
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int count = Integer.parseInt(holder.productCount.getText().toString());
-                    count++;
+
+                variant.addCount();
                 btn.setVisibility(View.VISIBLE);
-                holder.productCount.setText(count + "");
-                double price = count * variant.get_price();
+                holder.productCount.setText(variant.get_count() + "");
+                String price = getTotalPriceVariant(variant);
                 holder.productPrice.setText(price + " р.");
+
+
             }
         });
 
         holder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int count = Integer.parseInt(holder.productCount.getText().toString());
-                count--;
-                if(count > 0) {
-                    holder.productCount.setText(count + "");
-                    double price = count * variant.get_price();
+                variant.minusCount();
+                if(variant.get_count() > 0) {
+                    holder.productCount.setText(variant.get_count() + "");
+                    String price = getTotalPriceVariant(variant);
                     holder.productPrice.setText(price + " р.");
                 }else{
-                    holder.productCount.setText("0");
-                    if (getCountListViewProducts() == 0){
+                    holder.productCount.setText(variant.get_count() + "");
+                    if (variant.get_count() == 0){
                         btn.setVisibility(View.GONE);
-                        holder.productPrice.setText(variant.get_price() + " р.");
+                        holder.productPrice.setText(getTotalPriceVariant(variant) + " р.");
                     }
                 }
             }
@@ -106,16 +108,15 @@ public class VariantsAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private int getCountListViewProducts(){
-        int count = 0;
-        for (int i = 0; i < listData.size(); i++){
-            View view = listView.getChildAt(i);
-            TextView tv = (TextView) view.findViewById(R.id.product_count);
-            if (tv != null){
-                count += Integer.parseInt(tv.getText().toString());
-            }
+    private String getTotalPriceVariant(Variant variant){
+        int count = variant.get_count();
+        if (count == 0){
+            count = 1;
         }
-        return count;
+        double price = variant.get_price() * count;
+        double pr = (double) Math.round(price*100);
+        double prD = pr/100;
+        return pr%10 == 0 ? prD + "0" : prD + "";
     }
 
     static class ViewHolder {

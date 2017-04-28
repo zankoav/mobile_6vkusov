@@ -221,10 +221,17 @@ public class LocalStorage implements LoadJson{
                     String slug = rest.getString("slug");
                     String name = rest.getString("name");
                     String logo = rest.getString("logo");
-                    String working_time = rest.getString("working_time");
-                    double minimal_price = rest.getDouble("minimal_price");
-                    String delivery_time = rest.getString("delivery_time");
-
+                    String working_time = "";
+                    double minimal_price = 0;
+                    String delivery_time = "";
+                    try {
+                        working_time = rest.getString("working_time");
+                        minimal_price = rest.getDouble("minimal_price");
+                        delivery_time = rest.getString("delivery_time");
+                    }catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.i(TAG, "for: error = " + e);
+                    }
                     JSONArray kitchensJson = rest.getJSONArray("categories_slugs");
                     ArrayList<String> categories_slugs = new ArrayList<>();
                     for(int j = 0; j < kitchensJson.length(); j++){
@@ -236,16 +243,31 @@ public class LocalStorage implements LoadJson{
                     comments.put("likes",commentsJson.getInt("likes"));
                     comments.put("dislikes",commentsJson.getInt("dislikes"));
 
-                    JSONObject about = rest.getJSONObject("about");
-                    String kitchens = about.getString("kitchens");
+                    JSONObject about = null;
+                    String kitchens = null;
+                    JSONObject infoJson = null;
+                    String descriptionInfo = null;
+                    String addressInfo = null;
+                    String nameInfo = null;
+                    String unpInfo = null;
+                    String deliveryDescriptionInfo = null;
+                    String commercialRegisterInfo = null;
 
-                    JSONObject infoJson = about.getJSONObject("info");
-                    String descriptionInfo = infoJson.getString("description");
-                    String addressInfo = infoJson.getString("address");
-                    String nameInfo = infoJson.getString("name");
-                    String unpInfo = infoJson.getString("unp");
-                    String deliveryDescriptionInfo = infoJson.getString("delivery_description");
-                    String commercialRegisterInfo = infoJson.getString("commercial_register");
+                    try {
+                        about = rest.getJSONObject("about");
+                        kitchens = about.getString("kitchens");
+                        infoJson = about.getJSONObject("info");
+                        descriptionInfo = infoJson.getString("description");
+                        addressInfo = infoJson.getString("address");
+                        nameInfo = infoJson.getString("name");
+                        unpInfo = infoJson.getString("unp");
+                        deliveryDescriptionInfo = infoJson.getString("delivery_description");
+                        commercialRegisterInfo = infoJson.getString("commercial_register");
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                        Log.i(TAG, "getAllRestaurants: for" + e);
+                    }
+
 
                     InfoRestaurant info = new InfoRestaurant(descriptionInfo, addressInfo, nameInfo, unpInfo, deliveryDescriptionInfo, commercialRegisterInfo);
 
@@ -255,6 +277,7 @@ public class LocalStorage implements LoadJson{
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.i(TAG, "getAllRestaurants: error = " + e);
         }
         return restaurants;
     }
