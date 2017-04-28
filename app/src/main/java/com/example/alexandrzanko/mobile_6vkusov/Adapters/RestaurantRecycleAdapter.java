@@ -216,7 +216,7 @@ public class RestaurantRecycleAdapter extends RecyclerView.Adapter<RestaurantRec
                     public void onClick(View v) {
                         int position = getAdapterPosition();
                         Intent intent = new Intent(context, RestaurantActivity.class);
-                        intent.putExtra(RestaurantsActivity.EXTRA_RESTAURANT, restaurants.get(position).get_slug());
+                        intent.putExtra(RestaurantsCardActivity.EXTRA_RESTAURANT, restaurants.get(position).get_slug());
                         context.startActivity(intent);
                     }
                 });

@@ -74,6 +74,7 @@ public class BasketAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 productItem.addCount();
+                Singleton.currentState().getUser().getBasket().addProductItemOneRegister(productItem);
                 holder.countProducts.setText(productItem.get_count() + "");
                 holder.productPrice.setText(getTotalPriceVariant(productItem) + " р.");
                 ((BasketActivity)context).checkOutUpdateView();
@@ -88,8 +89,10 @@ public class BasketAdapter extends BaseAdapter {
                 if (count > 0) {
                     holder.countProducts.setText(count + "");
                     holder.productPrice.setText(getTotalPriceVariant(productItem) + " р.");
+                    Singleton.currentState().getUser().getBasket().minusProductItem(productItem);
                 }else{
                     listData.remove(productItem);
+                    Singleton.currentState().getUser().getBasket().removeProductItem(productItem);
                     notifyDataSetChanged();
                     Singleton.currentState().getUser().getBasket().getDelegateContext().updateBasket(0);
                 }
@@ -102,13 +105,21 @@ public class BasketAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 listData.remove(productItem);
+                Singleton.currentState().getUser().getBasket().removeProductItem(productItem);
                 notifyDataSetChanged();
                 Singleton.currentState().getUser().getBasket().getDelegateContext().updateBasket(0);
                 ((BasketActivity)context).checkOutUpdateView();
             }
         });
 
-        holder.productDescription.setText(productItem.get_description());
+        if(productItem.get_points() > 0){
+            holder.productDescription.setText(productItem.get_points() + " баллов");
+            holder.btnPlus.setVisibility(View.GONE);
+            holder.btnMinus.setVisibility(View.GONE);
+            holder.countProducts.setVisibility(View.GONE);
+        }else{
+            holder.productDescription.setText(productItem.get_description());
+        }
         holder.productPrice.setText(getTotalPriceVariant(productItem) + " р.");
         Variant variant = productItem.get_variant();
         String weight = variant.get_weigth();

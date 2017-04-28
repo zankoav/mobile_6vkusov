@@ -44,7 +44,9 @@
         <activity android:name=".Activities.Restaurant.RestaurantActivity" />
         <activity android:name=".Activities.Restaurant.ProductActivity" />
         <activity android:name=".Activities.BasketActivity" />
-        <activity android:name=".Activities.CheckOutActivity"></activity>
+        <activity android:name=".Activities.CheckOutActivity"
+            android:parentActivityName=".Activities.Restaurant.RestaurantActivity"
+            ></activity>
     </application>
 
 </manifest>

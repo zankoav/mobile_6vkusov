@@ -39,6 +39,11 @@ public class LocalStorage implements LoadJson{
     public final String APP_PROFILE = "profile";
 
     private SharedPreferences store;
+
+    public Context getContext() {
+        return context;
+    }
+
     private Context context;
 
     public LocalStorage(Context context){

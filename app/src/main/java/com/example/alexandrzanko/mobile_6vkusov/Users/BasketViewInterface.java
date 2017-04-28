@@ -10,4 +10,6 @@ import com.example.alexandrzanko.mobile_6vkusov.Models.ProductItem;
 public interface BasketViewInterface {
     void updateBasket(int count);
     void showAlert(ProductItem product, String slug);
+    void showAlertNewOrder(Product product, String slug);
+
 }

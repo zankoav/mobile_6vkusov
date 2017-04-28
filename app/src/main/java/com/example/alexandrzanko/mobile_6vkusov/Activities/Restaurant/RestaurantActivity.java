@@ -85,6 +85,12 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Singleton.currentState().getUser().getBasket().initBasketFromRegisterUser();
+    }
+
     private void loadHeaderRestaurant() {
         workingTime = (TextView)findViewById(R.id.rest_working_time_text);
         workingTime.setText(restaurant.get_working_time());
@@ -160,6 +166,9 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
         notificationCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Singleton.currentState().getUser().getBasket().getTotalCount() == 0){
+                    return;
+                }
                 Intent intent = new Intent(RestaurantActivity.this, BasketActivity.class);
                 startActivityForResult(intent,1);
             }
@@ -299,6 +308,11 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
 
     @Override
     public void showAlert(ProductItem product, String slug) {
+
+    }
+
+    @Override
+    public void showAlertNewOrder(Product product, String slug) {
 
     }
 }

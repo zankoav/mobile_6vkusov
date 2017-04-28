@@ -81,6 +81,11 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Singleton.currentState().getUser().getBasket().initBasketFromRegisterUser();
+    }
 
     public String getSlug() {
         return slug;
@@ -157,6 +162,9 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
         notificationCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Singleton.currentState().getUser().getBasket().getTotalCount() == 0){
+                    return;
+                }
                 Intent intent = new Intent(ProductActivity.this, BasketActivity.class);
                 startActivityForResult(intent,1);
             }
@@ -219,6 +227,7 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
                             builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int arg1) {
                                     Singleton.currentState().getUser().getBasket().setProductItems(new ArrayList<ProductItem>());
+                                    Singleton.currentState().getUser().getBasket().setFreeFoodExist(false);
                                     Singleton.currentState().getUser().getBasket().addProductItem(product, slug);
                                 }
                             });
@@ -234,5 +243,31 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
 
                             AlertDialog alert = builder.create();
                             alert.show();
+    }
+
+    @Override
+    public void showAlertNewOrder(final Product product, final String slug) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Внимание!");
+        builder.setMessage("В Вашей корзине присутствуют товары из другого ресторана. Очистить корзину ?");
+        builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                Singleton.currentState().getUser().getBasket().setProductItems(new ArrayList<ProductItem>());
+                Singleton.currentState().getUser().getBasket().setFreeFoodExist(false);
+                Singleton.currentState().getUser().getBasket().resetRegisterBasket(product, slug);
+            }
+        });
+        builder.setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+            }
+        });
+        builder.setCancelable(true);
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.alexandrzanko.mobile_6vkusov.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,10 +90,20 @@ public class ProductsAdapter extends BaseAdapter{
                 holder.addToBasketButton.setEnabled(false);
                 holder.addToBasketButton.setBackgroundResource(R.drawable.shape_corner);
                 holder.addToBasketButton.setText("Зарегистрируйтесь");
+            }else{
+                int points = Singleton.currentState().getUser().getPoints();
+                if (Singleton.currentState().getUser().getBasket().isFreeFoodExist()){
+                    holder.addToBasketButton.setEnabled(false);
+                    holder.addToBasketButton.setBackgroundResource(R.drawable.shape_corner);
+                }
+                if (points < product.get_points()){
+                    holder.addToBasketButton.setEnabled(false);
+                    holder.addToBasketButton.setBackgroundResource(R.drawable.shape_corner);
+                    holder.addToBasketButton.setText("не достаточно баллов");
+                }
             }
             holder.productDescription.setText(product.get_points() + " баллов");
             holder.addToBasketButton.setVisibility(View.VISIBLE);
-
         }else{
             final ArrayList<Variant> variants = product.get_variants();
             VariantsAdapter adapter = new VariantsAdapter(this.context, variants,holder.addToBasketButton);
@@ -115,13 +126,23 @@ public class ProductsAdapter extends BaseAdapter{
         holder.addToBasketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int i =0; i < product.get_variants().size();i++){
-                    if ( product.get_variants().get(i).get_count() > 0){
-                        ProductItem productItem = new ProductItem(product.get_id(), product.get_name(), product.get_icon(), product.get_description(), product.get_points(), product.get_category(), product.get_variants().get(i));
-                        basket.addProductItem(productItem, slug);
+                if (Singleton.currentState().getUser().getStatus() == STATUS.REGISTER){
+
+                    basket.addProductItemRegister(product,slug);
+                    if (Singleton.currentState().getUser().getBasket().isFreeFoodExist()){
+                        notifyDataSetChanged();
                     }
+
+                }else{
+                    for(int i =0; i < product.get_variants().size();i++){
+                        if ( product.get_variants().get(i).get_count() > 0){
+                            ProductItem productItem = new ProductItem(product.get_id(), product.get_name(), product.get_icon(), product.get_description(), product.get_points(), product.get_category(), product.get_variants().get(i));
+                            basket.addProductItem(productItem, slug);
+                        }
+                    }
+                    ((ProductActivity)context).updateCountOrdersMenu();
                 }
-                ((ProductActivity)context).updateCountOrdersMenu();
+
             }
         });
 
