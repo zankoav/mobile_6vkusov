@@ -15,13 +15,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity;
-import com.example.alexandrzanko.mobile_6vkusov.Activities.Trash.RestaurantsActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Models.ProductItem;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.example.alexandrzanko.mobile_6vkusov.Singleton;

@@ -1,18 +1,26 @@
 package com.example.alexandrzanko.mobile_6vkusov.Activities;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.support.design.widget.AppBarLayout;
-import android.support.v7.app.ActionBar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.alexandrzanko.mobile_6vkusov.Fragments.GetPointsFragment;
+import com.example.alexandrzanko.mobile_6vkusov.Fragments.OrderFragment;
+import com.example.alexandrzanko.mobile_6vkusov.Fragments.ProfileFragment;
+import com.example.alexandrzanko.mobile_6vkusov.Fragments.SettingsFragment;
+import com.example.alexandrzanko.mobile_6vkusov.Fragments.ViewPageAdapter;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.example.alexandrzanko.mobile_6vkusov.Singleton;
 import com.squareup.picasso.Picasso;
@@ -36,6 +44,15 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
     private TextView mTitle, mNameUser, subTitle, bonusCount;
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+
+    private ProfileFragment profileFragment;
+    private OrderFragment orderFragment;
+    private GetPointsFragment getPointsFragment;
+    private SettingsFragment settingsFragment;
+
+
     private CircleImageView circleImageView;
 
     private final String TAG = this.getClass().getSimpleName();
@@ -58,6 +75,13 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
                 }
 
         );
+
+        viewPager = (ViewPager)findViewById(R.id.viewpager);
+        tabLayout= (TabLayout)findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
+
+        setupViewPager(viewPager);
+
         JSONObject profile = singleton.getUser().getProfile();
         try {
             String name = profile.getString("firstName");
@@ -77,25 +101,32 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
             e.printStackTrace();
         }
 
+
     }
 
-//    private void addToolBarToScreen() {
-//        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-//        toolbar.setTitle(R.string.profile_title);
-//        toolbar.setTitleTextColor(Color.WHITE);
-//        toolbar.setSubtitleTextColor(Color.WHITE);
-//        setSupportActionBar(toolbar);
-//        toolbar.setNavigationOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        finish();
-//                    }
-//                }
-//        );
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-//    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // TODO Auto-generated method stub
+        InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        return super.onTouchEvent(event);
+    }
+
+    private void setupViewPager(ViewPager viewPager){
+        ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
+
+        profileFragment = new ProfileFragment();
+        orderFragment = new OrderFragment();
+        getPointsFragment = new GetPointsFragment();
+        settingsFragment = new SettingsFragment();
+
+        adapter.addFragment(profileFragment, "Предложения");
+        adapter.addFragment(orderFragment, "Заказы");
+        adapter.addFragment(getPointsFragment, "Получить бонусы");
+        adapter.addFragment(settingsFragment, "Настройки");
+
+        viewPager.setAdapter(adapter);
+    }
 
     private void bindActivity() {
         mToolbar        = (Toolbar) findViewById(R.id.main_toolbar);
@@ -118,7 +149,13 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
     public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
         int maxScroll = appBarLayout.getTotalScrollRange();
         float percentage = (float) Math.abs(offset) / (float) maxScroll;
-
+        if (offset > 0 || (offset + maxScroll) > 0) {
+            AppBarLayout.LayoutParams layoutParams = new AppBarLayout.LayoutParams(
+                    AppBarLayout.LayoutParams.MATCH_PARENT, AppBarLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, percentage < 0.77 ? 0 : 100, 0, 0);
+            tabLayout.setLayoutParams(layoutParams);
+        }
+        Log.i(TAG, "onOffsetChanged: ");
         handleAlphaOnTitle(percentage);
         handleToolbarTitleVisibility(percentage);
     }

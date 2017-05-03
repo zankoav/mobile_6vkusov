@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/call_friend"
+        android:text="Приглосить друга"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:textColor="@color/colorWhite"/>
+
+    <LinearLayout
+        android:id="@+id/get_friend"
+        android:layout_below="@+id/call_friend"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="16dp"
+        android:weightSum="6">
+
+        <EditText
+            android:layout_weight="3"
+            android:id="@+id/et_email"
+            android:hint="@string/login_email"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorGray"
+            android:ems="10"
+            android:textSize="14sp"
+            android:padding="5dp"
+            android:background="@drawable/apptheme_textfield_activated_holo_light"
+            android:textCursorDrawable="@null" />
+
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttons_style"
+            android:text="Приглосить"
+            android:layout_weight="3" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

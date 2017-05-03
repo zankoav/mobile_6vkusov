@@ -1,7 +1,6 @@
 package com.example.alexandrzanko.mobile_6vkusov.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.alexandrzanko.mobile_6vkusov.Activities.Restaurant.ProductActivity;
+import com.example.alexandrzanko.mobile_6vkusov.Fragments.ProductFragment;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Product;
 import com.example.alexandrzanko.mobile_6vkusov.Models.ProductItem;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Variant;
@@ -32,6 +32,7 @@ public class ProductsAdapter extends BaseAdapter{
     private LayoutInflater layoutInflater;
     private final String slug;
     private Context context;
+    private ProductFragment fragment;
     private Basket basket;
     private Singleton singleton;
     private String category;
@@ -39,10 +40,11 @@ public class ProductsAdapter extends BaseAdapter{
     private final String TAG = this.getClass().getSimpleName();
 
 
-    public ProductsAdapter(Context context, ArrayList<Product> listData, String category) {
+    public ProductsAdapter(Context context, ArrayList<Product> listData, String category, ProductFragment fragment) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
+        this.fragment = fragment;
         this.slug = ((ProductActivity)context).getSlug();
         this.singleton = Singleton.currentState();
         this.basket = singleton.getUser().getBasket();
@@ -79,11 +81,13 @@ public class ProductsAdapter extends BaseAdapter{
         final Product product = listData.get(position);
         holder.productName.setText(product.get_name());
         holder.productDescription.setText(product.get_description());
-        Picasso.with(context)
-                .load(product.get_icon())
-                .placeholder(R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
-                .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
-                .into(holder.productImg);
+        if (this.fragment.isVisible()){
+            Picasso.with(context)
+                    .load(product.get_icon())
+                    .placeholder(R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
+                    .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
+                    .into(holder.productImg);
+        }
 
         if (category.equals("Еда за баллы")){
             if (Singleton.currentState().getUser().getStatus() == STATUS.GENERAL){

@@ -56,7 +56,7 @@ public class ProductFragment extends Fragment {
             listView.setNestedScrollingEnabled(true);
         }
         if(products != null){
-            adapter  = new ProductsAdapter(getActivity(), products, category);
+            adapter  = new ProductsAdapter(getActivity(), products, category, this);
             listView.setAdapter(adapter);
         }
     }
