@@ -41,4 +41,6 @@ public class ViewPageAdapter extends FragmentStatePagerAdapter {
             mFragmentTitleList.add(title);
             mFragmentList.add(fragment);
     }
+
+
 }

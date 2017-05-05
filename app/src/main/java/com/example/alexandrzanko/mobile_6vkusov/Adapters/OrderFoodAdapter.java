@@ -46,11 +46,11 @@ public class OrderFoodAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         final OrderFoodAdapter.ViewHolder holder;
-        convertView = layoutInflater.inflate(R.layout.product_variant_item_layout, null);
+        convertView = layoutInflater.inflate(R.layout.food_variant_item_layout, null);
         holder = new OrderFoodAdapter.ViewHolder();
         convertView.setBackgroundColor(Color.WHITE);
-        holder.productName = (TextView) convertView.findViewById(R.id.product_price);
-        holder.productCount = (TextView) convertView.findViewById(R.id.product_count);
+        holder.productName = (TextView) convertView.findViewById(R.id.name);
+        holder.productCount = (TextView) convertView.findViewById(R.id.count);
 
         convertView.setTag(holder);
 

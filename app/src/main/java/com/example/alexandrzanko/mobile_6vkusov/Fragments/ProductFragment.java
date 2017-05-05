@@ -4,11 +4,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.alexandrzanko.mobile_6vkusov.Activities.Restaurant.ProductActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Adapters.ProductsAdapter;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Product;
 import com.example.alexandrzanko.mobile_6vkusov.R;
@@ -20,10 +23,18 @@ import java.util.ArrayList;
 
 public class ProductFragment extends Fragment {
 
+
+    private final String TAG = this.getClass().getSimpleName();
+
     private ArrayList<Product> products;
     private String category;
     private ProductsAdapter adapter;
     private ListView listView;
+    private int position;
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public ProductsAdapter getAdapter() {
         return adapter;
@@ -55,8 +66,9 @@ public class ProductFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             listView.setNestedScrollingEnabled(true);
         }
+
         if(products != null){
-            adapter  = new ProductsAdapter(getActivity(), products, category, this);
+            adapter = new ProductsAdapter(getActivity(), products, category, this);
             listView.setAdapter(adapter);
         }
     }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.LoginActivity;
 import com.example.alexandrzanko.mobile_6vkusov.LocalStorage;
+import com.example.alexandrzanko.mobile_6vkusov.Models.Category;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.example.alexandrzanko.mobile_6vkusov.Singleton;
 import com.example.alexandrzanko.mobile_6vkusov.Users.STATUS;
@@ -117,5 +118,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void favoriteRestaurants(View view) {
         Log.i(TAG, "favoriteRestaurants");
+        Intent intent = new Intent(MainActivity.this, RestaurantsCardActivity.class);
+        intent.putExtra("favorite", true);
+        startActivity(intent);
+
     }
 }

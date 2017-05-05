@@ -1,6 +1,7 @@
 package com.example.alexandrzanko.mobile_6vkusov.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,13 +82,12 @@ public class ProductsAdapter extends BaseAdapter{
         final Product product = listData.get(position);
         holder.productName.setText(product.get_name());
         holder.productDescription.setText(product.get_description());
-        if (this.fragment.isVisible()){
-            Picasso.with(context)
+
+        Picasso.with(context)
                     .load(product.get_icon())
                     .placeholder(R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
                     .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
                     .into(holder.productImg);
-        }
 
         if (category.equals("Еда за баллы")){
             if (Singleton.currentState().getUser().getStatus() == STATUS.GENERAL){

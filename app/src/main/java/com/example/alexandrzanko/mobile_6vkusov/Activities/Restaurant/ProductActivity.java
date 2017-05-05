@@ -45,7 +45,7 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    public ViewPager viewPager;
 
     private String slug;
 
@@ -55,7 +55,7 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
     private ArrayList<String> categories;
     private ArrayList<Product> products;
     private ArrayList<ProductFragment> fragments;
-    private ViewPageAdapter adapter;
+    public ViewPageAdapter adapter;
 
 
     public static final String EXTRA_CATEGORY = "Category";
@@ -78,7 +78,6 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
 
         setupViewPager(viewPager);
         Singleton.currentState().getUser().getBasket().setDelegateContext(this);
-
     }
 
     @Override
@@ -91,13 +90,12 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
         return slug;
     }
 
-
-
     private void setupViewPager(ViewPager viewPager){
         adapter = new ViewPageAdapter(getSupportFragmentManager());
         for (int i = 0; i < categories.size(); i++){
             ProductFragment fragment = new ProductFragment();
             fragment.setCategory(categories.get(i));
+            fragment.setPosition(i);
             ArrayList<Product> prods = new ArrayList<>();
             for(int j = 0; j< products.size(); j++){
 

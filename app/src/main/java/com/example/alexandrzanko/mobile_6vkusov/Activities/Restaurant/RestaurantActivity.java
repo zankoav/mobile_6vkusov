@@ -2,6 +2,7 @@ package com.example.alexandrzanko.mobile_6vkusov.Activities.Restaurant;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ import com.example.alexandrzanko.mobile_6vkusov.Models.Variant;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.example.alexandrzanko.mobile_6vkusov.Singleton;
 import com.example.alexandrzanko.mobile_6vkusov.Users.BasketViewInterface;
+import com.example.alexandrzanko.mobile_6vkusov.Users.STATUS;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 import com.squareup.picasso.Picasso;
@@ -57,8 +60,10 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
 
     private TextView workingTime, nameRest, kitchenType, minDeliveryPrice, deliveryTime, deliveryPrice, commentsLike,commentsDislike;
     private ImageView imgView;
+    private Button favorite;
     private RelativeLayout notificationCount;
     private ArrayList<String> categories;
+    private boolean isFavorite = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,14 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
         singleton.getUser().getBasket().setDelegateContext(this);
         String slug = getIntent().getStringExtra(RestaurantsActivity.EXTRA_RESTAURANT);
         this.restaurant = singleton.getStore().getRestaurantBySlug(slug);
+        favorite = (Button)findViewById(R.id.favorite);
+        if (Singleton.currentState().getUser().getStatus() == STATUS.GENERAL){
+            if (Singleton.currentState().getStore().isFavoriteSlug(slug)){
+                favorite.setBackgroundResource(R.drawable.ic_favorite_full);
+            }else{
+                favorite.setBackgroundResource(R.drawable.ic_favorite);
+            }
+        }
         loadHeaderRestaurant();
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         tabLayout= (TabLayout)findViewById(R.id.tablayout);
@@ -77,12 +90,14 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
         JSONObject params = new JSONObject();
         try {
             params.put("slug", slug);
+            if (Singleton.currentState().getUser().getStatus() == STATUS.REGISTER){
+                params.put("session", Singleton.currentState().getUser().getProfile().getString("session"));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         String url = this.getResources().getString(R.string.api_food);
         new JsonHelperLoad(url, params, this, getResources().getString(R.string.api_food)).execute();
-
     }
 
     @Override
@@ -216,16 +231,28 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
 
     @Override
     public void loadComplete(JSONObject obj, String sessionName) {
+        Log.i(TAG, "loadComplete: obj = " + obj.toString());
         if (obj != null){
             try {
-                Log.i(TAG, "loadComplete: " + obj.toString());
                 String status = obj.getString("status");
                 if (status.equals("successful")){
-                    String img_path = obj.getString("img_path");
-                    JSONArray prod = obj.getJSONArray("food");
-                    Singleton.currentState().getStore().currentProducts = initProducts(prod,img_path);
-                    categories = initCategories(Singleton.currentState().getStore().currentProducts);
-                    setupViewPager(viewPager);
+                    if (sessionName.equals("favorite")){
+                        Log.i(TAG, "loadComplete: favorite");
+                    }else{
+                        String img_path = obj.getString("img_path");
+                        JSONArray prod = obj.getJSONArray("food");
+                        if(Singleton.currentState().getUser().getStatus() != STATUS.GENERAL){
+                            isFavorite = obj.getBoolean("isFavorite");
+                            if (isFavorite){
+                                favorite.setBackgroundResource(R.drawable.ic_favorite_full);
+                            }else{
+                                favorite.setBackgroundResource(R.drawable.ic_favorite);
+                            }
+                        }
+                        Singleton.currentState().getStore().currentProducts = initProducts(prod,img_path);
+                        categories = initCategories(Singleton.currentState().getStore().currentProducts);
+                        setupViewPager(viewPager);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -314,5 +341,37 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
     @Override
     public void showAlertNewOrder(Product product, String slug) {
 
+    }
+
+    public void favoriteSend(View view) {
+        if (Singleton.currentState().getUser().getStatus() == STATUS.GENERAL){
+            String slug = restaurant.get_slug();
+            if (Singleton.currentState().getStore().isFavoriteSlug(slug)){
+                Log.i(TAG, "favoriteSend: remove " + slug);
+                Singleton.currentState().getStore().removeFavoriteSlug(slug);
+                favorite.setBackgroundResource(R.drawable.ic_favorite);
+            }else{
+                Log.i(TAG, "favoriteSend: add " + slug);
+                Singleton.currentState().getStore().addFavoriteSlug(slug);
+                favorite.setBackgroundResource(R.drawable.ic_favorite_full);
+            }
+        }else{
+            if (isFavorite){
+                favorite.setBackgroundResource(R.drawable.ic_favorite);
+            }else{
+                favorite.setBackgroundResource(R.drawable.ic_favorite_full);
+            }
+            isFavorite = !isFavorite;
+            String url = getResources().getString(R.string.api_favourite);
+
+            JSONObject params = new JSONObject();
+            try {
+                params.put("session", Singleton.currentState().getUser().getProfile().getString("session"));
+                params.put("slug", restaurant.get_slug());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            (new JsonHelperLoad(url, params, this, "favorite")).execute();
+        }
     }
 }

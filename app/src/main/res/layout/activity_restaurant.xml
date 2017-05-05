@@ -36,6 +36,7 @@
                     android:layout_width="match_parent"
                     app:layout_scrollFlags="scroll|snap"
                     android:layout_height="match_parent"
+                    android:background="@drawable/ic_background"
                     android:padding="16dp">
 
                     <ImageView
@@ -59,6 +60,8 @@
                         android:id="@+id/rest_kitchen_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+
                         android:layout_centerHorizontal="true"
                         android:textAlignment="center"
                         android:layout_below="@+id/rest_name"
@@ -68,6 +71,8 @@
                         android:id="@+id/rest_order_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+
                         android:layout_centerHorizontal="true"
                         android:textAlignment="center"
                         android:layout_below="@+id/rest_kitchen_type"
@@ -76,6 +81,8 @@
                     <TextView
                         android:id="@+id/rest_working_time_title"
                         android:layout_width="wrap_content"
+                        android:textColor="@color/colorWhite"
+
                         android:layout_height="wrap_content"
                         android:textSize="11dp"
                         android:text="@string/rest_working_time"/>
@@ -83,15 +90,16 @@
                     <TextView
                         android:id="@+id/rest_working_time_text"
                         android:layout_width="wrap_content"
+                        android:textColor="@color/colorWhite"
                         android:layout_height="wrap_content"
                         android:textSize="11dp"
                         android:layout_below="@+id/rest_working_time_title" />
-
 
                     <TextView
                         android:id="@+id/rest_delivery_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
                         android:textStyle="bold"
                         android:layout_marginLeft="4dp"
                         android:layout_alignParentBottom="true"
@@ -101,6 +109,7 @@
                     <TextView
                         android:id="@+id/rest_delivery_time_title"
                         android:layout_width="wrap_content"
+                        android:textColor="@color/colorWhite"
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@+id/rest_delivery_time"
                         android:layout_alignTop="@+id/rest_delivery_time"
@@ -110,6 +119,7 @@
                     <TextView
                         android:id="@+id/rest_delivery_price"
                         android:layout_width="wrap_content"
+                        android:textColor="@color/colorWhite"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:layout_marginLeft="4dp"
@@ -125,6 +135,7 @@
                         android:layout_toLeftOf="@+id/rest_delivery_price"
                         android:layout_alignTop="@+id/rest_delivery_price"
                         android:textSize="11dp"
+                        android:textColor="@color/colorWhite"
                         android:text="@string/rest_delivery_price"/>
 
                     <ImageView
@@ -150,6 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="11sp"
+                        android:textColor="@color/colorWhite"
                         android:textStyle="bold"
                         android:text="7"
                         android:layout_margin="4dp"
@@ -167,6 +179,7 @@
                         android:id="@+id/restaurant_likes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
                         android:textSize="11sp"
                         android:textStyle="bold"
                         android:layout_margin="4dp"
@@ -180,6 +193,15 @@
                         android:src="@drawable/ic_thumbs_up"
                         android:scaleType="centerCrop"
                         android:layout_toLeftOf="@+id/restaurant_likes" />
+
+                    <Button
+                        android:id="@+id/favorite"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/ic_favorite"
+                        android:onClick="favoriteSend"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
 
                 </RelativeLayout>
             </FrameLayout>

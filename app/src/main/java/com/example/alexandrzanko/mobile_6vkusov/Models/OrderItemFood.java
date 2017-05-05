@@ -9,6 +9,10 @@ public class OrderItemFood {
     private int count;
     private String name;
 
+    public OrderItemFood(int count, String name) {
+        this.count = count;
+        this.name = name;
+    }
 
     public int getCount() {
         return count;

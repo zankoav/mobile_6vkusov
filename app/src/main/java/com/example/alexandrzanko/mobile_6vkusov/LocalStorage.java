@@ -37,6 +37,8 @@ public class LocalStorage implements LoadJson{
     public final String APP_CATEGORIES = "categories";
     public final String APP_RESTAURANTS = "restaurants";
     public final String APP_PROFILE = "profile";
+    public final String APP_FAVORITE_SLUGS = "favorite";
+
 
     private SharedPreferences store;
 
@@ -300,5 +302,77 @@ public class LocalStorage implements LoadJson{
         }
 
         return restaurants;
+    }
+
+    public ArrayList<String> getAllSlugs(){
+        String restSTR = getStringValueStorage(APP_FAVORITE_SLUGS);
+        Log.i(TAG, "getAllSlugs: " + restSTR);
+        ArrayList<String> slugs = new ArrayList<>();
+        if (restSTR != null){
+            JSONArray slugsJson = null;
+            try {
+                slugsJson = new JSONArray(restSTR);
+                for(int i =0; i< slugsJson.length(); i++){
+                    slugs.add(slugsJson.getString(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return slugs;
+    }
+
+    public ArrayList<Restaurant> getFavoriteRestaurants(ArrayList<String> slugs){
+        ArrayList<Restaurant>  rests = new ArrayList<>();
+        ArrayList<Restaurant> restaurants = getRestaurants("all");
+        for(int i = 0; i < restaurants.size(); i++) {
+            if(slugs.contains(restaurants.get(i).get_slug())){
+                rests.add(restaurants.get(i));
+            }
+        }
+        return rests;
+    }
+
+    public void addFavoriteSlug(String slug){
+        String restSTR = getStringValueStorage(APP_FAVORITE_SLUGS);
+        if (restSTR != null){
+            JSONArray slugsJson = null;
+            try {
+                slugsJson = new JSONArray(restSTR);
+                slugsJson.put(slug);
+                setStringValueStorage(APP_FAVORITE_SLUGS,slugsJson.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else{
+            JSONArray slugsJson = new JSONArray();
+            slugsJson.put(slug);
+            setStringValueStorage(APP_FAVORITE_SLUGS,slugsJson.toString());
+        }
+    }
+
+    public void removeFavoriteSlug(String slug){
+        String restSTR = getStringValueStorage(APP_FAVORITE_SLUGS);
+        if (restSTR != null){
+            JSONArray slugsJson = null;
+            try {
+                slugsJson = new JSONArray(restSTR);
+                JSONArray slugsJsonNew = new JSONArray();
+                for(int i = 0; i < slugsJson.length(); i++){
+                    if (slugsJson.getString(i).equals(slug)){
+                        continue;
+                    }
+                    slugsJsonNew.put(slugsJson.getString(i));
+                }
+                setStringValueStorage(APP_FAVORITE_SLUGS,slugsJsonNew.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public boolean isFavoriteSlug(String slug){
+        ArrayList<String> slugs = getAllSlugs();
+        return slugs.contains(slug);
     }
 }

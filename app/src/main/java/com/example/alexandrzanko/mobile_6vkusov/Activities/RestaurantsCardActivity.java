@@ -1,10 +1,13 @@
 package com.example.alexandrzanko.mobile_6vkusov.Activities;
 
 import android.animation.Animator;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,13 +27,21 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.alexandrzanko.mobile_6vkusov.Adapters.RestaurantRecycleAdapter;
+import com.example.alexandrzanko.mobile_6vkusov.Models.ProductItem;
 import com.example.alexandrzanko.mobile_6vkusov.Models.Restaurant;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.example.alexandrzanko.mobile_6vkusov.Singleton;
+import com.example.alexandrzanko.mobile_6vkusov.Users.STATUS;
+import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
+import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class RestaurantsCardActivity extends AppCompatActivity {
+public class RestaurantsCardActivity extends AppCompatActivity implements LoadJson{
 
     private final String TAG = this.getClass().getSimpleName();
     public static final String EXTRA_RESTAURANT = "Restaurant";
@@ -49,6 +60,34 @@ public class RestaurantsCardActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     RestaurantRecycleAdapter adapter;
 
+    private boolean isFavorite;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isFavorite) {
+            Singleton.currentState().getUser().getBasket().initBasketFromRegisterUser();
+            if (Singleton.currentState().getUser().getStatus() == STATUS.REGISTER) {
+                JSONObject params = new JSONObject();
+                String url = this.getResources().getString(R.string.api_favourites);
+                try {
+                    params.put("session", Singleton.currentState().getUser().getProfile().getString("session"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i(TAG, "onResume: JsonHelperLoad starts");
+                (new JsonHelperLoad(url, params, this, "favorites")).execute();
+            } else {
+                ArrayList<String> slugs = Singleton.currentState().getStore().getAllSlugs();
+                if (slugs != null) {
+                    restaurants = Singleton.currentState().getStore().getFavoriteRestaurants(slugs);
+                    adapter = new RestaurantRecycleAdapter(restaurants,this);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +95,12 @@ public class RestaurantsCardActivity extends AppCompatActivity {
         toolBarHeight = Build.VERSION.SDK_INT > 18 ? 0: getToolBarHeight();
         addToolBarToScreen();
         Bundle bundle = getIntent().getExtras();
-        String slug = bundle.getString("slug");
-        restaurants = singleton.getStore().getRestaurants(slug);
+        isFavorite = bundle.getBoolean("favorite");
+        restaurants = new ArrayList<>();
+        if (!isFavorite){
+            String slug = bundle.getString("slug");
+            restaurants = singleton.getStore().getRestaurants(slug);
+        }
         initViews();
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -281,4 +324,27 @@ public class RestaurantsCardActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void loadComplete(JSONObject obj, String sessionName) {
+        Log.i(TAG, "loadComplete: obj = " + obj);
+        if (obj != null){
+            try {
+                String status = obj.getString("status");
+                if (status.equals("successful")){
+                        JSONArray array = obj.getJSONArray("slugs");
+                        restaurants = new ArrayList<>();
+                        for(int i = 0; i < array.length(); i++){
+                            restaurants.add(Singleton.currentState().getStore().getRestaurantBySlug(array.getString(i)));
+                        }
+                        adapter = new RestaurantRecycleAdapter(restaurants,this);
+                        recyclerView.setAdapter(adapter);
+                }
+            } catch (JSONException e) {
+                Log.i(TAG, "loadComplete: error" + e);
+                e.printStackTrace();
+            }
+        }else{
+            Log.i(TAG, "loadComplete: obj = null");
+        }
+    }
 }

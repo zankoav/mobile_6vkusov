@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import com.example.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity;
 import com.example.alexandrzanko.mobile_6vkusov.Adapters.OrderAdapter;
 import com.example.alexandrzanko.mobile_6vkusov.Models.OrderItem;
+import com.example.alexandrzanko.mobile_6vkusov.Models.OrderItemFood;
 import com.example.alexandrzanko.mobile_6vkusov.R;
 import com.example.alexandrzanko.mobile_6vkusov.Singleton;
 import com.example.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
@@ -33,9 +35,9 @@ import java.util.Date;
 
 public class OrderFragment extends Fragment implements LoadJson {
 
-    private String slug;
     private OrderAdapter adapter;
     private ArrayList<OrderItem> orders;
+    private ListView listView;
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -49,12 +51,12 @@ public class OrderFragment extends Fragment implements LoadJson {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_restaurant_comments_layout, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_orders_layout, container, false);
+        listView = (ListView)rootView.findViewById(R.id.listView);
         return rootView;
 
     }
 
-    static ListView listView;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -75,7 +77,44 @@ public class OrderFragment extends Fragment implements LoadJson {
     @Override
     public void loadComplete(JSONObject obj, String sessionName) {
         Log.i(TAG, "loadComplete: obj = "  + obj);
-        //adapter = new OrderAdapter(getContext(),orders);
+        if(obj != null){
+            String status = "error";
+            try {
+                status = obj.getString("status");
+                if (status.equals("successful")){
+                    this.orders = new ArrayList<>();
+                    //String image_path = obj.getString("image_path");
+                    JSONArray orders = obj.getJSONArray("orders");
+                    for (int i = 0; i < orders.length(); i++){
+                        JSONObject orderJson = orders.getJSONObject(i);
+                        //String restaurant_name = orderJson.getString("restaurant_name");
+                        String restaurant_slug = orderJson.getString("restaurant_slug");
+                        //String restaurant_icon = orderJson.getString("restaurant_icon");
+                        double total_price = orderJson.getDouble("total_price");
+                        int id = orderJson.getInt("id");
+                        int created = orderJson.getInt("created");
+                        boolean comment_exists = orderJson.getBoolean("comment_exists");
+                        JSONArray foods = orderJson.getJSONArray("food");
+                        ArrayList<OrderItemFood> arrayFoods = new ArrayList<>();
+
+                        for (int j = 0; j < foods.length(); j++){
+                            JSONObject foodJson = foods.getJSONObject(j);
+                            String food_name = foodJson.getString("name");
+                            int food_count = foodJson.getInt("count");
+                            OrderItemFood food = new OrderItemFood(food_count, food_name);
+                            arrayFoods.add(food);
+                        }
+
+                        OrderItem order = new OrderItem(arrayFoods, restaurant_slug, comment_exists, total_price, id, created);
+                        this.orders.add(order);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        adapter = new OrderAdapter(this,orders);
+        listView.setAdapter(adapter);
     }
 
 

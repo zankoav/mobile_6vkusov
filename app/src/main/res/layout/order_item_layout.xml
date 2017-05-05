@@ -1,6 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@color/colorWhite"
+    android:minHeight="130dp">
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/restaurants_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:id="@+id/restaurants_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/restaurants_icon"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/restaurants_icon"
+        android:text="@string/app_name"
+        android:textColor="@color/colorHeader"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/price_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="3dp"
+        android:layout_alignLeft="@+id/restaurants_name"
+        android:layout_below="@+id/restaurants_name"
+        android:text="Цена"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/price_title"
+        android:layout_below="@+id/restaurants_name"
+        android:text="100"
+        android:layout_marginTop="3dp"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="@color/colorBlack"/>
+
+    <TextView
+        android:id="@+id/price_rub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@+id/price"
+        android:layout_below="@+id/restaurants_name"
+        android:text="руб."
+        android:textSize="11sp"/>
+
+    <TextView
+        android:id="@+id/order_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_alignLeft="@+id/restaurants_name"
+        android:layout_below="@+id/price_title"
+        android:text="02/09/1988"
+        android:textSize="11sp" />
+
+    <Button
+        android:id="@+id/button_comment"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/buttons_style"
+        android:layout_alignLeft="@+id/restaurants_name"
+        android:layout_below="@+id/order_date"
+        android:text="Написать отзыв"
+        android:textSize="11sp" />
+
+
+    <ListView
+        android:id="@+id/foodListView"
+        android:scrollbars="none"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/restaurants_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+
+
+</RelativeLayout>

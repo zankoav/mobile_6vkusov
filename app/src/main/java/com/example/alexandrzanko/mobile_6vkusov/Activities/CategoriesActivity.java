@@ -47,6 +47,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 Intent intent = new Intent(CategoriesActivity.this, RestaurantsCardActivity.class);
                 String slug = category.getSlug();
                 intent.putExtra("slug", slug);
+                intent.putExtra("favorite", false);
                 startActivity(intent);
             }
         });

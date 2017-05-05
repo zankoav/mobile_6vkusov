@@ -149,13 +149,15 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
     public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
         int maxScroll = appBarLayout.getTotalScrollRange();
         float percentage = (float) Math.abs(offset) / (float) maxScroll;
-        if (offset > 0 || (offset + maxScroll) > 0) {
+
+        if (percentage > 0.0 && percentage < 1.0) {
             AppBarLayout.LayoutParams layoutParams = new AppBarLayout.LayoutParams(
                     AppBarLayout.LayoutParams.MATCH_PARENT, AppBarLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0, percentage < 0.77 ? 0 : 100, 0, 0);
             tabLayout.setLayoutParams(layoutParams);
         }
-        Log.i(TAG, "onOffsetChanged: ");
+
+        Log.i(TAG, "onOffsetChanged: percentage = "  + percentage);
         handleAlphaOnTitle(percentage);
         handleToolbarTitleVisibility(percentage);
     }
