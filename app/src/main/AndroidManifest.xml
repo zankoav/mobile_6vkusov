@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.alexandrzanko.mobile_6vkusov">
+    package="by.netbix.alexandrzanko.mobile_6vkusov">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.MainActivity"
+            android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,31 +21,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.AuthActivities.RegistrationActivity"
+            android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.RegistrationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.AuthActivities.LoginActivity"
+            android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.AuthActivities.RememberActivity"
+            android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.RememberActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.CategoriesActivity"
+            android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ProfileActivity"
+            android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.Trash.RestaurantsActivity"
+            android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.Trash.RestaurantsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.RestaurantsCardActivity"
+            android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.RestaurantsCardActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.Restaurant.RestaurantActivity" />
-        <activity android:name=".Activities.Restaurant.ProductActivity" />
-        <activity android:name=".Activities.BasketActivity" />
-        <activity android:name=".Activities.CheckOutActivity"
-            android:parentActivityName=".Activities.Restaurant.RestaurantActivity"
+        <activity android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.Restaurant.ProductActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.BasketActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="by.netbix.alexandrzanko.mobile_6vkusov.Activities.CheckOutActivity"
+            android:parentActivityName="by.netbix.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity"
+            android:screenOrientation="portrait"
             ></activity>
     </application>
 

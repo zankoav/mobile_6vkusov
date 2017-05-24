@@ -39,7 +39,7 @@
     <string name="rest_time">Время:</string>
     <string name="rest_delivery_price_free">бесплатно</string>
     <string name="rest_min_delivery_price">Заказ от</string>
-    <string name="rest_working_time">Время работы</string>
+    <string name="rest_working_time">Время работы:</string>
 
     <!--Для RestaurantsActivity-->
     <string name="restaurants_title">Рестораны</string>
@@ -120,4 +120,12 @@
     <string name="error_promo_code_symbols_and_numbers">Промокод может состоять только из букв и/или цифр</string>
     <string name="error_license_agree">Подтвердите согласие с условием пользовательского соглашения</string>
     <!--Errors end-->
+
+
+    <!--RestaurantRecycleAdapter-->
+    <string name="restaurant_recycle_adapter_work_time">Время работы: </string>
+    <string name="restaurant_recycle_adapter_delivery_time">Время доставки:</string>
+    <string name="restaurant_recycle_adapter_min_price">Мин. заказ от:</string>
+    <!--RestaurantRecycleAdapter end-->
+
 </resources>

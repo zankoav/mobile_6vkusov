@@ -4,7 +4,8 @@
     android:id="@+id/activity_categories"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivity">
+    android:background="@color/colorCheckOut"
+    tools:context="by.netbix.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivity">
 
     <include layout="@layout/action_bar"/>
 

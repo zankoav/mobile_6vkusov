@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_background"
-    tools:context="com.example.alexandrzanko.mobile_6vkusov.Activities.CheckOutActivity">
+    tools:context="com.example.alexandrzanko.mobile_6vkusov.by.example.alexandrzanko.mobile_6vkusov.Activities.CheckOutActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/action_bar"
