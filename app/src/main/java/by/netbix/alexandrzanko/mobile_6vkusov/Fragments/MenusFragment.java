@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import by.netbix.alexandrzanko.mobile_6vkusov.Activities.Restaurant.ProductActivity;
 import by.netbix.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity;
+import by.netbix.alexandrzanko.mobile_6vkusov.Adapters.MenuAdapter;
 import by.netbix.alexandrzanko.mobile_6vkusov.R;
 
 import java.util.ArrayList;
@@ -35,11 +36,10 @@ public class MenusFragment extends Fragment {
     }
 
     private ArrayList<String> categories;
-    private ArrayAdapter<String> adapter;
+    private MenuAdapter adapter;
     private ListView listView;
 
     public MenusFragment(){}
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class MenusFragment extends Fragment {
             listView.setNestedScrollingEnabled(true);
         }
 
-        adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1, android.R.id.text1, categories);
+        adapter = new MenuAdapter( getActivity(), categories);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"
                     app:layout_scrollFlags="scroll|snap"
                     android:layout_height="match_parent"
-                    android:background="@drawable/ic_background"
+                    android:background="@drawable/line_gradient"
                     android:padding="12dp">
 
                     <android.support.v7.widget.CardView
@@ -65,7 +65,7 @@
                         android:maxLines="2"
                         android:layout_toRightOf="@+id/restaurant_icon_view"
                         android:layout_alignTop="@+id/restaurant_icon_view"
-                        android:textSize="18sp"/>
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:id="@+id/rest_kitchen_type"
@@ -87,19 +87,19 @@
                         android:layout_below="@+id/rest_kitchen_type"
                         android:layout_marginTop="16dp"
                         android:textColor="@color/colorWhite"
-                        android:text="Любимый ресторан"
+                        android:text="Любимый"
+                        android:onClick="favoriteSend"
                         android:textSize="18sp"/>
 
                     <Button
                         android:id="@+id/favorite"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="8dp"
+                        android:layout_toRightOf="@+id/rest_favorite"
                         android:layout_marginLeft="8dp"
-                        android:layout_below="@+id/rest_kitchen_type"
+                        android:layout_alignBottom="@+id/rest_favorite"
                         android:background="@drawable/ic_favorite"
                         android:onClick="favoriteSend"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp" />
+                        android:layout_width="24dp"
+                        android:layout_height="24dp" />
 
                     <TextView
                         android:id="@+id/rest_reviews"
@@ -220,13 +220,15 @@
                         android:textStyle="bold"
                         android:text="30.00 руб."/>
 
-
-
-
                 </RelativeLayout>
             </FrameLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorBeige"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_actionbar_restaurant"

@@ -4,7 +4,7 @@
     android:id="@+id/activity_categories"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorCheckOut"
+    android:background="@color/colorBeige"
     tools:context="by.netbix.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivity">
 
     <include layout="@layout/action_bar"/>
@@ -14,7 +14,7 @@
         android:id="@+id/category_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/colorLightGray"
+        android:divider="@color/colorCheckOut"
         android:dividerHeight="1dp"
         android:layout_below="@+id/action_bar"
         android:layout_alignParentLeft="true"

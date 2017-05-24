@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_background"
-    tools:context="com.example.alexandrzanko.mobile_6vkusov.by.example.alexandrzanko.mobile_6vkusov.Activities.MainActivity">
+    tools:context="by.netbix.alexandrzanko.mobile_6vkusov.Activities.MainActivity">
 
     <ImageView
         android:layout_width="100dp"
@@ -129,7 +129,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_lunchscreen"
+        android:background="@drawable/radial_main"
         android:id="@+id/iv_lunchScreen" />
 
 </RelativeLayout>

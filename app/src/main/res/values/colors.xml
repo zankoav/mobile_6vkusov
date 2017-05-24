@@ -2,6 +2,7 @@
 <resources>
     <color name="colorHeader">#ad2322</color>
     <color name="colorDarkHeader">#591211</color>
+    <color name="colorDarkRedLine">#9e1f1f</color>
     <color name="colorButtons">#a2c644</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorLightGray">#EEEEEE</color>
