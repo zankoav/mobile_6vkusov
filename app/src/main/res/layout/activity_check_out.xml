@@ -5,8 +5,8 @@
     android:id="@+id/activity_settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_background"
-    tools:context="com.example.alexandrzanko.mobile_6vkusov.by.example.alexandrzanko.mobile_6vkusov.Activities.CheckOutActivity">
+    android:background="@color/colorDarkGray"
+    tools:context="by.vkus.alexandrzanko.mobile_6vkusov.Activities.CheckOutActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/action_bar"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:background="@color/colorHeader"
+            android:background="@drawable/line_gradient"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
     </android.support.design.widget.AppBarLayout>
@@ -52,9 +52,9 @@
         android:textColor="@color/colorWhite"
         android:background="@drawable/apptheme_textfield_focused_holo_light"
         android:layout_below="@+id/order_user_name"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
         android:id="@+id/order_user_phone" />
 
     <EditText
@@ -68,8 +68,8 @@
         android:textColor="@color/colorWhite"
         android:background="@drawable/apptheme_textfield_focused_holo_light"
         android:layout_below="@+id/order_user_phone"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
         android:layout_marginRight="16dp"
         android:id="@+id/order_user_street" />
 
@@ -78,9 +78,9 @@
         android:layout_below="@+id/order_user_street"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
         android:weightSum="3"
         android:orientation="horizontal"
         >
@@ -138,19 +138,15 @@
         android:textSize="14sp"
         android:maxLines="3"
         android:layout_below="@+id/address_info"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
         android:id="@+id/order_user_comments" />
-
-
-
-
 
     <RelativeLayout
         android:id="@+id/checkOut"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="180dp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorCheckOut"
         >
@@ -160,7 +156,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Сумма заказа"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="12dp"
             />
 
@@ -169,7 +165,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="26.00"
-            android:textColor="@color/colorDarkGray"
             android:layout_marginTop="12dp"
             android:layout_marginRight="4dp"
             android:layout_toLeftOf="@+id/checkPriceRub"
@@ -180,7 +175,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="12dp"
             android:layout_alignParentRight="true"
             android:text="руб."
             />
@@ -190,7 +185,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Стоимость доставки"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="4dp"
             android:layout_below="@+id/checkPrice"
             />
@@ -200,7 +195,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="12dp"
             android:layout_alignParentRight="true"
             android:text="бесплатно"
             android:layout_below="@+id/checkPriceRub"
@@ -211,7 +206,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Итого"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="6dp"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -225,7 +220,6 @@
             android:text="26.00"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/colorDarkGray"
             android:layout_marginTop="6dp"
             android:layout_marginRight="4dp"
             android:layout_toLeftOf="@+id/checkTotalPriceRub"
@@ -239,7 +233,7 @@
             android:layout_marginTop="6dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="12dp"
             android:layout_alignParentRight="true"
             android:text="руб."
             android:layout_below="@+id/checkDeliveryPriceRub"
@@ -251,7 +245,7 @@
             android:layout_height="wrap_content"
             android:text="Вы заработаете"
             android:textColor="@color/colorOdnoklasniki"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="6dp"
             android:layout_below="@+id/checkTotalPrice"/>
 
@@ -272,7 +266,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="12dp"
             android:layout_alignParentRight="true"
             android:text="баллов"
             android:textColor="@color/colorOdnoklasniki"
@@ -284,14 +278,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="16dp"
+            android:layout_margin="12dp"
             android:onClick="buttonPressed"
             android:textColor="@color/colorWhite"
             android:background="@drawable/buttons_style"
             android:id="@+id/btn_order" />
 
     </RelativeLayout>
-
 
 </RelativeLayout>
 

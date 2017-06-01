@@ -2,16 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="7dp"
-    android:paddingBottom="7dp">
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp">
 
     <TextView
         android:id="@+id/product_width"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Вес 330 г"
-        android:layout_alignParentLeft="true"
+        android:maxLines="2"
+        android:layout_marginRight="12dp"
         android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/product_btn_minus"
         />
 
     <Button
@@ -20,11 +22,12 @@
         android:layout_height="36dp"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:background="@drawable/shape_corner"
-        android:textColor="@color/colorWhite"
+        android:background="@drawable/variant_buttons_shape_corner"
+        android:textColor="@color/colorGray"
         android:textStyle="bold"
+        android:textSize="14sp"
         android:text="-"
-        android:layout_centerHorizontal="true"
+        android:layout_toLeftOf="@id/product_count"
          />
 
     <TextView
@@ -33,11 +36,14 @@
         android:layout_height="36dp"
         android:gravity="center"
         android:text="0"
-        android:background="@drawable/shape_corner_green"
-        android:textColor="@color/colorWhite"
-        android:layout_marginRight="3dp"
-        android:layout_marginLeft="3dp"
-        android:layout_toRightOf="@+id/product_btn_minus"/>
+        android:textSize="14sp"
+        android:background="@drawable/variant_buttons_shape_corner"
+        android:textColor="@color/colorGray"
+        android:layout_marginRight="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_centerHorizontal="true"
+
+        />
 
     <Button
         android:id="@+id/product_btn_plus"
@@ -45,11 +51,13 @@
         android:layout_height="36dp"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:background="@drawable/shape_corner"
-        android:textColor="@color/colorWhite"
+        android:background="@drawable/variant_buttons_shape_corner"
+        android:textColor="@color/colorGray"
         android:textStyle="bold"
         android:text="+"
-        android:layout_toRightOf="@id/product_count" />
+        android:textSize="14sp"
+        android:layout_toRightOf="@+id/product_count"
+         />
 
 
     <TextView

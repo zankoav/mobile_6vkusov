@@ -12,7 +12,6 @@
         android:textSize="22sp"
         android:paddingBottom="16dp"
         android:paddingTop="16dp"
-        android:layout_marginLeft="22dp"
-        android:text="hbviwbevw" />
+        android:layout_marginLeft="22dp"/>
 
 </RelativeLayout>

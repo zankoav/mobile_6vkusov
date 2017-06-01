@@ -9,20 +9,20 @@
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:src="@drawable/ic_shopping_cart" />
 
     <TextView
         android:id="@+id/notif_count"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:background="@drawable/ciercle_icon"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="-5dp"
         android:layout_alignParentRight="true"
         android:textColor="#ffffffff"
-        android:text="15"
+        android:text="99"
+        android:maxLength="2"
         android:gravity="center"
         android:textStyle="bold"
         android:padding="2dp"
-        android:textSize="9sp"/>
+        android:textSize="12sp"/>
 </RelativeLayout>

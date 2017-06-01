@@ -2,5 +2,12 @@
 <shape
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
-    <solid android:color="@color/colorButtons" />
+
+    <gradient
+        android:type="linear"
+        android:angle="90"
+        android:endColor="@color/colorButtons"
+        android:centerColor="@color/colorButtons"
+        android:startColor="@color/colorButtonsShadow"/>
+
 </shape>

@@ -4,7 +4,7 @@
     android:id="@+id/main_content"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    tools:context="by.netbix.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity">
+    tools:context="by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity">
 
 
 
@@ -225,10 +225,10 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorBeige"/>
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/colorBeige"/>-->
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_actionbar_restaurant"
@@ -237,17 +237,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:background="@color/colorHeader"
+            android:background="@drawable/line_gradient"
             />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextColor="@color/colorDarkHeader"
+            app:tabTextColor="@color/colorTabLight"
             app:tabIndicatorColor="@color/colorWhite"
             app:tabSelectedTextColor="@color/colorWhite"
-            android:background="@color/colorHeader"
+            android:background="@drawable/line_gradient_tabs"
             app:tabGravity="fill"
             app:tabMode="fixed"/>
 

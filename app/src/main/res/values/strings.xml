@@ -76,6 +76,8 @@
     <string name="reg_password_confirm">Повторить пароль</string>
     <string name="reg_promo">Промокод (не обязательно)</string>
     <string name="reg_license_btn">Условия пользовательского соглашения и основных документов</string>
+    <string name="reg_license_url">https://6vkusov.by/userAgreement</string>
+
     <string name="reg_news">Получать новости</string>
     <string name="reg_license">Я прочитал и принимаю</string>
     <string name="reg_button">Зарегистрироваться</string>
@@ -127,5 +129,26 @@
     <string name="restaurant_recycle_adapter_delivery_time">Время доставки:</string>
     <string name="restaurant_recycle_adapter_min_price">Мин. заказ от:</string>
     <!--RestaurantRecycleAdapter end-->
+
+    <!--FRAGMENTS-->
+
+        <!-- ProductFragment -->
+
+
+        <!-- ProductFragment End -->
+
+    <!-- FRAGMENTS END -->
+
+    <!-- ADAPTERS -->
+
+        <!-- ProductAdapter (product_item_layout.xml) -->
+            <string name="product_add_basket">заказать</string>
+
+
+
+        <!-- ProductAdapter End -->
+
+    <!-- ADAPTERS END -->
+
 
 </resources>

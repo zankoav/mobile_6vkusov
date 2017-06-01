@@ -5,7 +5,7 @@
     android:id="@+id/activity_basket"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.alexandrzanko.mobile_6vkusov.by.example.alexandrzanko.mobile_6vkusov.Activities.BasketActivity">
+    tools:context="by.vkus.alexandrzanko.mobile_6vkusov.Activities.BasketActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/action_bar"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            android:background="@color/colorHeader"
+            android:background="@drawable/line_gradient"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
     </android.support.design.widget.AppBarLayout>
@@ -55,7 +55,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="26.00"
-            android:textColor="@color/colorDarkGray"
             android:layout_marginTop="12dp"
             android:layout_marginRight="4dp"
             android:layout_toLeftOf="@+id/checkPriceRub"
@@ -111,7 +110,6 @@
             android:text="26.00"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/colorDarkGray"
             android:layout_marginTop="6dp"
             android:layout_marginRight="4dp"
             android:layout_toLeftOf="@+id/checkTotalPriceRub"

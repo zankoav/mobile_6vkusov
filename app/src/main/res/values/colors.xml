@@ -3,7 +3,10 @@
     <color name="colorHeader">#ad2322</color>
     <color name="colorDarkHeader">#591211</color>
     <color name="colorDarkRedLine">#9e1f1f</color>
-    <color name="colorButtons">#a2c644</color>
+    <color name="colorTabLight">#fc897f</color>
+    <color name="colorButtons">#91c211</color>
+    <color name="colorButtonsShadow">#6f8b2b</color>
+
     <color name="colorWhite">#ffffff</color>
     <color name="colorLightGray">#EEEEEE</color>
     <color name="colorGray">#999999</color>

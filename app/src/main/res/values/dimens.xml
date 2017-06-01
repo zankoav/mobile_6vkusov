@@ -7,4 +7,32 @@
     <dimen name="appbar_circle_view_left">320dp</dimen>
     <dimen name="image_final_width">32dp</dimen>
 
+
+    <!--FRAGMENTS-->
+
+    <!-- ProductFragment -->
+
+
+    <!-- ProductFragment End -->
+
+    <!-- FRAGMENTS END -->
+
+    <!-- ADAPTERS -->
+
+    <!-- ProductAdapter (product_item_layout.xml) -->
+        <dimen name="parent_product_item_layout">12dp</dimen>
+        <dimen name="paddingLeftRight_product_add_basket">30dp</dimen>
+        <dimen name="product_description_textSize">12sp</dimen>
+        <dimen name="product_description_marginLeft">12dp</dimen>
+        <dimen name="product_icon_width">120dp</dimen>
+        <dimen name="product_icon_height">85dp</dimen>
+
+
+
+
+
+    <!-- ProductAdapter End -->
+
+    <!-- ADAPTERS END -->
+
 </resources>

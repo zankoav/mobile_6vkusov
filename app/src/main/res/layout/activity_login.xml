@@ -17,6 +17,7 @@
 
     <TextView
         android:id="@+id/tv_social"
+        android:visibility="gone"
         android:text="@string/login_social_text"
         android:layout_width="wrap_content"
         android:layout_marginLeft="16dp"
@@ -31,6 +32,7 @@
 
     <LinearLayout
         android:id="@+id/ll_social"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -69,6 +71,7 @@
 
     <TextView
         android:id="@+id/tv_or"
+        android:visibility="invisible"
         android:text="@string/login_or"
         android:layout_width="wrap_content"
         android:layout_marginLeft="16dp"
