@@ -87,7 +87,7 @@ public class RememberActivity extends AppCompatActivity implements LoadJson {
     }
 
     private void initFields(){
-        email = (EditText)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.et_email);
+        email = (EditText)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.et_name);
     }
 
     public void sendPressed(View view) {

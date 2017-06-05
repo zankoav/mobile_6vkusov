@@ -14,8 +14,11 @@ import android.widget.TextView;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.LoginActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.LocalStorage;
+import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -27,18 +30,18 @@ public class MainActivity extends AppCompatActivity {
     private Singleton singleton = Singleton.currentState();
     private LinearLayout generalMenu, registerMenu;
     private TextView loginOrProfile;
-    private ImageView userLogo;
+    private CircleImageView userLogo;
     public ImageView lunchScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.activity_main);
-        generalMenu = (LinearLayout)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.generalMenu);
-        registerMenu = (LinearLayout)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.registerMenu);
-        loginOrProfile = (TextView) findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.btn_login);
-        userLogo = (ImageView)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.iv_user);
-        lunchScreen = (ImageView)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.iv_lunchScreen);
+        setContentView(R.layout.activity_main);
+        generalMenu = (LinearLayout)findViewById(R.id.generalMenu);
+        registerMenu = (LinearLayout)findViewById(R.id.registerMenu);
+        loginOrProfile = (TextView) findViewById(R.id.btn_save);
+        userLogo = (CircleImageView)findViewById(R.id.iv_user);
+        lunchScreen = (ImageView)findViewById(R.id.iv_lunchScreen);
         singleton.initStore(this);
     }
 
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         generalMenu.setVisibility(singleton.getUser().getStatus() == STATUS.GENERAL ? View.VISIBLE:View.GONE);
         registerMenu.setVisibility(singleton.getUser().getStatus() == STATUS.REGISTER ? View.VISIBLE:View.INVISIBLE);
         if (singleton.getUser().getStatus() == STATUS.GENERAL ){
-            userLogo.setImageDrawable(ContextCompat.getDrawable(this, by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_avatar));
+            userLogo.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user));
             loginOrProfile.setText("Войти");
         }else{
             String email = null;
@@ -63,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 String urlIcon = this.getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_base) + userJson.getString("img_path")+"/"+ userJson.getString("avatar");
                 Picasso.with(this)
                         .load(urlIcon)
-                        .placeholder(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
-                        .error(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
+                        .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
+                        .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
                         .into(userLogo);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void loginButtonClick(View view) {
         STATUS status = singleton.getUser().getStatus();
-        Intent intent = status == STATUS.GENERAL? new Intent(this, LoginActivity.class): new Intent(this,ProfileActivity.class);
+        Intent intent = status == STATUS.GENERAL? new Intent(this, LoginActivity.class): new Intent(this,ProfileActivityNew.class);
         this.startActivity(intent);
     }
 

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">6 Вкусов</string>
+    <string name="app_version">Версия 1.1</string>
 
     <!--Для MenuActivity-->
     <string name="menu_title">Меню</string>
@@ -107,6 +108,8 @@
     <string name="api_favourites">https://6vkusov.by/api/favourites</string>
     <string name="api_invite">https://6vkusov.by/api/invite</string>
     <string name="api_user_points">https://6vkusov.by/api/user_points</string>
+    <string name="api_change_data">https://6vkusov.by/api/change_user_data</string>
+
     <!--Для REST API END-->
 
     <!--Errors-->
@@ -132,23 +135,26 @@
 
     <!--FRAGMENTS-->
 
-        <!-- ProductFragment -->
+    <!-- ProductFragment -->
 
 
-        <!-- ProductFragment End -->
+    <!-- ProductFragment End -->
 
     <!-- FRAGMENTS END -->
 
     <!-- ADAPTERS -->
 
-        <!-- ProductAdapter (product_item_layout.xml) -->
-            <string name="product_add_basket">заказать</string>
+    <!-- ProductAdapter (product_item_layout.xml) -->
+    <string name="product_add_basket">заказать</string>
 
 
-
-        <!-- ProductAdapter End -->
+    <!-- ProductAdapter End -->
 
     <!-- ADAPTERS END -->
+
+
+    <string name="button_change_user_data">Редактировать</string>
+    <string name="button_call_friend">Позвать друга</string>
 
 
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_remember"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_background">
@@ -11,42 +11,60 @@
         android:id="@+id/iv_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/et_name"
+        android:layout_alignBottom="@+id/et_name"
         android:background="@drawable/ic_logo"
+        android:layout_marginBottom="50dp"
         android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/et_name"
-        android:hint="@string/login_email"
+        android:hint="Имя"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:inputType="textEmailAddress"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorGray"
         android:ems="10"
-        android:layout_centerInParent="true"
         android:textSize="14sp"
         android:padding="5dp"
         android:background="@drawable/apptheme_textfield_activated_holo_light"
         android:textCursorDrawable="@null"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="10dp"/>
 
+    <EditText
+        android:id="@+id/et_surname"
+        android:layout_below="@+id/et_name"
+        android:hint="Фамилия"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/colorWhite"
+        android:ems="10"
+        android:textSize="14sp"
+        android:padding="5dp"
+        android:textCursorDrawable="@null"
+        android:textColorHint="@color/colorGray"
+        android:background="@drawable/apptheme_textfield_activated_holo_light"
+        android:layout_alignLeft="@+id/et_name"
+        android:layout_alignRight="@+id/et_name"
+        android:layout_marginBottom="20dp"/>
+
     <Button
-        android:text="@string/remember_send"
+        android:text="Сохранить"
         android:textColor="@color/colorWhite"
         android:minHeight="40dp"
-        android:onClick="sendPressed"
-        android:layout_below="@+id/et_name"
+        android:onClick="savePressed"
+        android:clickable="true"
+        android:layout_below="@+id/et_surname"
         android:background="@drawable/buttons_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_save"
         android:textAllCaps="false"
-        android:layout_alignLeft="@+id/et_name"
-        android:layout_alignRight="@+id/et_name"
-        android:layout_marginBottom="20dp" />
-
+        android:layout_alignLeft="@+id/et_surname"
+        android:layout_alignRight="@+id/et_surname"
+        android:layout_marginBottom="10dp" />
 
 </RelativeLayout>
+

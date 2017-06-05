@@ -37,8 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_above="@+id/tv_or"
-        android:layout_alignLeft="@+id/et_email"
-        android:layout_alignRight="@+id/et_email"
+        android:layout_alignLeft="@+id/et_name"
+        android:layout_alignRight="@+id/et_name"
         android:weightSum="4">
 
         <ImageButton
@@ -83,7 +83,7 @@
         android:textColor="@color/colorGray"/>
 
     <EditText
-        android:id="@+id/et_email"
+        android:id="@+id/et_name"
         android:hint="@string/login_email"
         android:layout_below="@+id/tv_or"
         android:layout_width="match_parent"
@@ -101,8 +101,8 @@
         android:layout_marginBottom="10dp"/>
 
     <EditText
-        android:id="@+id/et_password"
-        android:layout_below="@+id/et_email"
+        android:id="@+id/et_surname"
+        android:layout_below="@+id/et_name"
         android:hint="@string/login_password"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -114,8 +114,8 @@
         android:textCursorDrawable="@null"
         android:textColorHint="@color/colorGray"
         android:background="@drawable/apptheme_textfield_activated_holo_light"
-        android:layout_alignLeft="@+id/et_email"
-        android:layout_alignRight="@+id/et_email"
+        android:layout_alignLeft="@+id/et_name"
+        android:layout_alignRight="@+id/et_name"
         android:layout_marginBottom="20dp"/>
 
     <Button
@@ -125,8 +125,8 @@
         android:textColor="@color/colorGray"
         android:textAllCaps="false"
         android:onClick="rememberPressed"
-        android:layout_alignRight="@+id/et_password"
-        android:layout_alignTop="@+id/et_password"
+        android:layout_alignRight="@+id/et_surname"
+        android:layout_alignTop="@+id/et_surname"
         android:layout_width="wrap_content"
         android:layout_height="40dp" />
 
@@ -136,14 +136,14 @@
         android:minHeight="40dp"
         android:onClick="loginPressed"
         android:clickable="true"
-        android:layout_below="@+id/et_password"
+        android:layout_below="@+id/et_surname"
         android:background="@drawable/buttons_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_save"
         android:textAllCaps="false"
-        android:layout_alignLeft="@+id/et_password"
-        android:layout_alignRight="@+id/et_password"
+        android:layout_alignLeft="@+id/et_surname"
+        android:layout_alignRight="@+id/et_surname"
         android:layout_marginBottom="10dp" />
 
     <Button
@@ -151,7 +151,7 @@
         android:textColor="@color/colorGray"
         android:minHeight="50dp"
         android:textAllCaps="false"
-        android:layout_below="@+id/btn_login"
+        android:layout_below="@+id/btn_save"
         android:onClick="goToRegistration"
         android:background="@android:color/transparent"
         android:layout_width="match_parent"

@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_background"
     tools:context="by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivity">
 
-    <ImageView
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_user"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_avatar"
-        android:id="@+id/iv_user"
-        android:layout_above="@+id/btn_login"
-        android:layout_centerHorizontal="true" />
+        android:src="@drawable/user"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/btn_save"
+        android:onClick="loginButtonClick"
+        app:border_color="@android:color/white"
+        app:border_width="2dp"
+        />
 
     <TextView
         android:text="Вход"
@@ -26,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_above="@+id/registerMenu"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_save"
         android:textSize="15sp" />
 
     <LinearLayout
@@ -126,9 +132,22 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+
+    <TextView
+        android:textColor="@color/colorWhite"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/app_version"
+        android:layout_marginBottom="40dp"
+        android:textSize="10sp"
+        />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         android:background="@drawable/radial_main"
         android:id="@+id/iv_lunchScreen" />
 

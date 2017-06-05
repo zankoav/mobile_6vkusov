@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="by.vkus.alexandrzanko.mobile_6vkusov">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivity"
+            android:name=".Activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,36 +21,48 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.RegistrationActivity"
+            android:name=".Activities.AuthActivities.RegistrationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.LoginActivity"
+            android:name=".Activities.AuthActivities.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.RememberActivity"
+            android:name=".Activities.AuthActivities.RememberActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivity"
+            android:name=".Activities.CategoriesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.ProfileActivity"
+            android:name=".Activities.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.Trash.RestaurantsActivity"
+            android:name=".Activities.Trash.RestaurantsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.RestaurantsCardActivity"
+            android:name=".Activities.RestaurantsCardActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.ProductActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.BasketActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="by.vkus.alexandrzanko.mobile_6vkusov.Activities.CheckOutActivity"
-            android:parentActivityName="by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity"
-            android:screenOrientation="portrait"
-            ></activity>
+        <activity
+            android:name=".Activities.Restaurant.RestaurantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.Restaurant.ProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.BasketActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.CheckOutActivity"
+            android:parentActivityName=".Activities.Restaurant.RestaurantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.ProfileActivityNew"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.UserCallFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.ChangeUserSettingsActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

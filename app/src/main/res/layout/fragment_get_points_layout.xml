@@ -28,7 +28,7 @@
 
         <EditText
             android:layout_weight="3"
-            android:id="@+id/et_email"
+            android:id="@+id/et_name"
             android:hint="@string/login_email"
             android:layout_width="match_parent"
             android:layout_height="40dp"

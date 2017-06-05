@@ -190,8 +190,8 @@ public class RegistrationActivity extends AppCompatActivity implements LoadJson 
             relative_form.updateViewLayout(logo, layoutParams);
         }
 
-        email = (EditText)findViewById(R.id.et_email);
-        password = (EditText)findViewById(R.id.et_password);
+        email = (EditText)findViewById(R.id.et_name);
+        password = (EditText)findViewById(R.id.et_surname);
         confirmPassword = (EditText)findViewById(R.id.et_confirm_password);
         firstName = (EditText)findViewById(R.id.et_first_name);
         promoCode = (EditText)findViewById(R.id.et_promo);

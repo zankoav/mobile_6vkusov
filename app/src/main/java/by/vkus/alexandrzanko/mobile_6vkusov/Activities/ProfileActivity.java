@@ -21,6 +21,7 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.OrderFragment;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ProfileFragment;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.SettingsFragment;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ViewPageAdapter;
+import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
 import com.squareup.picasso.Picasso;
 
@@ -93,8 +94,8 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
             bonusCount.setText(bonuses.toString() + " баллов");
             Picasso.with(this)
                     .load(url)
-                    .placeholder(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
-                    .error(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
+                    .placeholder(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
+                    .error(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.user) // показываем что-то, если не удалось скачать картинку
                     .into(circleImageView);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -138,7 +139,7 @@ public class ProfileActivity extends AppCompatActivity implements AppBarLayout.O
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(by.vkus.alexandrzanko.mobile_6vkusov.R.menu.menu_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
     }
 

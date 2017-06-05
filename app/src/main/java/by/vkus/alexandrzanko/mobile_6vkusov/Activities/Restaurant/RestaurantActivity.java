@@ -69,22 +69,22 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.activity_restaurant);
+        setContentView(R.layout.activity_restaurant);
         this.singleton = Singleton.currentState();
         singleton.getUser().getBasket().setDelegateContext(this);
         String slug = getIntent().getStringExtra(RestaurantsActivity.EXTRA_RESTAURANT);
         this.restaurant = singleton.getStore().getRestaurantBySlug(slug);
-        favorite = (Button)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.favorite);
+        favorite = (Button)findViewById(R.id.favorite);
         if (Singleton.currentState().getUser().getStatus() == STATUS.GENERAL){
             if (Singleton.currentState().getStore().isFavoriteSlug(slug)){
-                favorite.setBackgroundResource(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_favorite_full);
+                favorite.setBackgroundResource(R.drawable.ic_favorite_full);
             }else{
-                favorite.setBackgroundResource(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_favorite);
+                favorite.setBackgroundResource(R.drawable.ic_favorite);
             }
         }
         loadHeaderRestaurant();
-        viewPager = (ViewPager)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.viewpager);
-        tabLayout= (TabLayout)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.tablayout);
+        viewPager = (ViewPager)findViewById(R.id.viewpager);
+        tabLayout= (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
         addToolBarToScreen();
 
@@ -110,7 +110,7 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
     private void loadHeaderRestaurant() {
         workingTime = (TextView)findViewById(R.id.rest_working_time_text);
         workingTime.setText(restaurant.get_working_time());
-        nameRest = (TextView)findViewById(R.id.rest_name);
+        nameRest = (TextView)findViewById(R.id.user_name);
         nameRest.setText(restaurant.get_name());
         imgView = (ImageView)findViewById(R.id.restaurant_icon);
 
@@ -120,7 +120,7 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
                 .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
                 .into(imgView);
 
-        kitchenType = (TextView)findViewById(R.id.rest_kitchen_type);
+        kitchenType = (TextView)findViewById(R.id.user_email);
         kitchenType.setText(join(", ",restaurant.get_kitchens()));
         minDeliveryPrice = (TextView)findViewById(R.id.rest_order_price);
         String price = Validation.twoNumbersAfterAfterPoint(restaurant.get_minimal_price());
@@ -136,7 +136,7 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
     }
 
     private void addToolBarToScreen() {
-        toolbar = (Toolbar)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.toolbar_actionbar_restaurant);
+        toolbar = (Toolbar)findViewById(R.id.toolbar_actionbar_restaurant);
         toolbar.setTitle(by.vkus.alexandrzanko.mobile_6vkusov.R.string.restaurants_title);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setSubtitleTextColor(Color.WHITE);
@@ -177,9 +177,9 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(by.vkus.alexandrzanko.mobile_6vkusov.R.menu.main_menu, menu);
-        MenuItem item = menu.findItem(by.vkus.alexandrzanko.mobile_6vkusov.R.id.shopping_cart);
-        MenuItemCompat.setActionView(item, by.vkus.alexandrzanko.mobile_6vkusov.R.layout.menu_basket_icon);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        MenuItem item = menu.findItem(R.id.shopping_cart);
+        MenuItemCompat.setActionView(item, R.layout.menu_basket_icon);
         notificationCount = (RelativeLayout) MenuItemCompat.getActionView(item);
         notificationCount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,7 +196,7 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
     }
 
     private void updateCountBasket(){
-        TextView countProducts = (TextView) notificationCount.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.notif_count);
+        TextView countProducts = (TextView) notificationCount.findViewById(R.id.notif_count);
         int count = this.singleton.getUser().getBasket().getTotalCount();
         if (count>0){
             countProducts.setText(count + "");
@@ -247,9 +247,9 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
                         if(Singleton.currentState().getUser().getStatus() != STATUS.GENERAL){
                             isFavorite = obj.getBoolean("isFavorite");
                             if (isFavorite){
-                                favorite.setBackgroundResource(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_favorite_full);
+                                favorite.setBackgroundResource(R.drawable.ic_favorite_full);
                             }else{
-                                favorite.setBackgroundResource(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_favorite);
+                                favorite.setBackgroundResource(R.drawable.ic_favorite);
                             }
                         }
                         Singleton.currentState().getStore().currentProducts = initProducts(prod,img_path);
@@ -352,17 +352,17 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
             if (Singleton.currentState().getStore().isFavoriteSlug(slug)){
                 Log.i(TAG, "favoriteSend: remove " + slug);
                 Singleton.currentState().getStore().removeFavoriteSlug(slug);
-                favorite.setBackgroundResource(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_favorite);
+                favorite.setBackgroundResource(R.drawable.ic_favorite);
             }else{
                 Log.i(TAG, "favoriteSend: add " + slug);
                 Singleton.currentState().getStore().addFavoriteSlug(slug);
-                favorite.setBackgroundResource(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_favorite_full);
+                favorite.setBackgroundResource(R.drawable.ic_favorite_full);
             }
         }else{
             if (isFavorite){
-                favorite.setBackgroundResource(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_favorite);
+                favorite.setBackgroundResource(R.drawable.ic_favorite);
             }else{
-                favorite.setBackgroundResource(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_favorite_full);
+                favorite.setBackgroundResource(R.drawable.ic_favorite_full);
             }
             isFavorite = !isFavorite;
             String url = getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_favourite);

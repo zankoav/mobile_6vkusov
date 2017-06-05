@@ -1,0 +1,156 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    tools:context="by.vkus.alexandrzanko.mobile_6vkusov.Activities.ProfileActivityNew">
+
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/main_menu_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/main.collapsing"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            >
+
+            <FrameLayout
+                android:id="@+id/main_framelayout_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.3">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    app:layout_scrollFlags="scroll|snap"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/line_gradient"
+                    android:padding="12dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/user_icon_view"
+                        android:layout_width="@dimen/image_width"
+                        android:layout_height="@dimen/image_width"
+                        android:src="@drawable/user"
+                        android:layout_marginRight="12dp"
+                        app:border_color="@android:color/white"
+                        app:border_width="2dp"/>
+
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textStyle="bold"
+                        android:layout_marginRight="8dp"
+                        android:text="Александр"
+                        android:maxLines="1"
+                        android:layout_toRightOf="@+id/user_icon_view"
+                        android:layout_alignTop="@+id/user_icon_view"
+                        android:textSize="24sp"/>
+
+                    <TextView
+                        android:id="@+id/user_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/user_icon_view"
+                        android:layout_below="@+id/user_name"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/colorWhite"
+                        android:text="zankoav@mail.ru"
+                        android:maxLines="1"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/user_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/user_icon_view"
+                        android:layout_below="@+id/user_email"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/colorWhite"
+                        android:text="+375295558386"
+                        android:maxLines="1"
+                        android:textSize="16sp"/>
+
+
+                    <Button
+                        android:id="@+id/user_change_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/user_icon_view"
+                        android:layout_alignRight="@+id/user_icon_view"
+                        android:layout_below="@+id/user_icon_view"
+                        android:textColor="@color/colorWhite"
+                        android:text="@string/button_change_user_data"
+                        android:textAllCaps="false"
+                        android:onClick="changeSettings"
+                        android:background="@android:color/transparent"
+                        android:textSize="12sp"/>
+
+
+                    <Button
+                        android:id="@+id/user_call_friends"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:text="@string/button_call_friend"
+                        android:textAllCaps="false"
+                        android:onClick="callFriend"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignBottom="@+id/user_change_data"
+                        android:background="@android:color/transparent"
+                        android:textSize="12sp"/>
+
+                </RelativeLayout>
+            </FrameLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_actionbar_restaurant"
+            app:theme="@style/ToolbarColoredBackArrow"
+            app:popupTheme="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@drawable/line_gradient"
+            />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabTextColor="@color/colorTabLight"
+            app:tabIndicatorColor="@color/colorWhite"
+            app:tabSelectedTextColor="@color/colorWhite"
+            android:background="@drawable/line_gradient_tabs"
+            app:tabGravity="fill"
+            app:tabMode="fixed"/>
+
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+
+</android.support.design.widget.CoordinatorLayout>

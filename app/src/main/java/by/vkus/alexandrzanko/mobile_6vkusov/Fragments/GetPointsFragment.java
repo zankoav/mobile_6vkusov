@@ -41,7 +41,7 @@ public class GetPointsFragment extends Fragment implements LoadJson {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.fragment_get_points_layout, container, false);
-        email = (EditText)rootView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.et_email);
+        email = (EditText)rootView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.et_name);
         btn = (Button)rootView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

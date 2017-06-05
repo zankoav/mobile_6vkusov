@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.LocalStorage;
+import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements LoadJson {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.activity_login);
+        setContentView(R.layout.activity_login);
         addToolBarToScreen();
         initFields();
     }
@@ -110,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements LoadJson {
     }
 
     private void addToolBarToScreen() {
-        Toolbar toolbar = (Toolbar)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle(by.vkus.alexandrzanko.mobile_6vkusov.R.string.login_title);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setSubtitleTextColor(Color.WHITE);
@@ -128,10 +129,10 @@ public class LoginActivity extends AppCompatActivity implements LoadJson {
     }
 
     private void initFields(){
-        message = (TextView)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.tv_social);
-        email = (EditText)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.et_email);
-        password = (EditText)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.et_password);
-        loginBtn = (Button)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.btn_login);
+        message = (TextView)findViewById(R.id.tv_social);
+        email = (EditText)findViewById(R.id.et_name);
+        password = (EditText)findViewById(R.id.et_surname);
+        loginBtn = (Button)findViewById(R.id.btn_save);
     }
 
 
@@ -149,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements LoadJson {
             toast.show();
             loginBtn.setEnabled(true);
             return;
-        }if(!Validation.maxLength(password,128)){
+        }else if(!Validation.maxLength(password,128)){
             Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.error_max_password_length), Toast.LENGTH_SHORT);
             toast.show();
             loginBtn.setEnabled(true);

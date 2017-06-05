@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 
+import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -44,12 +45,12 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         mContext = context;
 
         if (attrs != null) {
-            TypedArray a = context.obtainStyledAttributes(attrs, by.vkus.alexandrzanko.mobile_6vkusov.R.styleable.AvatarImageBehavior);
-            mCustomFinalYPosition = a.getDimension(by.vkus.alexandrzanko.mobile_6vkusov.R.styleable.AvatarImageBehavior_finalYPosition, 0);
-            mCustomStartXPosition = a.getDimension(by.vkus.alexandrzanko.mobile_6vkusov.R.styleable.AvatarImageBehavior_startXPosition, 0);
-            mCustomStartToolbarPosition = a.getDimension(by.vkus.alexandrzanko.mobile_6vkusov.R.styleable.AvatarImageBehavior_startToolbarPosition, 0);
-            mCustomStartHeight = a.getDimension(by.vkus.alexandrzanko.mobile_6vkusov.R.styleable.AvatarImageBehavior_startHeight, 0);
-            mCustomFinalHeight = a.getDimension(by.vkus.alexandrzanko.mobile_6vkusov.R.styleable.AvatarImageBehavior_finalHeight, 0);
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AvatarImageBehavior);
+            mCustomFinalYPosition = a.getDimension(R.styleable.AvatarImageBehavior_finalYPosition, 0);
+            mCustomStartXPosition = a.getDimension(R.styleable.AvatarImageBehavior_startXPosition, 0);
+            mCustomStartToolbarPosition = a.getDimension(R.styleable.AvatarImageBehavior_startToolbarPosition, 0);
+            mCustomStartHeight = a.getDimension(R.styleable.AvatarImageBehavior_startHeight, 0);
+            mCustomFinalHeight = a.getDimension(R.styleable.AvatarImageBehavior_finalHeight, 0);
 
             a.recycle();
         }
