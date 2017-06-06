@@ -54,6 +54,7 @@
         android:layout_height="36dp"
         android:text="@string/product_add_basket"
         android:textStyle="bold"
+        android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:layout_alignParentRight="true"
         android:paddingLeft="@dimen/paddingLeftRight_product_add_basket"

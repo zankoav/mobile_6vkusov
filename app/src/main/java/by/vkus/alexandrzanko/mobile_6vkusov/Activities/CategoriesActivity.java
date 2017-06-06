@@ -35,6 +35,7 @@ public class CategoriesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.activity_categories);
+
         addToolBarToScreen();
         mainCategories = singleton.getStore().getMainCategories();
         secondaryCategories = singleton.getStore().getSecondaryCategories();

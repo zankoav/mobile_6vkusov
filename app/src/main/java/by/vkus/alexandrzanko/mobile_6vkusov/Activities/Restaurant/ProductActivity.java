@@ -28,6 +28,7 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.BasketViewInterface;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ProductActivity extends AppCompatActivity implements BasketViewInterface {
 
@@ -197,6 +198,7 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
         if (freeFood != null){
             categories.add(0,freeFood);
         }
+        Collections.sort(categories);
         return categories;
     }
 

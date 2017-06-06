@@ -135,8 +135,8 @@ public class BasketAdapter extends BaseAdapter {
         holder.productName.setText(productItem.get_name());
         Picasso.with(context)
                 .load(productItem.get_icon())
-                .placeholder(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
-                .error(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
+                .placeholder(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.rest_icon) //показываем что-то, пока не загрузится указанная картинка
+                .error(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.rest_icon) // показываем что-то, если не удалось скачать картинку
                 .into(holder.productImg);
         return convertView;
     }

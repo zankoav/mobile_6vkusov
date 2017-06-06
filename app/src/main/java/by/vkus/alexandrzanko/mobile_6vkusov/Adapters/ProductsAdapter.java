@@ -78,8 +78,8 @@ public class ProductsAdapter extends BaseAdapter{
 
         Picasso.with(context)
                     .load(product.get_icon())
-                    .placeholder(R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
-                    .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
+                    .placeholder(R.drawable.rest_icon) //показываем что-то, пока не загрузится указанная картинка
+                    .error(R.drawable.rest_icon) // показываем что-то, если не удалось скачать картинку
                     .into(holder.productImg);
 
         if (category.equals("Еда за баллы")){

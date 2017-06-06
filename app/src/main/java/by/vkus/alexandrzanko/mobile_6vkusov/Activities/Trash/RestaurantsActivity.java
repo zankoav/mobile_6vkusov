@@ -59,7 +59,7 @@ public class RestaurantsActivity extends AppCompatActivity {
                 Restaurant restaurant = (Restaurant)listView.getItemAtPosition(position);
                 Log.i(TAG, "onItemClick: " + restaurant.get_name());
 //                Intent intent = new Intent(RestaurantsActivity.this, RestaurantActivity.class);
-//                intent.putExtra(EXTRA_RESTAURANT, restaurant.getSlug());
+//                intent.putExtra(EXTRA_RESTAURANT, restaurant.getRestaurant_slug());
 //                startActivity(intent);
             }
         });

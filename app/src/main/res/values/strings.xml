@@ -109,6 +109,9 @@
     <string name="api_invite">https://6vkusov.by/api/invite</string>
     <string name="api_user_points">https://6vkusov.by/api/user_points</string>
     <string name="api_change_data">https://6vkusov.by/api/change_user_data</string>
+    <string name="api_food_points">https://6vkusov.by/api/food_points</string>
+
+
 
     <!--Для REST API END-->
 
@@ -145,10 +148,16 @@
     <!-- ADAPTERS -->
 
     <!-- ProductAdapter (product_item_layout.xml) -->
-    <string name="product_add_basket">заказать</string>
+    <string name="product_add_basket">Заказать</string>
 
 
     <!-- ProductAdapter End -->
+
+    <!-- PromoAdapter (product_item_layout.xml) -->
+    <string name="promo_free_food">К ресторану</string>
+
+
+    <!-- PromoAdapter End -->
 
     <!-- ADAPTERS END -->
 

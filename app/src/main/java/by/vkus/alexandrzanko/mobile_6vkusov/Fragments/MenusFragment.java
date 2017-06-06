@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.ProductActivit
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.MenuAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
+import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.InetConnection;
 
 import java.util.ArrayList;
 

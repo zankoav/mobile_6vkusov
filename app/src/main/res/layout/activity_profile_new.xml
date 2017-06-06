@@ -35,8 +35,14 @@
                     android:layout_width="match_parent"
                     app:layout_scrollFlags="scroll|snap"
                     android:layout_height="match_parent"
-                    android:background="@drawable/line_gradient"
-                    android:padding="12dp">
+                    >
+
+                    <ImageView
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_background"
+                        />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/user_icon_view"
@@ -45,6 +51,7 @@
                         android:src="@drawable/user"
                         android:layout_marginRight="12dp"
                         app:border_color="@android:color/white"
+                        android:layout_margin="12dp"
                         app:border_width="2dp"/>
 
 
@@ -109,6 +116,7 @@
                         android:text="@string/button_call_friend"
                         android:textAllCaps="false"
                         android:onClick="callFriend"
+                        android:layout_marginRight="8dp"
                         android:layout_alignParentRight="true"
                         android:layout_alignBottom="@+id/user_change_data"
                         android:background="@android:color/transparent"

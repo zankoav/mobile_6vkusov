@@ -43,6 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class RestaurantActivity extends AppCompatActivity implements LoadJson, BasketViewInterface {
@@ -116,8 +117,8 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
 
         Picasso.with(this)
                 .load(restaurant.get_iconURL())
-                .placeholder(R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
-                .error(R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
+                .placeholder(R.drawable.rest_icon) //показываем что-то, пока не загрузится указанная картинка
+                .error(R.drawable.rest_icon) // показываем что-то, если не удалось скачать картинку
                 .into(imgView);
 
         kitchenType = (TextView)findViewById(R.id.user_email);
@@ -254,6 +255,7 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
                         }
                         Singleton.currentState().getStore().currentProducts = initProducts(prod,img_path);
                         categories = initCategories(Singleton.currentState().getStore().currentProducts);
+                        Collections.sort(categories);
                         setupViewPager(viewPager);
                     }
                 }

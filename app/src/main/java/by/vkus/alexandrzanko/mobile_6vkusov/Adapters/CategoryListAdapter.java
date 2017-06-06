@@ -1,6 +1,7 @@
 package by.vkus.alexandrzanko.mobile_6vkusov.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by alexandrzanko on 3/7/17.
  */
 
 public class CategoryListAdapter extends BaseAdapter {
+
+    private final String TAG = this.getClass().getSimpleName();
 
     private ArrayList<Category> listData, listData2;
     private LayoutInflater layoutInflater;
@@ -56,11 +60,13 @@ public class CategoryListAdapter extends BaseAdapter {
             ViewHolder holder;
             convertView = layoutInflater.inflate(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.category_type_1, null);
             holder = new ViewHolder();
-            holder.titleView = (TextView) convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.title);
+            holder.titleView = (TextView) convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.name);
             holder.imageView = (ImageView)convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.thumbImage);
             convertView.setTag(holder);
             Category category = listData.get(position);
+
             holder.titleView.setText(category.getTitle());
+
             Picasso.with(context)
                     .load(category.getUrlImg())
                     .placeholder(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка

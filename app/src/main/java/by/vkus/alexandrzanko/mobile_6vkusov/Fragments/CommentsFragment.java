@@ -13,6 +13,7 @@ import android.widget.ListView;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.CommentsAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Comment;
+import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.InetConnection;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 
@@ -37,11 +38,14 @@ public class CommentsFragment extends Fragment implements LoadJson {
 
     private final String TAG = this.getClass().getSimpleName();
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createView();
+    }
+
+
+    private void createView(){
         slug = ((RestaurantActivity)this.getActivity()).getRestaurant().get_slug();
         if (comments == null){
             comments = new ArrayList<>();
@@ -68,6 +72,9 @@ public class CommentsFragment extends Fragment implements LoadJson {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
+
         listView = (ListView) getView().findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.listComments);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             listView.setNestedScrollingEnabled(true);
@@ -92,10 +99,9 @@ public class CommentsFragment extends Fragment implements LoadJson {
                         String name = array.getJSONObject(i).getString("user");
                         String imgLogoStr = baseUrl  + "/" + array.getJSONObject(i).getString("avatarFile");
                         long time = array.getJSONObject(i).getLong("date_time");
-                        Date date = new Date(time*1000);
+                        Date date = new Date(time * 1000);
                         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                         String dateFormatted = formatter.format(date);
-                        Log.i(TAG, "loadComplete: " + dateFormatted);
                         comments.add(new Comment(dateFormatted, type, name, text, title, imgLogoStr));
                     }
                 }
