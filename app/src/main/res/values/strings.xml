@@ -117,6 +117,7 @@
 
     <!--Errors-->
     <string name="error_server">Ошибка соединения, попробуйте еще раз</string>
+    <string name="error_net">Ошибка соединения с интернетом</string>
     <string name="error_min_name_length">Слишком короткое имя</string>
     <string name="error_name_only_literals">Имя должно состоять только из букв</string>
     <string name="error_email">Не верный формат email</string>

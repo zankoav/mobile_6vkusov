@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.BasketActivity;
-import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Trash.RestaurantsActivity;
+import by.vkus.alexandrzanko.mobile_6vkusov.Activities.RestaurantsCardActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.CommentsFragment;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.InfoFragment;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.MenusFragment;
@@ -73,7 +73,7 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
         setContentView(R.layout.activity_restaurant);
         this.singleton = Singleton.currentState();
         singleton.getUser().getBasket().setDelegateContext(this);
-        String slug = getIntent().getStringExtra(RestaurantsActivity.EXTRA_RESTAURANT);
+        String slug = getIntent().getStringExtra(RestaurantsCardActivity.EXTRA_RESTAURANT);
         this.restaurant = singleton.getStore().getRestaurantBySlug(slug);
         favorite = (Button)findViewById(R.id.favorite);
         if (Singleton.currentState().getUser().getStatus() == STATUS.GENERAL){

@@ -12,9 +12,10 @@
 
         <ImageView
             android:id="@+id/product_icon"
+            android:src="@drawable/product"
             android:layout_width="@dimen/product_icon_width"
             android:layout_height="@dimen/product_icon_height"
-            android:scaleType="fitXY"/>
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/product_name"

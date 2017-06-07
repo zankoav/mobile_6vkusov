@@ -9,11 +9,22 @@
 
     <ImageView
         android:id="@+id/iv_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_above="@+id/et_name"
-        android:background="@drawable/ic_logo"
+        android:src="@drawable/ic_logo_search"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/iv_circle"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
+        android:layout_alignLeft="@+id/iv_profile"
+        android:layout_marginBottom="41dp"
+        android:layout_marginLeft="8.5dp"
+        android:layout_alignBottom="@+id/iv_profile"
+
+        android:src="@drawable/ic_cercle"/>
 
     <EditText
         android:id="@+id/et_name"

@@ -73,8 +73,8 @@ public class PromoAdapter extends BaseAdapter {
 
         Picasso.with(context)
                 .load(food.getUrlImg())
-                .placeholder(R.drawable.rest_icon) //показываем что-то, пока не загрузится указанная картинка
-                .error(R.drawable.rest_icon) // показываем что-то, если не удалось скачать картинку
+                .placeholder(R.drawable.product) //показываем что-то, пока не загрузится указанная картинка
+                .error(R.drawable.product) // показываем что-то, если не удалось скачать картинку
                 .into(holder.productImg);
 
 

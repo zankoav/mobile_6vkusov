@@ -16,6 +16,7 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.AlertCommentsDialog;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.OrderFragment;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItemFood;
+import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 import com.squareup.picasso.Picasso;
 
@@ -64,15 +65,15 @@ public class OrderAdapter extends BaseAdapter  implements LoadJson {
     public View getView(int position, View convertView, ViewGroup parent) {
         final OrderAdapter.ViewHolder holder;
 
-        convertView = layoutInflater.inflate(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.order_item_layout, null);
+        convertView = layoutInflater.inflate(R.layout.order_item_layout, null);
         holder = new OrderAdapter.ViewHolder();
 
-        holder.restImg = (ImageView) convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.restaurants_icon);
-        holder.orderName = (TextView) convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.restaurants_name);
-        holder.orderDate = (TextView) convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.order_date);
-        holder.orderPrice = (TextView) convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.price);
-        holder.itemsListView = (ListView) convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.foodListView);
-        holder.commentBtn = (Button) convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.button_comment);
+        holder.restImg = (ImageView) convertView.findViewById(R.id.restaurants_icon);
+        holder.orderName = (TextView) convertView.findViewById(R.id.restaurants_name);
+        holder.orderDate = (TextView) convertView.findViewById(R.id.order_date);
+        holder.orderPrice = (TextView) convertView.findViewById(R.id.price);
+        holder.itemsListView = (ListView) convertView.findViewById(R.id.foodListView);
+        holder.commentBtn = (Button) convertView.findViewById(R.id.button_comment);
 
         convertView.setTag(holder);
 
@@ -104,8 +105,8 @@ public class OrderAdapter extends BaseAdapter  implements LoadJson {
 
             Picasso.with(context.getContext())
                     .load(item.getRestaurant().get_iconURL())
-                    .placeholder(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
-                    .error(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
+                    .placeholder(R.drawable.rest_icon) //показываем что-то, пока не загрузится указанная картинка
+                    .error(R.drawable.rest_icon) // показываем что-то, если не удалось скачать картинку
                     .into(holder.restImg);
 
 

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Category;
+import by.vkus.alexandrzanko.mobile_6vkusov.R;
 
 import com.squareup.picasso.Picasso;
 
@@ -58,10 +59,10 @@ public class CategoryListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (position < listData.size()) {
             ViewHolder holder;
-            convertView = layoutInflater.inflate(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.category_type_1, null);
+            convertView = layoutInflater.inflate(R.layout.category_type_1, null);
             holder = new ViewHolder();
-            holder.titleView = (TextView) convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.name);
-            holder.imageView = (ImageView)convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.thumbImage);
+            holder.titleView = (TextView) convertView.findViewById(R.id.name);
+            holder.imageView = (ImageView)convertView.findViewById(R.id.thumbImage);
             convertView.setTag(holder);
             Category category = listData.get(position);
 
@@ -69,14 +70,14 @@ public class CategoryListAdapter extends BaseAdapter {
 
             Picasso.with(context)
                     .load(category.getUrlImg())
-                    .placeholder(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_thumbs_up) //показываем что-то, пока не загрузится указанная картинка
-                    .error(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.ic_thumb_down) // показываем что-то, если не удалось скачать картинку
+                    .placeholder(R.drawable.category) //показываем что-то, пока не загрузится указанная картинка
+                    .error(R.drawable.category) // показываем что-то, если не удалось скачать картинку
                     .into(holder.imageView);
         }else{
             ViewHolder2 holder;
-            convertView = layoutInflater.inflate(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.category_type_2, null);
+            convertView = layoutInflater.inflate(R.layout.category_type_2, null);
             holder = new ViewHolder2();
-            holder.titleView = (TextView) convertView.findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.cat2_title);
+            holder.titleView = (TextView) convertView.findViewById(R.id.cat2_title);
             convertView.setTag(holder);
             Category category = listData2.get(position - listData.size());
             holder.titleView.setText(category.getTitle());

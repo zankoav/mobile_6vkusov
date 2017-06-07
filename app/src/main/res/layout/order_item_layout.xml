@@ -73,10 +73,11 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="6dp"
-        android:background="@drawable/buttons_style"
+        android:background="@drawable/shape_corner_green"
         android:layout_alignLeft="@+id/restaurants_name"
         android:layout_below="@+id/order_date"
         android:text="Написать отзыв"
+        android:textColor="@color/colorWhite"
         android:textSize="11sp" />
 
 

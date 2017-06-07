@@ -78,8 +78,8 @@ public class ProductsAdapter extends BaseAdapter{
 
         Picasso.with(context)
                     .load(product.get_icon())
-                    .placeholder(R.drawable.rest_icon) //показываем что-то, пока не загрузится указанная картинка
-                    .error(R.drawable.rest_icon) // показываем что-то, если не удалось скачать картинку
+                    .placeholder(R.drawable.product) //показываем что-то, пока не загрузится указанная картинка
+                    .error(R.drawable.product) // показываем что-то, если не удалось скачать картинку
                     .into(holder.productImg);
 
         if (category.equals("Еда за баллы")){
@@ -97,7 +97,7 @@ public class ProductsAdapter extends BaseAdapter{
                 if (points < product.get_points()){
                     holder.addToBasketButton.setEnabled(false);
                     holder.addToBasketButton.setBackgroundResource(R.drawable.shape_corner);
-                    holder.addToBasketButton.setText("не достаточно баллов");
+                    holder.addToBasketButton.setText("Мало баллов");
                 }
             }
             holder.productDescription.setText(product.get_points() + " баллов");

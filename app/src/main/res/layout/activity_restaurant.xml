@@ -84,7 +84,7 @@
                         android:layout_marginTop="8dp"
                         android:textColor="@color/colorWhite"
                         android:text="Кухни Кухни Кухни Кухни Кухни "
-                        android:maxLines="2"
+                        android:maxLines="1"
                         android:textSize="14sp"/>
 
                     <TextView
@@ -127,7 +127,7 @@
                         android:scaleType="centerCrop"
                         android:layout_marginRight="4dp"
                         android:layout_toLeftOf="@+id/restaurant_dislikes"
-                        android:layout_alignBottom="@+id/user_change_data" />
+                        android:layout_alignBottom="@+id/user_change_data"/>
 
                     <TextView
                         android:id="@+id/restaurant_dislikes"
@@ -147,8 +147,7 @@
                         android:src="@drawable/ic_thumbs_up"
                         android:scaleType="centerCrop"
                         android:layout_toLeftOf="@+id/restaurant_likes"
-                        android:layout_alignBottom="@+id/user_change_data"
-                        />
+                        android:layout_alignBottom="@+id/user_change_data"/>
 
                     <TextView
                         android:id="@+id/restaurant_likes"
@@ -232,11 +231,6 @@
             </FrameLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
-
-        <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:background="@color/colorBeige"/>-->
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_actionbar_restaurant"

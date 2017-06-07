@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void loginButtonClick(View view) {
         STATUS status = singleton.getUser().getStatus();
-        Intent intent = status == STATUS.GENERAL? new Intent(this, LoginActivity.class): new Intent(this,ProfileActivityNew.class);
+        Intent intent = status == STATUS.GENERAL? new Intent(this, LoginActivity.class): new Intent(this,ProfileActivity.class);
         this.startActivity(intent);
     }
 

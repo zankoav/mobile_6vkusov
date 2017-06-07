@@ -33,12 +33,6 @@
             android:name=".Activities.CategoriesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ProfileActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activities.Trash.RestaurantsActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Activities.RestaurantsCardActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -55,7 +49,7 @@
             android:parentActivityName=".Activities.Restaurant.RestaurantActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ProfileActivityNew"
+            android:name=".Activities.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.UserCallFriendsActivity"
