@@ -3,10 +3,8 @@ package by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,13 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-
-import by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivity;
-import by.vkus.alexandrzanko.mobile_6vkusov.Activities.RestaurantsCardActivity;
-import by.vkus.alexandrzanko.mobile_6vkusov.LocalStorage;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.InetConnection;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
@@ -109,7 +101,7 @@ public class RememberActivity extends AppCompatActivity implements LoadJson {
         button =  (Button) findViewById(R.id.btn_save);
         imageLogo = (ImageView) findViewById(R.id.iv_circle);
         anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.android_rotate_animation);
-        anim.setRepeatCount(Animation.INFINITE);
+        anim.setRepeatCount(10);
     }
 
     public void sendPressed(View view) {

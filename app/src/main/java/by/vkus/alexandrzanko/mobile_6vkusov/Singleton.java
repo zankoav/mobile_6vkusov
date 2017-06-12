@@ -33,6 +33,10 @@ public class Singleton {
             this.context = context;
         }
         ((MainActivity)this.context).lunchScreen.setVisibility(View.VISIBLE);
+        ((MainActivity)this.context).logoViewCircle.setVisibility(View.VISIBLE);
+        ((MainActivity)this.context).showAnimation();
+        ((MainActivity)this.context).logoView.setVisibility(View.VISIBLE);
+
         store = new LocalStorage(this.context);
     }
 

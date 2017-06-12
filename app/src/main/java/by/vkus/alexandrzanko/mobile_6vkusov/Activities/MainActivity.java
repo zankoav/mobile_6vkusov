@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout generalMenu, registerMenu;
     private TextView loginOrProfile;
     private CircleImageView userLogo;
-    public ImageView lunchScreen;
+    public ImageView lunchScreen, logoView, logoViewCircle;
+    private Animation anim;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
         loginOrProfile = (TextView) findViewById(R.id.btn_save);
         userLogo = (CircleImageView)findViewById(R.id.iv_user);
         lunchScreen = (ImageView)findViewById(R.id.iv_lunchScreen);
+        logoView = (ImageView)findViewById(R.id.search_view);
+        logoViewCircle = (ImageView)findViewById(R.id.search_view_circle);
+        anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.android_rotate_animation);
+        anim.setRepeatCount(10);
         singleton.initStore(this);
     }
 
@@ -49,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         lunchScreen.setVisibility(View.GONE);
+        logoViewCircle.setVisibility(View.GONE);
+        logoView.setVisibility(View.GONE);
     }
 
     public void loadComplete(){
@@ -69,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
                         .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
                         .into(userLogo);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -96,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
                 LocalStorage store = singleton.getStore();
                 store.clearKeyStorage(store.APP_PROFILE);
                 lunchScreen.setVisibility(View.VISIBLE);
+                logoViewCircle.setVisibility(View.VISIBLE);
+                showAnimation();
+                logoView.setVisibility(View.VISIBLE);
                 singleton.initStore(MainActivity.this);
             }
         });
@@ -111,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+    public void showAnimation(){
+        logoViewCircle.startAnimation(anim);
     }
 
     public void bonusProgramPressed(View view) {

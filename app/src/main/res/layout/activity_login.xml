@@ -9,11 +9,21 @@
 
     <ImageView
         android:id="@+id/iv_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_above="@+id/tv_social"
-        android:background="@drawable/ic_logo"
+        android:background="@drawable/ic_logo_search"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/iv_circle_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="70dp"
+        android:layout_alignBottom="@+id/iv_profile"
+        android:layout_alignLeft="@+id/iv_profile"
+        android:background="@drawable/ic_cercle"/>
 
     <TextView
         android:id="@+id/tv_social"
