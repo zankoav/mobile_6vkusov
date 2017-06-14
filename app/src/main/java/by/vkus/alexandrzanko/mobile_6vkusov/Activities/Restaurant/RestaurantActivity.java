@@ -127,9 +127,9 @@ public class RestaurantActivity extends AppCompatActivity implements LoadJson, B
         String price = Validation.twoNumbersAfterAfterPoint(restaurant.get_minimal_price());
         minDeliveryPrice.setText(price + " руб");
         deliveryTime = (TextView)findViewById(R.id.rest_working_time_text);
-        deliveryTime.setText(restaurant.get_delivery_time() + " мин.");
+        deliveryTime.setText(restaurant.get_working_time());
         deliveryPrice = (TextView)findViewById(R.id.rest_delivery_price);
-        deliveryPrice.setText(getResources().getText(R.string.rest_delivery_price_free));
+        deliveryPrice.setText(restaurant.get_delivery_time() + " мин.");
         commentsLike = (TextView)findViewById(R.id.restaurant_likes);
         commentsDislike = (TextView)findViewById(R.id.restaurant_dislikes);
         commentsLike.setText(restaurant.get_comments().get("likes") + "");
