@@ -26,6 +26,7 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Users.Basket;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
+import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,9 +95,20 @@ public class CheckOutActivity extends AppCompatActivity implements LoadJson {
 
     public void buttonPressed(View view) {
         messageError = null;
+        String name = this.name.getText().toString().trim();
         String phone = this.phone.getText().toString().trim();
         String street = this.street.getText().toString().trim();
-        if (validateData(phone, street)) {
+
+        if (!Validation.minLength(name, 2)){
+            Toast toast = Toast.makeText(getApplicationContext(),"Слишком короткое имя", Toast.LENGTH_SHORT);
+            toast.show();
+        }else if (!Validation.namePhoneNumbers(phone)){
+            Toast toast = Toast.makeText(getApplicationContext(),"Номер телефона имеет формат +375XXYYYYYYY", Toast.LENGTH_SHORT);
+            toast.show();
+        }else if(!Validation.minLength(street, 3)){
+            Toast toast = Toast.makeText(getApplicationContext(),"Введите адрес доставки", Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
             nameStr = this.name.getText().toString().trim();
             houseStr = this.house.getText().toString().trim();
             blockStr = this.block.getText().toString().trim();
@@ -108,8 +120,25 @@ public class CheckOutActivity extends AppCompatActivity implements LoadJson {
             try {
                 params.put("fio", nameStr);
                 params.put("phone", phone);
+
+
+                if (!houseStr.equals("") && !Validation.nameLiteralsAndNumbers(houseStr)){
+                    Toast toast = Toast.makeText(getApplicationContext(),"Не корректно введен номер дома", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+
                 params.put("address", street + " " + houseStr);
-                params.put("flat", flatStr);
+
+                if (!flatStr.equals("") && !Validation.nameLiteralsAndNumbers(flatStr)){
+                    Toast toast = Toast.makeText(getApplicationContext(),"Не корректно введен номер квартиры", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+
+                if (!flatStr.equals("")) {
+                    params.put("flat", flatStr);
+                }
 //                params.put("porch", "Подъезд");
 //                params.put("floor", "Этаж");
 //                params.put("intercom", "Код домофона");
@@ -120,7 +149,6 @@ public class CheckOutActivity extends AppCompatActivity implements LoadJson {
 //                params.put("payment-method", "тип оплаты");
 //                params.put("change", "сдача");
 //                params.put("delivery-type", "тип доставки, самовывоз, значения 1 или 2");
-
                 if (Singleton.currentState().getUser().getStatus() == STATUS.GENERAL){
                     params.put("variants", Singleton.currentState().getUser().getBasket().getItemsJson());
                 }else{
@@ -131,9 +159,6 @@ public class CheckOutActivity extends AppCompatActivity implements LoadJson {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }else{
-            Toast toast = Toast.makeText(getApplicationContext(),messageError, Toast.LENGTH_SHORT);
-            toast.show();
         }
     }
 

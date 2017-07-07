@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">6 Вкусов</string>
-    <string name="app_version">Версия 1.1</string>
+    <string name="app_version">Версия 1.3</string>
 
     <!--Для MenuActivity-->
     <string name="menu_title">Меню</string>

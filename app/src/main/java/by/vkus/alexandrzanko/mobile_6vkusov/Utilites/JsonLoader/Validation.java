@@ -35,6 +35,12 @@ public class Validation {
         return  matcher.find();
     }
 
+    public static boolean namePhoneNumbers(String name){
+        Pattern namePattern = Pattern.compile("^\\+375(29|25|44|33)\\d{7}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = namePattern.matcher(name);
+        return  matcher.find();
+    }
+
     public static String twoNumbersAfterAfterPoint(double number){
         return String.format("%.2f", number);
     }
