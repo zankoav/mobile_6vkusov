@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         generalMenu = (LinearLayout)findViewById(R.id.generalMenu);
         registerMenu = (LinearLayout)findViewById(R.id.registerMenu);
         loginOrProfile = (TextView) findViewById(R.id.btn_save);
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.android_rotate_animation);
         anim.setRepeatCount(10);
         singleton.initStore(this);
+
     }
 
     @Override

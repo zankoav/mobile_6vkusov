@@ -167,4 +167,10 @@
     <string name="button_call_friend">Позвать друга</string>
 
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+
 </resources>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_categories"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBeige"
-    tools:context="by.vkus.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivity">
-
-    <include layout="@layout/action_bar"/>
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main">
 
     <ListView
         android:id="@+id/category_list"
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:divider="@color/colorCheckOut"
         android:dividerHeight="1dp"
-        android:layout_below="@+id/action_bar"
+        android:layout_below="@+id/toolbar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
     </ListView>
