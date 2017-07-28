@@ -52,13 +52,7 @@ public class LocalStorage implements LoadJson{
         this.store = context.getSharedPreferences(APP_STORE, Context.MODE_PRIVATE);
         this.context = context;
         Singleton.currentState().setUser(null);
-        clearKeyStorage(APP_CATEGORIES);
         clearKeyStorage(APP_RESTAURANTS);
-
-
-        JSONObject paramsCategories = new JSONObject();
-        String urlCat = context.getResources().getString(R.string.api_categories);
-        new JsonHelperLoad(urlCat, paramsCategories, this, APP_CATEGORIES).execute();
 
         JSONObject paramsRestaurants = new JSONObject();
         String urlRest = context.getResources().getString(R.string.api_restaurants);
@@ -122,7 +116,6 @@ public class LocalStorage implements LoadJson{
                 }
             }
             if(Singleton.currentState().getUser() != null &&
-               getStringValueStorage(APP_CATEGORIES) != null &&
                getStringValueStorage(APP_RESTAURANTS) != null)
             {
                 Log.i(TAG, "loadComplete: ");
@@ -132,63 +125,6 @@ public class LocalStorage implements LoadJson{
             Log.i(TAG,"Error connection");
         }
     }
-
-
-    public ArrayList<Category> getMainCategories(){
-        ArrayList<Category> categories = new ArrayList<>();
-        String catsSTR = getStringValueStorage(APP_CATEGORIES);
-        JSONObject categoriesHash = null;
-        try {
-            JSONObject hash = new JSONObject(catsSTR);
-            categoriesHash = hash.getJSONObject("message");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            String img_path = categoriesHash.getString("img_path");
-            JSONArray cats = categoriesHash.getJSONArray("categories");
-            for (int i=0; i<cats.length(); i++) {
-                int type = cats.getJSONObject(i).getInt("type");
-                String name = cats.getJSONObject(i).getString("name");
-                String slug = cats.getJSONObject(i).getString("slug");
-                if (type == 1) {
-                    String image = cats.getJSONObject(i).getString("image");
-                    String url = this.context.getResources().getString(R.string.api_base) + img_path + "/" + image;
-                    categories.add(new Category(name, slug, url, type));
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return categories;
-    }
-
-    public ArrayList<Category> getSecondaryCategories(){
-        ArrayList<Category> categories = new ArrayList<>();
-        String catsSTR = getStringValueStorage(APP_CATEGORIES);
-        JSONObject categoriesHash = null;
-        try {
-            JSONObject hash = new JSONObject(catsSTR);
-            categoriesHash = hash.getJSONObject("message");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            JSONArray cats = categoriesHash.getJSONArray("categories");
-            for (int i=0; i<cats.length(); i++) {
-                int type = cats.getJSONObject(i).getInt("type");
-                String name = cats.getJSONObject(i).getString("name");
-                String slug = cats.getJSONObject(i).getString("slug");
-                if (type == 2) {
-                    categories.add(new Category(name, slug, null, type));
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return categories;
-    }
-
 
     public ArrayList<Restaurant> getRestaurants(String slug){
         if (slug.equals("all")){

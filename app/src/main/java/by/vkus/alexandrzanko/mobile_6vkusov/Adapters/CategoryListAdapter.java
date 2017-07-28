@@ -1,7 +1,6 @@
 package by.vkus.alexandrzanko.mobile_6vkusov.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.Category;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.MCategory;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -25,17 +25,38 @@ public class CategoryListAdapter extends BaseAdapter {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    private ArrayList<Category> listData, listData2;
+    private ArrayList<MCategory> listData, listData2;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public CategoryListAdapter(Context context, ArrayList<Category> listData, ArrayList<Category> listData2) {
-        this.listData = listData;
-        this.listData2 = listData2;
+    public CategoryListAdapter(Context context, List<MCategory> categories) {
+        this.listData = getMainCategories(categories);
+        this.listData2 = getSecondaryCategories(categories);
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
 
     }
+
+    private ArrayList<MCategory> getMainCategories(List<MCategory> categories){
+        ArrayList<MCategory> mainCategories = new ArrayList<>();
+        for (MCategory category : categories) {
+            if (category.getType().equals(1)){
+                mainCategories.add(category);
+            }
+        }
+        return mainCategories;
+    }
+
+    private ArrayList<MCategory> getSecondaryCategories(List<MCategory> categories){
+        ArrayList<MCategory> secondaryCategories = new ArrayList<>();
+        for (MCategory category : categories) {
+            if (category.getType().equals(2)){
+                secondaryCategories.add(category);
+            }
+        }
+        return secondaryCategories;
+    }
+
 
     @Override
     public int getCount() {
@@ -64,12 +85,11 @@ public class CategoryListAdapter extends BaseAdapter {
             holder.titleView = (TextView) convertView.findViewById(R.id.name);
             holder.imageView = (ImageView)convertView.findViewById(R.id.thumbImage);
             convertView.setTag(holder);
-            Category category = listData.get(position);
+            MCategory category = listData.get(position);
 
-            holder.titleView.setText(category.getTitle());
-
+            holder.titleView.setText(category.getName());
             Picasso.with(context)
-                    .load(category.getUrlImg())
+                    .load(category.getImage())
                     .placeholder(R.drawable.category) //показываем что-то, пока не загрузится указанная картинка
                     .error(R.drawable.category) // показываем что-то, если не удалось скачать картинку
                     .into(holder.imageView);
@@ -79,8 +99,8 @@ public class CategoryListAdapter extends BaseAdapter {
             holder = new ViewHolder2();
             holder.titleView = (TextView) convertView.findViewById(R.id.cat2_title);
             convertView.setTag(holder);
-            Category category = listData2.get(position - listData.size());
-            holder.titleView.setText(category.getTitle());
+            MCategory category = listData2.get(position - listData.size());
+            holder.titleView.setText(category.getName());
         }
 
         return convertView;

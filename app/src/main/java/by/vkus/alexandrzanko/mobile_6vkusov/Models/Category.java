@@ -7,15 +7,15 @@ package by.vkus.alexandrzanko.mobile_6vkusov.Models;
 public class Category{
 
     private String slug;
-    private String title;
-    private String urlImg;
+    private String name;
+    private String image;
     private int type;
 
 
-    public Category( String title, String slug, String urlImg, int type) {
+    public Category(String name, String slug, String image, int type) {
         this.slug = slug;
-        this.title = title;
-        this.urlImg = urlImg;
+        this.name = name;
+        this.image = image;
         this.type = type;
 
     }
@@ -24,11 +24,11 @@ public class Category{
 
     public String getSlug() {return slug;}
 
-    public String getUrlImg() {
-        return urlImg;
+    public String getImage() {
+        return image;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 }

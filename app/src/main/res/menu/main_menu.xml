@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/shopping_cart"
-        android:name="Корзина"
+        android:title="Корзина"
         app:showAsAction="always"/>
 
     <!--app:actionLayout="@layout/menu_basket_icon"-->

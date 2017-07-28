@@ -3,19 +3,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_food"
             android:icon="@drawable/ic_hamburger"
             android:title="Еда"/>
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_free_food"
             android:icon="@drawable/ic_star"
             android:title="Еда за баллы"/>
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_our_bonuses"
             android:icon="@drawable/ic_gift"
             android:title="Обменять баллы"/>
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_favorites"
             android:icon="@drawable/ic_favorite"
             android:title="Любимые рестораны"/>
     </group>
@@ -23,11 +23,11 @@
     <item android:title="Дополнительно">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_info"
                 android:icon="@drawable/ic_info"
                 android:title="О программе"/>
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"
                 android:title="Выход"/>
         </menu>
