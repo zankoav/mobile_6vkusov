@@ -98,7 +98,6 @@ public class RestaurantsCardActivity extends AppCompatActivity implements LoadJs
         if (!isFavorite){
             String slug = bundle.getString(SLUG);
             title = bundle.getString(NAME);
-
             restaurants = singleton.getStore().getRestaurants(slug);
         }
         addToolBarToScreen();

@@ -1,12 +1,9 @@
 package by.vkus.alexandrzanko.mobile_6vkusov.Activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.LoginActivity;
-import by.vkus.alexandrzanko.mobile_6vkusov.LocalStorage;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
@@ -28,14 +24,12 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG = this.getClass().getSimpleName();
     private Singleton singleton = Singleton.currentState();
     private LinearLayout generalMenu, registerMenu;
     private TextView loginOrProfile;
     private CircleImageView userLogo;
     public ImageView lunchScreen, logoView, logoViewCircle;
     private Animation anim;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.android_rotate_animation);
         anim.setRepeatCount(10);
         singleton.initStore(this);
-
+        showAnimation();
     }
 
     @Override
@@ -88,11 +82,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Intent intent = new Intent(this, CategoriesActivity.class);
         this.startActivity(intent);
-    }
-
-    public void foodMenuPressed(View view) {
-        Intent intent = new Intent(this, CategoriesActivity.class);
-        this.startActivity(intent);
+        this.finish();
     }
 
     public void loginButtonClick(View view) {
@@ -101,47 +91,9 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
-    public void exitMenuPressed(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Вы хотите выйдти?");
-        builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int arg1) {
-                LocalStorage store = singleton.getStore();
-                store.clearKeyStorage(store.APP_PROFILE);
-                lunchScreen.setVisibility(View.VISIBLE);
-                logoViewCircle.setVisibility(View.VISIBLE);
-                showAnimation();
-                logoView.setVisibility(View.VISIBLE);
-                singleton.initStore(MainActivity.this);
-            }
-        });
-        builder.setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int arg1) {
 
-            }
-        });
-        builder.setCancelable(true);
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            public void onCancel(DialogInterface dialog) {
-
-            }
-        });
-        builder.show();
-    }
 
     public void showAnimation(){
         logoViewCircle.startAnimation(anim);
-    }
-
-    public void bonusProgramPressed(View view) {
-        Log.i(TAG, "bonusProgramPressed");
-    }
-
-    public void favoriteRestaurants(View view) {
-        Log.i(TAG, "favoriteRestaurants");
-        Intent intent = new Intent(MainActivity.this, RestaurantsCardActivity.class);
-        intent.putExtra("favorite", true);
-        startActivity(intent);
-
     }
 }

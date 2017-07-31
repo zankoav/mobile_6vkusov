@@ -29,11 +29,8 @@ import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseMenuActivity {
 
-    private final String TAG = this.getClass().getSimpleName();
-
-    private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Singleton singleton;
@@ -49,7 +46,10 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_new);
+        setContentView(R.layout.activity_profile);
+
+        initViews(this.getString(R.string.rest_menu));
+
         this.singleton = Singleton.currentState();
         JSONObject profile = singleton.getUser().getProfile();
 
@@ -67,8 +67,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         buttonUnderlineText(btnChangeInfo);
         buttonUnderlineText(btnCallFriends);
-
-        addToolBarToScreen();
 
         try {
             String name = profile.getString("firstName");
@@ -89,36 +87,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         setupViewPager(viewPager);
 
-    }
-
-    private void addToolBarToScreen() {
-        toolbar = (Toolbar)findViewById(R.id.toolbar_actionbar_restaurant);
-        toolbar.setTitle(R.string.rest_menu);
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setSubtitleTextColor(Color.WHITE);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                }
-        );
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        MenuItem item = menu.findItem(R.id.shopping_cart);
-        MenuItemCompat.setActionView(item, R.layout.user_bonus_layout);
-        LinearLayout bonusCount = (LinearLayout) MenuItemCompat.getActionView(item);
-        TextView bonusCountTextView = (TextView)bonusCount.findViewById(R.id.bonus_count);
-        Integer bonuses = singleton.getUser().getPoints();
-        bonusCountTextView.setText(bonuses.toString() + " баллов");
-        return super.onCreateOptionsMenu(menu);
     }
 
     private void setupViewPager(ViewPager viewPager){

@@ -69,6 +69,22 @@
     <string name="login_button_maybe_reg">У Вас еще нет аккаунта? ЗАРЕГИСТРИРОВАТЬСЯ</string>
     <!--Для LoginActivity END-->
 
+    <!--Для OurPointsActivity-->
+    <string name="our_points_title">Обменять баллы</string>
+    <!--Для OurPointsActivity END-->
+
+    <!--Для InfoActivity-->
+    <string name="info_title">О программе</string>
+    <!--Для InfoActivity END-->
+
+    <!--Для FreeFoodActivity-->
+    <string name="free_food_title">Еда за баллы</string>
+    <!--Для FreeFoodActivity END-->
+
+    <!--Для FavoritesRestaurantsActivity-->
+    <string name="favorites_restaurants_title">Любимые рестораны</string>
+    <!--Для FavoritesRestaurantsActivity END-->
+
     <!--Для RegistrationActivity-->
     <string name="reg_title">Регистрация</string>
     <string name="reg_first_name">Имя</string>
@@ -110,7 +126,6 @@
     <string name="api_user_points">https://6vkusov.by/api/user_points</string>
     <string name="api_change_data">https://6vkusov.by/api/change_user_data</string>
     <string name="api_food_points">https://6vkusov.by/api/food_points</string>
-
 
 
     <!--Для REST API END-->
@@ -172,5 +187,7 @@
 
     <string name="action_settings">Settings</string>
 
-
+    <!-- Facebook id -->
+    <string name="facebook_app_id">1508894532517367</string>
+    <string name="fb_login_protocol_scheme">fb1508894532517367</string>
 </resources>

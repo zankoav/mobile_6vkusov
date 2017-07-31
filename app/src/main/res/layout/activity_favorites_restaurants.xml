@@ -10,7 +10,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_main"
+        layout="@layout/app_bar_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -24,7 +24,7 @@
         app:itemTextColor="@color/colorDarkHeader"
         android:fitsSystemWindows="true"
         app:arc_cropDirection="cropInside"
-        app:arc_width="96dp"
+        app:arc_width="0dp"
         app:itemBackground="@android:color/white"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer"/>

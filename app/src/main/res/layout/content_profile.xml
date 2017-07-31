@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_scrollFlags="scroll|snap"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_background"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_icon_view"
+        android:layout_width="@dimen/image_width"
+        android:layout_height="@dimen/image_width"
+        android:src="@drawable/user"
+        android:layout_marginRight="12dp"
+        app:border_color="@android:color/white"
+        android:layout_margin="12dp"
+        app:border_width="2dp"/>
+
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:layout_marginRight="8dp"
+        android:text="Александр"
+        android:maxLines="1"
+        android:layout_toRightOf="@+id/user_icon_view"
+        android:layout_alignTop="@+id/user_icon_view"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/user_icon_view"
+        android:layout_below="@+id/user_name"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorWhite"
+        android:text="zankoav@mail.ru"
+        android:maxLines="1"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/user_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/user_icon_view"
+        android:layout_below="@+id/user_email"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorWhite"
+        android:text="+375295558386"
+        android:maxLines="1"
+        android:textSize="16sp"/>
+
+
+    <Button
+        android:id="@+id/user_change_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/user_icon_view"
+        android:layout_alignRight="@+id/user_icon_view"
+        android:layout_below="@+id/user_icon_view"
+        android:textColor="@color/colorWhite"
+        android:text="@string/button_change_user_data"
+        android:textAllCaps="false"
+        android:onClick="changeSettings"
+        android:background="@android:color/transparent"
+        android:textSize="12sp"/>
+
+
+    <Button
+        android:id="@+id/user_call_friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:text="@string/button_call_friend"
+        android:textAllCaps="false"
+        android:onClick="callFriend"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/user_change_data"
+        android:background="@android:color/transparent"
+        android:textSize="12sp"/>
+
+</RelativeLayout>
