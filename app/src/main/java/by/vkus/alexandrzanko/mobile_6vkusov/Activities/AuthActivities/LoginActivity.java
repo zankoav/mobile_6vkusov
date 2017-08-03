@@ -11,10 +11,11 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -23,33 +24,32 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
+import com.vk.sdk.VKScope;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
+import com.vk.sdk.api.model.VKList;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.BaseMenuActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivity;
-import by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivity;
-import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.CategoryListAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
-import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
-import by.vkus.alexandrzanko.mobile_6vkusov.LocalStorage;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.MCategory;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.UserRegister;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
-import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
-import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
 
-public class LoginActivity extends BaseMenuActivity implements LoadJson, Callback<UserRegister> {
+public class LoginActivity extends BaseMenuActivity implements Callback<UserRegister> {
 
     static final private int RESET_PASSWORD = 1;
     static final private int REGISTRATION_USER = 2;
@@ -57,11 +57,15 @@ public class LoginActivity extends BaseMenuActivity implements LoadJson, Callbac
     private CallbackManager callbackManager;
 
     private EditText email,password;
-    private TextView message;
+    private TextView message, tvOr;
     private Button loginBtn, btnRemember, btnMaybeReg;
+    private ImageButton vkBtn, fbBtn;
     private ImageView circleView;
     private Animation anim;
     private LoginButton fbButton;
+    private VKCallback<VKAccessToken> vkToken;
+
+    private LinearLayout llSocial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,48 @@ public class LoginActivity extends BaseMenuActivity implements LoadJson, Callbac
         hideBasket();
         initFields();
         fbButton = initFaceBookApi();
+        vkToken = initVkToken();
+    }
+
+    private VKCallback<VKAccessToken> initVkToken() {
+        return new VKCallback<VKAccessToken>() {
+
+            @Override
+            public void onResult(VKAccessToken res) {
+                final String email = res.email;
+                VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "first_name, last_name, sex, email, photo_100"));
+                request.executeWithListener(new VKRequest.VKRequestListener() {
+                    @Override
+                    public void onComplete(VKResponse response) {
+                        VKList list =  (VKList) response.parsedModel;
+                        JSONObject user = list.get(0).fields;
+                        try {
+                            user.put("email",email);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Call<UserRegister> userCall = ApiController.getApi().loginVk(user.toString());
+                        userCall.enqueue(LoginActivity.this);
+                        VKSdk.logout();
+                    }
+
+
+                    @Override
+                    public void onError(VKError error) {
+                        Log.i(TAG, "onError: ");
+                    }
+                    @Override
+                    public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
+                        Log.i(TAG, "attemptFailed: ");
+                    }
+                });
+            }
+
+            @Override
+            public void onError(VKError error) {
+                Log.i("MainActivity", "onResult: Error");
+            }
+        };
     }
 
     private LoginButton initFaceBookApi(){
@@ -121,48 +167,12 @@ public class LoginActivity extends BaseMenuActivity implements LoadJson, Callbac
     }
 
     @Override
-    public void loadComplete(JSONObject obj, String sessionName) {
-        if (obj != null) {
-            String status = "error";
-            try {
-                status = obj.getString("status");
-            } catch (JSONException e) {
-                showInterface();
-                e.printStackTrace();
-            }
-            if (status.equals("successful")) {
-                LocalStorage store = Singleton.currentState().getStore();
-                try {
-                    JSONObject user = obj.getJSONObject("message");
-                    store.setStringValueStorage(store.APP_PROFILE,user.toString());
-                    Intent intent = new Intent(this, MainActivity.class);
-                    this.startActivity(intent);
-                    finish();
-                } catch (JSONException e) {
-                    showInterface();
-                    e.printStackTrace();
-                }
-            }else{
-                Toast toast = null;
-                try {
-                    toast = Toast.makeText(getApplicationContext(),obj.getString("message"), Toast.LENGTH_SHORT);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                toast.show();
-                showInterface();
-            }
-        }else{
-            showInterface();
-            Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.error_server), Toast.LENGTH_SHORT);
-            toast.show();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (!VKSdk.onActivityResult(requestCode, resultCode, data, vkToken)) {
+            super.onActivityResult(requestCode, resultCode, data);
         }
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RESET_PASSWORD) {
@@ -178,9 +188,14 @@ public class LoginActivity extends BaseMenuActivity implements LoadJson, Callbac
                 message.setText(answer);
             }
         }
+        showInterface();
     }
 
     private void initFields(){
+        llSocial = (LinearLayout)findViewById(R.id.ll_social);
+        vkBtn = (ImageButton)findViewById(R.id.vk_btn);
+        fbBtn = (ImageButton)findViewById(R.id.fb_btn);
+        tvOr = (TextView)findViewById(R.id.tv_or);
         message = (TextView)findViewById(R.id.tv_social);
         email = (EditText)findViewById(R.id.et_name);
         password = (EditText)findViewById(R.id.et_surname);
@@ -202,6 +217,11 @@ public class LoginActivity extends BaseMenuActivity implements LoadJson, Callbac
         this.btnRemember.setEnabled(false);
         this.btnMaybeReg.setVisibility(View.INVISIBLE);
         this.btnMaybeReg.setEnabled(false);
+        this.message.setVisibility(View.INVISIBLE);
+        this.tvOr.setVisibility(View.INVISIBLE);
+        this.llSocial.setVisibility(View.INVISIBLE);
+        this.vkBtn.setEnabled(false);
+        this.fbBtn.setEnabled(false);
     }
 
     private void showInterface(){
@@ -214,6 +234,11 @@ public class LoginActivity extends BaseMenuActivity implements LoadJson, Callbac
         this.btnRemember.setEnabled(true);
         this.btnMaybeReg.setVisibility(View.VISIBLE);
         this.btnMaybeReg.setEnabled(true);
+        this.message.setVisibility(View.VISIBLE);
+        this.tvOr.setVisibility(View.VISIBLE);
+        this.llSocial.setVisibility(View.VISIBLE);
+        this.vkBtn.setEnabled(true);
+        this.fbBtn.setEnabled(true);
     }
 
     public void loginPressed(View view) {
@@ -240,25 +265,10 @@ public class LoginActivity extends BaseMenuActivity implements LoadJson, Callbac
             loginBtn.setEnabled(true);
             return;
         }else{
-            sendHashToTheServer(email,password);
-        }
-    }
 
-    private void sendHashToTheServer(String email, String password){
-        JSONObject params = new JSONObject();
-        try {
-            params.put("email", email);
-            params.put("password", password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.error_server), Toast.LENGTH_SHORT);
-            toast.show();
-            return;
+            Call<UserRegister> userCall = ApiController.getApi().login(email,password);
+            userCall.enqueue(LoginActivity.this);
         }
-
-        String url = this.getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_login);
-        hideInterface();
-        (new JsonHelperLoad(url,params,this, TAG)).execute();
     }
 
     public void goToRegistration(View view) {
@@ -276,16 +286,32 @@ public class LoginActivity extends BaseMenuActivity implements LoadJson, Callbac
         hideInterface();
     }
 
+    public void vkLogin(View view) {
+        VKSdk.login(this, VKScope.EMAIL);
+        hideInterface();
+    }
+
     @Override
     public void onResponse(Call<UserRegister> call, Response<UserRegister> response) {
-        IUser user = response.body();
-        Log.i(TAG, "onResponse: " + user.getSession());
+        Log.i(TAG, "onResponse: response code : " + response.code());
+        if (response.code() == 200){
+            Singleton.currentState().setIUser(response.body());
+            Intent intent = new Intent(this, CategoriesActivity.class);
+            this.startActivity(intent);
+            finish();
+        }else if(response.code() == 399){
+            Toast.makeText(LoginActivity.this, "Такого пользователя не существует", Toast.LENGTH_LONG).show();
+        }else if(response.code() == 398){
+            Toast.makeText(LoginActivity.this, "Не верно введен пароль или email", Toast.LENGTH_LONG).show();
+        }else if(response.code() == 397){
+            Toast.makeText(LoginActivity.this, " Необходимо авторизоваться на почте", Toast.LENGTH_LONG).show();
+        }
+        showInterface();
     }
 
     @Override
     public void onFailure(Call<UserRegister> call, Throwable t) {
         Toast.makeText(LoginActivity.this, "Ошибка соединения", Toast.LENGTH_SHORT).show();
+        showInterface();
     }
-
-
 }

@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.LoginActivity;
+import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.LocalStorage;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
@@ -192,24 +193,20 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
         TextView userEmail = (TextView) headerView.findViewById(R.id.menu_email);
         TextView userPoints = (TextView) headerView.findViewById(R.id.menu_points);
 
-        if(Singleton.currentState().getUser().getStatus().equals(STATUS.REGISTER)){
-            JSONObject userJson = Singleton.currentState().getUser().getProfile();
-            try {
-                String email = userJson.getString("email");
-                String name = userJson.getString("firstName");
-                String points = String.valueOf(Singleton.currentState().getUser().getPoints());
-                userName.setText(name);
-                userEmail.setText(email);
-                userPoints.setText(points + " баллов");
-                String urlIcon = this.getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_base) + userJson.getString("img_path")+"/"+ userJson.getString("avatar");
-                Picasso.with(this)
-                        .load(urlIcon)
-                        .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
-                        .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
-                        .into(userLogo);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        IUser user = Singleton.currentState().getIUser();
+        if(user.getStatus().equals(STATUS.REGISTER)){
+            userEmail.setText(user.getEmail());
+            userName.setText(user.getFirstName());
+            userPoints.setText(user.getPoints().toString() + " баллов");
+            String avatarUrl = this.getResources().getString(R.string.api_base) +
+                            Singleton.currentState().getSettingsApp().getImage_path().getUser() +
+                            user.getAvatar();
+            Log.i(TAG, "initViews: url avatar : " + avatarUrl);
+            Picasso.with(this)
+                    .load(avatarUrl)
+                    .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
+                    .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
+                    .into(userLogo);
             userPoints.setVisibility(View.VISIBLE);
             userLogo.setVisibility(View.VISIBLE);
             userEmail.setVisibility(View.VISIBLE);
@@ -223,7 +220,7 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
     }
 
     public void loginButtonClick(View view) {
-        STATUS status = Singleton.currentState().getUser().getStatus();
+        STATUS status = Singleton.currentState().getIUser().getStatus();
         Intent intent = status == STATUS.GENERAL? new Intent(this, LoginActivity.class): new Intent(this,ProfileActivity.class);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

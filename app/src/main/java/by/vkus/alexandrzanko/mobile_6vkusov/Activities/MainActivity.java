@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private Singleton singleton = Singleton.currentState();
@@ -35,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         generalMenu = (LinearLayout)findViewById(R.id.generalMenu);
         registerMenu = (LinearLayout)findViewById(R.id.registerMenu);
         loginOrProfile = (TextView) findViewById(R.id.btn_save);
@@ -96,4 +97,5 @@ public class MainActivity extends AppCompatActivity {
     public void showAnimation(){
         logoViewCircle.startAnimation(anim);
     }
+
 }

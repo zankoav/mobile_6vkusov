@@ -190,4 +190,5 @@
     <!-- Facebook id -->
     <string name="facebook_app_id">1508894532517367</string>
     <string name="fb_login_protocol_scheme">fb1508894532517367</string>
+    <integer name="com_vk_sdk_AppId">6135951</integer>
 </resources>
