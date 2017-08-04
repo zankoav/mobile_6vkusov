@@ -29,6 +29,18 @@ public interface IApi {
     Call<SettingsApp> getSettings();
 
     @FormUrlEncoded
+    @POST("/rest/api/get_user_by_session")
+    Call<UserRegister> getUserBySession(@Field("session") String session);
+
+    @FormUrlEncoded
+    @POST("/rest/api/set_user_profile")
+    Call<UserRegister> setUserProfile(@Field("session") String session, @Field("first_name") String first_name, @Field("last_name") String last_name);
+
+    @FormUrlEncoded
+    @POST("/rest/api/call_friend")
+    Call<String> callFriend(@Field("session") String session, @Field("email") String email);
+
+    @FormUrlEncoded
     @POST("/rest/api/facebook")
     Call<UserRegister> loginFacebook(@Field("facebook") String jsonObjectStr);
 

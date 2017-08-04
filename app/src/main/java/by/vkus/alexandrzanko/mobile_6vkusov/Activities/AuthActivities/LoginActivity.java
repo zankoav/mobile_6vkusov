@@ -37,10 +37,13 @@ import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKList;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.BaseMenuActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivity;
+import by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
+import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.UserRegister;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -265,7 +268,6 @@ public class LoginActivity extends BaseMenuActivity implements Callback<UserRegi
             loginBtn.setEnabled(true);
             return;
         }else{
-
             Call<UserRegister> userCall = ApiController.getApi().login(email,password);
             userCall.enqueue(LoginActivity.this);
         }
@@ -293,10 +295,10 @@ public class LoginActivity extends BaseMenuActivity implements Callback<UserRegi
 
     @Override
     public void onResponse(Call<UserRegister> call, Response<UserRegister> response) {
-        Log.i(TAG, "onResponse: response code : " + response.code());
         if (response.code() == 200){
-            Singleton.currentState().setIUser(response.body());
-            Intent intent = new Intent(this, CategoriesActivity.class);
+            IUser user = response.body();
+            Singleton.currentState().getSessionStore().setStringValueStorage(Singleton.currentState().getSessionStore().USER_SESSION,user.getSession());
+            Intent intent = new Intent(this, MainActivity.class);
             this.startActivity(intent);
             finish();
         }else if(response.code() == 399){

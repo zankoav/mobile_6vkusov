@@ -42,7 +42,7 @@ public class UserRegister implements IUser{
 
     @Override
     public BasketUser getBasket() {
-        return null;
+        return this.basket;
     }
 
     @Override
@@ -90,35 +90,48 @@ public class UserRegister implements IUser{
         this.basket = basket;
     }
 
+    @Override
     public void setPhone_code(Integer phone_code) {
         this.phone_code = phone_code;
     }
 
+    @Override
     public void setPhone_number(Integer phone_number) {
         this.phone_number = phone_number;
     }
 
+    @Override
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
+    @Override
     public void setSession(String session) {
         this.session = session;
     }
 
+    @Override
     public void setPoints(Integer points) {
         this.points = points;
     }
 
+    @Override
     public void setEmail(String email) {
         this.email = email;
     }
 
+    @Override
     public void setLast_name(String last_name) {
         this.last_name = last_name;
     }
+
+    @Override
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
+    }
+
+    public UserRegister(){
+        basket = new BasketUser();
     }
 
 }

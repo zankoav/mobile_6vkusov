@@ -55,6 +55,7 @@ public class CategoriesActivity extends BaseMenuActivity {
                 mCategories.addAll(response.body());
                 adapter = new CategoryListAdapter(CategoriesActivity.this, mCategories);
                 listView.setAdapter(adapter);
+
             }
 
             @Override

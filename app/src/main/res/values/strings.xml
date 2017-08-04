@@ -101,6 +101,12 @@
     <string name="reg_button_maybe_login">У Вас уже есть созданный профиль? ВОЙДИТЕ</string>
     <!--Для RegistrationActivity END-->
 
+
+    <!--ChangeUserSettingsActivity-->
+    <string name="change_user_profile_success">Данные успешно сохранены</string>
+    <!--ChangeUserSettingsActivity  END-->
+
+
     <!--Для REST API-->
     <string name="api_base">https://6vkusov.by</string>
     <string name="api_key">252cbf79f74f36e0df806817847a0e1b</string>
@@ -133,6 +139,8 @@
     <!--Errors-->
     <string name="error_server">Ошибка соединения, попробуйте еще раз</string>
     <string name="error_net">Ошибка соединения с интернетом</string>
+    <string name="error_friend_exists">Такой пользователь уже зарегистрирован</string>
+    <string name="error_friend_limit">Достигнут дневной лимит приглашений</string>
     <string name="error_min_name_length">Слишком короткое имя</string>
     <string name="error_name_only_literals">Имя должно состоять только из букв</string>
     <string name="error_email">Не верный формат email</string>

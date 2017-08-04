@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.OrderFragment;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ProfileFragment;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ViewPageAdapter;
@@ -44,6 +45,18 @@ public class ProfileActivity extends BaseMenuActivity {
 
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        userName.setText(singleton.getIUser().getFirstName());
+        userEmail.setText(singleton.getIUser().getEmail());
+        userPhone.setText(
+                "+375"+
+                        singleton.getIUser().getPhoneCode()+
+                        singleton.getIUser().getPhoneNumber()
+        );
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
@@ -51,7 +64,6 @@ public class ProfileActivity extends BaseMenuActivity {
         initViews(this.getString(R.string.rest_menu));
 
         this.singleton = Singleton.currentState();
-        JSONObject profile = singleton.getUser().getProfile();
 
         userName = (TextView)findViewById(R.id.user_name);
         userEmail = (TextView)findViewById(R.id.user_email);
@@ -68,22 +80,15 @@ public class ProfileActivity extends BaseMenuActivity {
         buttonUnderlineText(btnChangeInfo);
         buttonUnderlineText(btnCallFriends);
 
-        try {
-            String name = profile.getString("firstName");
-            String email = profile.getString("email");
-            String phone = profile.getString("phone");
-            String url =  this.getResources().getString(R.string.api_base) + profile.getString("img_path")+"/"+profile.getString("avatar");
-            userName.setText(name);
-            userEmail.setText(email);
-            userPhone.setText("+375"+phone);
-            Picasso.with(this)
-                    .load(url)
-                    .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
-                    .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
-                    .into(userIcon);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        String avatarUrl = ApiController.BASE_URL +
+                Singleton.currentState().getSettingsApp().getImage_path().getUser() +
+                singleton.getIUser().getAvatar();
+        Picasso.with(this)
+                .load(avatarUrl)
+                .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
+                .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
+                .into(userIcon);
 
         setupViewPager(viewPager);
 
@@ -93,10 +98,10 @@ public class ProfileActivity extends BaseMenuActivity {
         ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
 
         profileFragment = new ProfileFragment();
-        orderFragment = new OrderFragment();
+        //orderFragment = new OrderFragment();
 
         adapter.addFragment(profileFragment, "Предложения");
-        adapter.addFragment(orderFragment, "Заказы");
+       // adapter.addFragment(orderFragment, "Заказы");
 
         viewPager.setAdapter(adapter);
     }

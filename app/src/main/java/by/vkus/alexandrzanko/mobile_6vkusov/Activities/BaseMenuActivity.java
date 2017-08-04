@@ -25,9 +25,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.LoginActivity;
+import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.LocalStorage;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
+import by.vkus.alexandrzanko.mobile_6vkusov.SessionStore;
 import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -73,8 +75,38 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
     @Override
     protected void onResume() {
         super.onResume();
-        int count = Singleton.currentState().getUser().getBasket().getTotalCount();
+        int count = Singleton.currentState().getIUser().getBasket().getCountItems();
         fab.setCount(count);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        CircleImageView userLogo = (CircleImageView) headerView.findViewById(R.id.menu_iv_user);
+        TextView userName = (TextView) headerView.findViewById(R.id.menu_name);
+        TextView userEmail = (TextView) headerView.findViewById(R.id.menu_email);
+        TextView userPoints = (TextView) headerView.findViewById(R.id.menu_points);
+        IUser user = Singleton.currentState().getIUser();
+        if(user.getStatus().equals(STATUS.REGISTER)){
+            userEmail.setText(user.getEmail());
+            userName.setText(user.getFirstName());
+            userPoints.setText(user.getPoints().toString() + " баллов");
+            String avatarUrl =  ApiController.BASE_URL +
+                    Singleton.currentState().getSettingsApp().getImage_path().getUser() +
+                    user.getAvatar();
+            Picasso.with(this)
+                    .load(avatarUrl)
+                    .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
+                    .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
+                    .into(userLogo);
+            userPoints.setVisibility(View.VISIBLE);
+            userLogo.setVisibility(View.VISIBLE);
+            userEmail.setVisibility(View.VISIBLE);
+        }else{
+            userLogo.setVisibility(View.GONE);
+            userName.setText("Войти");
+            userPoints.setVisibility(View.GONE);
+            userEmail.setVisibility(View.GONE);
+            navigationView.getMenu().getItem(4).getSubMenu().getItem(1).setVisible(false);
+        }
     }
 
     @Override
@@ -130,8 +162,8 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
             builder.setTitle("Вы хотите выйдти?");
             builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int arg1) {
-                    LocalStorage store = Singleton.currentState().getStore();
-                    store.clearKeyStorage(store.APP_PROFILE);
+                    SessionStore store = Singleton.currentState().getSessionStore();
+                    store.clearKeyStorage(store.USER_SESSION);
                     Intent intent = new Intent(instance, MainActivity.class);
                     startActivity(intent);
                     instance.finish();
@@ -169,7 +201,7 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int count = Singleton.currentState().getUser().getBasket().getTotalCount();
+                int count = Singleton.currentState().getIUser().getBasket().getCountItems();
                 if (count>0){
                     Intent intent = new Intent(instance, BasketActivity.class);
                     startActivity(intent);
@@ -185,38 +217,7 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-        CircleImageView userLogo = (CircleImageView) headerView.findViewById(R.id.menu_iv_user);
-        TextView userName = (TextView) headerView.findViewById(R.id.menu_name);
-        TextView userEmail = (TextView) headerView.findViewById(R.id.menu_email);
-        TextView userPoints = (TextView) headerView.findViewById(R.id.menu_points);
 
-        IUser user = Singleton.currentState().getIUser();
-        if(user.getStatus().equals(STATUS.REGISTER)){
-            userEmail.setText(user.getEmail());
-            userName.setText(user.getFirstName());
-            userPoints.setText(user.getPoints().toString() + " баллов");
-            String avatarUrl = this.getResources().getString(R.string.api_base) +
-                            Singleton.currentState().getSettingsApp().getImage_path().getUser() +
-                            user.getAvatar();
-            Log.i(TAG, "initViews: url avatar : " + avatarUrl);
-            Picasso.with(this)
-                    .load(avatarUrl)
-                    .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
-                    .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
-                    .into(userLogo);
-            userPoints.setVisibility(View.VISIBLE);
-            userLogo.setVisibility(View.VISIBLE);
-            userEmail.setVisibility(View.VISIBLE);
-        }else{
-            userLogo.setVisibility(View.GONE);
-            userName.setText("Войти");
-            userPoints.setVisibility(View.GONE);
-            userEmail.setVisibility(View.GONE);
-            navigationView.getMenu().getItem(4).getSubMenu().getItem(1).setVisible(false);
-        }
     }
 
     public void loginButtonClick(View view) {

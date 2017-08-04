@@ -19,7 +19,7 @@ public class UserGeneral implements IUser
 
     @Override
     public BasketUser getBasket() {
-        return null;
+        return this.basket;
     }
 
     @Override
@@ -65,5 +65,49 @@ public class UserGeneral implements IUser
     @Override
     public void setBasketUser(BasketUser basket) {
         this.basket = basket;
+    }
+
+    @Override
+    public void setPhone_number(Integer phone_number) {
+
+    }
+
+    @Override
+    public void setAvatar(String avatar) {
+
+    }
+
+    @Override
+    public void setPhone_code(Integer phone_code) {
+
+    }
+
+    @Override
+    public void setSession(String session) {
+
+    }
+
+    @Override
+    public void setPoints(Integer points) {
+
+    }
+
+    @Override
+    public void setEmail(String email) {
+
+    }
+
+    @Override
+    public void setLast_name(String last_name) {
+
+    }
+
+    @Override
+    public void setFirst_name(String first_name) {
+
+    }
+
+    public UserGeneral(){
+        basket = new BasketUser();
     }
 }

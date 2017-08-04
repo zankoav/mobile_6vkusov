@@ -34,9 +34,7 @@ public class LocalStorage implements LoadJson{
     public ArrayList<Product> currentProducts = new ArrayList<Product>();
 
 
-    public final String APP_CATEGORIES = "categories";
     public final String APP_RESTAURANTS = "restaurants";
-    public final String APP_PROFILE = "profile";
     public final String APP_FAVORITE_SLUGS = "favorite";
 
 
@@ -51,31 +49,12 @@ public class LocalStorage implements LoadJson{
     public LocalStorage(Context context){
         this.store = context.getSharedPreferences(APP_STORE, Context.MODE_PRIVATE);
         this.context = context;
-        Singleton.currentState().setUser(null);
         clearKeyStorage(APP_RESTAURANTS);
 
         JSONObject paramsRestaurants = new JSONObject();
         String urlRest = context.getResources().getString(R.string.api_restaurants);
         new JsonHelperLoad(urlRest, paramsRestaurants, this, APP_RESTAURANTS).execute();
-
-        String userProfile = getStringValueStorage(APP_PROFILE);
-
-        if(userProfile != null){
-            JSONObject params = new JSONObject();
-            try {
-                JSONObject userProfileJson = new JSONObject(userProfile);
-                String session = userProfileJson.getString("session");
-                params.put("session", session);
-                String url = context.getResources().getString(R.string.api_user);
-                new JsonHelperLoad(url, params, this, APP_PROFILE).execute();
-            } catch (JSONException e) {
-                Singleton.currentState().setUser(new General());
-                Log.i(TAG,"initial General User Exception");
-                e.printStackTrace();
-            }
-        }else{
-            Singleton.currentState().setUser(new General());
-        }
+        Log.i(TAG, "LocalStorage: ");
     }
 
     public String getStringValueStorage(String key) {
@@ -103,20 +82,7 @@ public class LocalStorage implements LoadJson{
     public void loadComplete(JSONObject obj, String sessionName) {
         if(obj != null){
             setStringValueStorage(sessionName, obj.toString());
-            Log.i(TAG,obj.toString());
-            if (sessionName == APP_PROFILE) {
-                JSONObject user = null;
-                try {
-                    user = obj.getJSONObject("user");
-                    setStringValueStorage(sessionName, user.toString());
-                    int points = user.getInt("points");
-                    Singleton.currentState().setUser(new Register(points));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            if(Singleton.currentState().getUser() != null &&
-               getStringValueStorage(APP_RESTAURANTS) != null)
+            if(getStringValueStorage(APP_RESTAURANTS) != null)
             {
                 Log.i(TAG, "loadComplete: ");
                 ((MainActivity)context).loadComplete();

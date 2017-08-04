@@ -17,55 +17,32 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
+import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.UserRegister;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class ChangeUserSettingsActivity extends AppCompatActivity implements LoadJson {
+public class ChangeUserSettingsActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName();
 
     private EditText firstName,lastName;
     private Button changeBtn;
-    private JSONObject profile;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_user_settings);
-        profile = Singleton.currentState().getUser().getProfile();
         addToolBarToScreen();
         initFields();
-    }
-
-    @Override
-    public void loadComplete(JSONObject obj, String sessionName) {
-        if (obj != null) {
-            try {
-                String status = obj.getString("status");
-                if (status.equals("successful")) {
-                    Toast toast = Toast.makeText(getApplicationContext(),obj.getString("message"), Toast.LENGTH_SHORT);
-                    toast.show();
-                }else{
-                    Toast toast = Toast.makeText(getApplicationContext(),obj.getString("message"), Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                changeBtn.setEnabled(true);
-            } catch (JSONException e) {
-                Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT);
-                toast.show();
-                changeBtn.setEnabled(true);
-                e.printStackTrace();
-            }
-        }else{
-            Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT);
-            toast.show();
-            changeBtn.setEnabled(true);
-        }
-
     }
 
     private void addToolBarToScreen() {
@@ -90,72 +67,60 @@ public class ChangeUserSettingsActivity extends AppCompatActivity implements Loa
         firstName = (EditText)findViewById(R.id.et_name);
         lastName = (EditText)findViewById(R.id.et_surname);
         changeBtn = (Button)findViewById(R.id.btn_save);
-        try {
-            String fName = profile.getString("firstName");
-            String fSurname = profile.getString("lastName");
-            if (fName != "null"){
-                firstName.setText(fName);
-            }
-
-            if (fSurname != "null"){
-                lastName.setText(fSurname);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        firstName.setText(Singleton.currentState().getIUser().getFirstName());
+        lastName.setText(Singleton.currentState().getIUser().getLastName());
     }
 
     public void savePressed(View view) {
         changeBtn.setEnabled(false);
-        String name = this.firstName.getText().toString().trim();
-        String surname = this.lastName.getText().toString().trim();
+        String first_name = this.firstName.getText().toString().trim();
+        String last_name = this.lastName.getText().toString().trim();
 
-        if(!Validation.minLength(name,2)){
+        if(!Validation.minLength(first_name,2)){
             Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(R.string.error_min_name_length), Toast.LENGTH_SHORT);
             toast.show();
             changeBtn.setEnabled(true);
             return;
-        }else if(!Validation.maxLength(name,128)){
+        }else if(!Validation.maxLength(first_name,128)){
             Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(R.string.error_max_password_length), Toast.LENGTH_SHORT);
             toast.show();
             changeBtn.setEnabled(true);
             return;
-        }if(!Validation.minLength(surname,2)){
+        }if(!Validation.minLength(last_name,2)){
             Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(R.string.error_min_name_length), Toast.LENGTH_SHORT);
             toast.show();
             changeBtn.setEnabled(true);
             return;
-        }else if(!Validation.maxLength(surname,128)){
+        }else if(!Validation.maxLength(last_name,128)){
             Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(R.string.error_max_password_length), Toast.LENGTH_SHORT);
             toast.show();
             changeBtn.setEnabled(true);
             return;
         }else{
-            String session = null;
-            try {
-                session = profile.getString("session");
-                sendHashToTheServer(name,surname,session);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+            String session = Singleton.currentState().getIUser().getSession();
+            ApiController.getApi().setUserProfile(session,first_name,last_name).enqueue(new Callback<UserRegister>() {
 
-    private void sendHashToTheServer(String name, String surname, String session){
-        JSONObject params = new JSONObject();
-        try {
-            params.put("name", name);
-            params.put("session", session);
-            params.put("surname", surname);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast toast = Toast.makeText(getApplicationContext(),this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT);
-            toast.show();
-            return;
+                @Override
+                public void onResponse(Call<UserRegister> call, Response<UserRegister> response) {
+                    if(response.code() == 200){
+                        IUser user = response.body();
+                        Singleton.currentState().getIUser().setFirst_name(user.getFirstName());
+                        Singleton.currentState().getIUser().setLast_name(user.getLastName());
+                        Toast.makeText(getApplicationContext(),ChangeUserSettingsActivity.this.getResources().getString(R.string.change_user_profile_success), Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),ChangeUserSettingsActivity.this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT).show();
+                    }
+                    changeBtn.setEnabled(true);
+                }
+
+                @Override
+                public void onFailure(Call<UserRegister> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(),ChangeUserSettingsActivity.this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT).show();
+                    changeBtn.setEnabled(true);
+                }
+
+            });
         }
-        Log.i(TAG, "sendHashToTheServer: " + params.toString());
-        String url = this.getResources().getString(R.string.api_change_data);
-        (new JsonHelperLoad(url,params,this, TAG)).execute();
     }
 
     @Override

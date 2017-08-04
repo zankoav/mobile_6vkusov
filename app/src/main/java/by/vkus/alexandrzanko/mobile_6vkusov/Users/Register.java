@@ -31,15 +31,15 @@ public class Register implements UserInterface {
 
     @Override
     public JSONObject getProfile() {
-        LocalStorage store = Singleton.currentState().getStore();
-        JSONObject profile = null;
-        try {
-            profile = new JSONObject(store.getStringValueStorage(store.APP_PROFILE));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.d(TAG, "load profile from local storage error");
-        }
-        return profile;
+//        LocalStorage store = Singleton.currentState().getStore();
+//        JSONObject profile = null;
+//        try {
+//            profile = new JSONObject(store.getStringValueStorage(store.APP_PROFILE));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//            Log.d(TAG, "load profile from local storage error");
+//        }
+        return null;
     }
 
     @Override

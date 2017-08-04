@@ -20,4 +20,12 @@ public interface IUser {
     Integer getPhoneNumber();
     String getAvatar();
     void setBasketUser(BasketUser basket);
+    void setPhone_number(Integer phone_number);
+    void setAvatar(String avatar);
+    void setPhone_code(Integer phone_code);
+    void setSession(String session);
+    void setPoints(Integer points);
+    void setEmail(String email);
+    void setLast_name(String last_name);
+    void setFirst_name(String first_name);
 }

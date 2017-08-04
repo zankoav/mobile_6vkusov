@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
+import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
 
 /**
  * Created by alexandrzanko on 7/28/17.
@@ -12,7 +13,6 @@ import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 
 public class MCategory {
 
-    private final String imgPath = "img/";
 
     @SerializedName("name")
     @Expose
@@ -52,7 +52,7 @@ public class MCategory {
     }
 
     public String getImage() {
-        return ApiController.BASE_URL + imgPath + image;
+        return ApiController.BASE_URL + Singleton.currentState().getSettingsApp().getImage_path().getCategory() + image;
     }
 
     public void setImage(String image) {
