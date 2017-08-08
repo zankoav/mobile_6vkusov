@@ -8,12 +8,20 @@ import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.LoginActivity;
+import by.vkus.alexandrzanko.mobile_6vkusov.Settings.DiscreteScrollViewOptions;
 
 /**
  * Created by alexandrzanko on 8/3/17.
  */
 
 public class Application extends android.app.Application {
+
+    private static Application instance;
+
+    public static Application getInstance() {
+        return instance;
+    }
+
 
     VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
         @Override
@@ -29,6 +37,8 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
+        DiscreteScrollViewOptions.init(this);
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
     }

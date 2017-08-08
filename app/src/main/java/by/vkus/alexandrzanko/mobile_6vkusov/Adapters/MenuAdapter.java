@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.MenuRestaurant;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 
 /**
@@ -18,10 +20,10 @@ import by.vkus.alexandrzanko.mobile_6vkusov.R;
 
 public class MenuAdapter extends BaseAdapter {
 
-    private ArrayList<String> listData;
+    private List<MenuRestaurant> listData;
     private LayoutInflater layoutInflater;
 
-    public MenuAdapter(Context context, ArrayList<String> listData) {
+    public MenuAdapter(Context context, List<MenuRestaurant> listData) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(context);
     }
@@ -44,16 +46,18 @@ public class MenuAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
             MenuAdapter.ViewHolder holder;
-            convertView = layoutInflater.inflate(R.layout.menu_category_item, null);
+            convertView = layoutInflater.inflate(R.layout.menu_restaurant_category, null);
             holder = new MenuAdapter.ViewHolder();
-            holder.titleView = (TextView) convertView.findViewById(R.id.cat2_title);
-            convertView.setTag(holder);
-            holder.titleView.setText(listData.get(position));
+            holder.titleView = (TextView) convertView.findViewById(R.id.cat_title);
+            holder.countView = (TextView) convertView.findViewById(R.id.cat_count);
+        convertView.setTag(holder);
+            holder.titleView.setText(listData.get(position).getName());
+            holder.countView.setText("(" + listData.get(position).getCount() + ")");
 
         return convertView;
     }
 
     static class ViewHolder {
-        TextView titleView;
+        TextView titleView, countView;
     }
 }

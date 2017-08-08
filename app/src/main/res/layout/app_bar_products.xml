@@ -24,7 +24,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_free_food"/>
+    <include layout="@layout/content_products" />
 
     <com.andremion.counterfab.CounterFab
         android:id="@+id/fab"

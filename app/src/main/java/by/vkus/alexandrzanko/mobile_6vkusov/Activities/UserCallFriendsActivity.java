@@ -86,7 +86,7 @@ public class UserCallFriendsActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
                     Log.i(TAG, "onResponse: " + response.code());
-                    if (response.code() == 200){
+                    if (response.code() == 392){
                         text.setText("Вашему другу на почту " + email.getText() + " отправлено приглошение для регистрации");
                         email.setText("");
                     }else if(response.code() == 395){

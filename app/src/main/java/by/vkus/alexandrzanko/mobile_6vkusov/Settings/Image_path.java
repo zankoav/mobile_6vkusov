@@ -9,9 +9,22 @@ public class Image_path {
     @SerializedName("category")
     @Expose
     private String category;
+
     @SerializedName("user")
     @Expose
     private String user;
+
+    @SerializedName("food")
+    @Expose
+    private String food;
+
+    @SerializedName("comment")
+    @Expose
+    private String comment;
+
+    @SerializedName("restaurant")
+    @Expose
+    private String restaurant;
 
     public String getCategory() {
         return category;
@@ -29,4 +42,27 @@ public class Image_path {
         this.user = user;
     }
 
+    public String getFood() {
+        return food;
+    }
+
+    public void setFood(String food) {
+        this.food = food;
+    }
+
+    public String getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(String restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 }

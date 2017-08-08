@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,11 +50,14 @@ public class ProfileActivity extends BaseMenuActivity {
         super.onResume();
         userName.setText(singleton.getIUser().getFirstName());
         userEmail.setText(singleton.getIUser().getEmail());
-        userPhone.setText(
-                "+375"+
-                        singleton.getIUser().getPhoneCode()+
-                        singleton.getIUser().getPhoneNumber()
-        );
+        if(singleton.getIUser().getPhoneNumber() != null){
+            userPhone.setText(
+                    "+375"+
+                            singleton.getIUser().getPhoneCode()+
+                            singleton.getIUser().getPhoneNumber()
+            );
+        }
+
     }
 
     @Override
@@ -80,12 +84,9 @@ public class ProfileActivity extends BaseMenuActivity {
         buttonUnderlineText(btnChangeInfo);
         buttonUnderlineText(btnCallFriends);
 
-
-        String avatarUrl = ApiController.BASE_URL +
-                Singleton.currentState().getSettingsApp().getImage_path().getUser() +
-                singleton.getIUser().getAvatar();
+        Log.i(TAG, "onCreate: " + singleton.getIUser().getAvatar());
         Picasso.with(this)
-                .load(avatarUrl)
+                .load(singleton.getIUser().getAvatar())
                 .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
                 .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
                 .into(userIcon);

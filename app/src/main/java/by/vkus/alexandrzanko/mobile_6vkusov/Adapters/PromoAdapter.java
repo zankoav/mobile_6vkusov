@@ -13,9 +13,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
+import java.util.List;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.RestaurantsCardActivity;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.FoodByPoint;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.FreeFood;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 
@@ -25,13 +27,11 @@ import by.vkus.alexandrzanko.mobile_6vkusov.R;
 
 public class PromoAdapter extends BaseAdapter {
 
-    private final String TAG = this.getClass().getSimpleName();
-
-    private ArrayList<FreeFood> listData;
+    private List<FoodByPoint> listData;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public PromoAdapter(Context context, ArrayList<FreeFood> listData) {
+    public PromoAdapter(Context context, List<FoodByPoint> listData) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
@@ -65,14 +65,13 @@ public class PromoAdapter extends BaseAdapter {
         holder.addToBasketButton    = (Button) convertView.findViewById(R.id.free_food_add_basket);
 
         convertView.setTag(holder);
-        final FreeFood food = listData.get(position);
+        final FoodByPoint food = listData.get(position);
         holder.productName.setText(food.getName());
         holder.productPoints.setText(food.getPoints()+ " баллов");
-        String description = food.getDescription() == "null" ? "" : food.getDescription();
-        holder.productDescription.setText(description);
+        holder.productDescription.setText("");
 
         Picasso.with(context)
-                .load(food.getUrlImg())
+                .load(food.getIcon())
                 .placeholder(R.drawable.product) //показываем что-то, пока не загрузится указанная картинка
                 .error(R.drawable.product) // показываем что-то, если не удалось скачать картинку
                 .into(holder.productImg);

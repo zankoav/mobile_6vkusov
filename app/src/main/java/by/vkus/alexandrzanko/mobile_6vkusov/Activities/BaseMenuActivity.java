@@ -43,34 +43,11 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
 
     public final String TAG = this.getClass().getSimpleName();
 
-    private BaseMenuActivity instance;
     private CounterFab fab;
-
-    public BaseMenuActivity(){
-        super();
-        this.instance = this;
-    }
-
-    public void setFabCount(int count){
-        fab.setCount(count);
-    }
-
-    public void increaseFabCount(){
-        fab.increase();
-    }
-
-    public void decreaseFabCount(){
-        fab.decrease();
-    }
 
     public void hideBasket(){
         fab.setVisibility(View.GONE);
     }
-
-    public void showBasket(){
-        fab.setVisibility(View.VISIBLE);
-    }
-
 
     @Override
     protected void onResume() {
@@ -89,11 +66,8 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
             userEmail.setText(user.getEmail());
             userName.setText(user.getFirstName());
             userPoints.setText(user.getPoints().toString() + " баллов");
-            String avatarUrl =  ApiController.BASE_URL +
-                    Singleton.currentState().getSettingsApp().getImage_path().getUser() +
-                    user.getAvatar();
             Picasso.with(this)
-                    .load(avatarUrl)
+                    .load(user.getAvatar())
                     .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
                     .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
                     .into(userLogo);
@@ -164,9 +138,9 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
                 public void onClick(DialogInterface dialog, int arg1) {
                     SessionStore store = Singleton.currentState().getSessionStore();
                     store.clearKeyStorage(store.USER_SESSION);
-                    Intent intent = new Intent(instance, MainActivity.class);
+                    Intent intent = new Intent(BaseMenuActivity.this, MainActivity.class);
                     startActivity(intent);
-                    instance.finish();
+                    BaseMenuActivity.this.finish();
                 }
             });
             builder.setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
@@ -203,7 +177,7 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
             public void onClick(View view) {
                 int count = Singleton.currentState().getIUser().getBasket().getCountItems();
                 if (count>0){
-                    Intent intent = new Intent(instance, BasketActivity.class);
+                    Intent intent = new Intent(BaseMenuActivity.this, BasketActivity.class);
                     startActivity(intent);
                 }else{
                     Snackbar.make(view, "Ваша корзина пуста", Snackbar.LENGTH_SHORT)

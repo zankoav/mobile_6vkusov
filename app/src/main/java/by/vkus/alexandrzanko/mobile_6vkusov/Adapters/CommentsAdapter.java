@@ -11,12 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.Comment;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.MComment;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,11 +25,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class CommentsAdapter extends BaseAdapter {
-    private ArrayList<Comment> listData;
+    private List<MComment> listData;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public CommentsAdapter(Context context, ArrayList<Comment> listData) {
+    public CommentsAdapter(Context context, List<MComment> listData) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
@@ -61,11 +61,11 @@ public class CommentsAdapter extends BaseAdapter {
         holder.userIcon          = (CircleImageView) convertView.findViewById(R.id.user_icon);
         holder.likeIcon          = (ImageView) convertView.findViewById(R.id.likes_icon);
         convertView.setTag(holder);
-        Comment comment = listData.get(position);
+        MComment comment = listData.get(position);
 
-        holder.userFirstName.setText(comment.getName());
+        holder.userFirstName.setText(comment.getUser());
         holder.textComment.setText(comment.getText());
-        holder.timeCreateComment.setText(comment.getTime());
+        holder.timeCreateComment.setText(comment.getDate_time());
         Integer type = comment.getType();
         Drawable icon = null;
         if(type == 1){
@@ -78,9 +78,8 @@ public class CommentsAdapter extends BaseAdapter {
         if(icon != null) {
             holder.likeIcon.setImageDrawable(icon);
         }
-
         Picasso.with(context)
-                .load(comment.getUrlLogo())
+                .load(comment.getAvatar())
                 .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
                 .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
                 .into(holder.userIcon);

@@ -3,7 +3,9 @@ package by.vkus.alexandrzanko.mobile_6vkusov.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
+import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 
 public class UserRegister implements IUser{
@@ -82,7 +84,7 @@ public class UserRegister implements IUser{
 
     @Override
     public String getAvatar() {
-        return avatar;
+        return ApiController.BASE_URL + Singleton.currentState().getSettingsApp().getImage_path().getUser() +  avatar;
     }
 
     @Override
