@@ -25,7 +25,7 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Activities.MainActivityV2"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,19 +37,19 @@
             android:name=".Activities.AuthActivities.RegistrationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.AuthActivities.LoginActivity"
+            android:name=".Activities.AuthActivities.LoginActivityV2"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.AuthActivities.RememberActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.CategoriesActivity"
+            android:name=".Activities.CategoriesActivityV2"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.RestaurantsCardActivity"
+            android:name=".Trash.RestaurantsCardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.Restaurant.RestaurantActivity"
+            android:name=".Activities.Restaurant.RestaurantActivityV2"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.Restaurant.ProductActivity"
@@ -59,22 +59,22 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.CheckOutActivity"
-            android:parentActivityName=".Activities.Restaurant.RestaurantActivity"
+            android:parentActivityName=".Activities.Restaurant.RestaurantActivityV2"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ProfileActivity"
+            android:name=".Activities.ProfileActivities.ProfileActivityV2"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.UserCallFriendsActivity"
+            android:name=".Activities.ProfileActivities.UserCallFriendsActivityV2"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ChangeUserSettingsActivity"
+            android:name=".Activities.ProfileActivities.ChangeUserSettingsActivityV2"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.OurPints" />
-        <activity android:name=".Activities.InfoActivity" />
-        <activity android:name=".Activities.FreeFoodActivity" />
-        <activity android:name=".Activities.FavoritesRestaurantsActivity" />
-        <activity android:name=".Activities.ProductsActivity"></activity>
+        <activity android:name=".Activities.OurPintsV2" />
+        <activity android:name=".Activities.InfoActivityV2" />
+        <activity android:name=".Activities.FreeFoodActivityV2" />
+        <activity android:name=".Activities.Restaurant.ProductsActivityV2" />
+        <activity android:name=".Activities.Restaurant.RestaurantsActivityV2"></activity>
     </application>
 
 </manifest>

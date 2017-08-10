@@ -12,7 +12,7 @@ import android.widget.ListView;
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.OrderAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItemFood;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 
@@ -57,7 +57,7 @@ public class OrderFragment extends Fragment implements LoadJson {
         String url = getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_orders);
         JSONObject params = new JSONObject();
         try {
-            JSONObject userProfileJson = Singleton.currentState().getUser().getProfile();
+            JSONObject userProfileJson = SingletonV2.currentState().getUser().getProfile();
             String session = userProfileJson.getString("session");
             params.put("session", session);
         } catch (JSONException e) {

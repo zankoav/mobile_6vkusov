@@ -1,7 +1,5 @@
 package by.vkus.alexandrzanko.mobile_6vkusov.Models;
 
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ public class OrderItem {
 
     public OrderItem(ArrayList<OrderItemFood> foods, String slug, boolean comment_exists, double total_price, int id, int created) {
         this.foods = foods;
-        this.restaurant = Singleton.currentState().getStore().getRestaurantBySlug(slug);
+//        this.restaurant = SingletonV2.currentState().getStore().getRestaurantBySlug(slug);
         this.comment_exists = comment_exists;
         this.total_price = total_price;
         this.id = id;

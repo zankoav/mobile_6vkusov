@@ -24,7 +24,7 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ViewPageAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Product;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.ProductItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.BasketViewInterface;
 
 import java.util.ArrayList;
@@ -63,17 +63,17 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
         tabLayout.setVisibility(View.GONE);
         fragments = new ArrayList<>();
 
-        products = Singleton.currentState().getStore().currentProducts;
+//        products = SingletonV2.currentState().getStore().currentProducts;
         categories = initCategories(products);
 
         setupViewPager(viewPager);
-        Singleton.currentState().getUser().getBasket().setDelegateContext(this);
+        SingletonV2.currentState().getUser().getBasket().setDelegateContext(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Singleton.currentState().getUser().getBasket().initBasketFromRegisterUser();
+        SingletonV2.currentState().getUser().getBasket().initBasketFromRegisterUser();
     }
 
     public String getSlug() {
@@ -149,7 +149,7 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
         notificationCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Singleton.currentState().getUser().getBasket().getTotalCount() == 0){
+                if (SingletonV2.currentState().getUser().getBasket().getTotalCount() == 0){
                     return;
                 }
                 Intent intent = new Intent(ProductActivity.this, BasketActivity.class);
@@ -162,7 +162,7 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
     }
 
     public void updateCountOrdersMenu(){
-        int count = Singleton.currentState().getUser().getBasket().getTotalCount();
+        int count = SingletonV2.currentState().getUser().getBasket().getTotalCount();
         if (count>0){
             countProducts.setText(count + "");
             countProducts.setVisibility(View.VISIBLE);
@@ -214,9 +214,9 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
                             builder.setMessage("В Вашей корзине присутствуют товары из другого ресторана. Очистить корзину ?");
                             builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int arg1) {
-                                    Singleton.currentState().getUser().getBasket().setProductItems(new ArrayList<ProductItem>());
-                                    Singleton.currentState().getUser().getBasket().setFreeFoodExist(false);
-                                    Singleton.currentState().getUser().getBasket().addProductItem(product, slug);
+                                    SingletonV2.currentState().getUser().getBasket().setProductItems(new ArrayList<ProductItem>());
+                                    SingletonV2.currentState().getUser().getBasket().setFreeFoodExist(false);
+                                    SingletonV2.currentState().getUser().getBasket().addProductItem(product, slug);
                                 }
                             });
                             builder.setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
@@ -240,9 +240,9 @@ public class ProductActivity extends AppCompatActivity implements BasketViewInte
         builder.setMessage("В Вашей корзине присутствуют товары из другого ресторана. Очистить корзину ?");
         builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
-                Singleton.currentState().getUser().getBasket().setProductItems(new ArrayList<ProductItem>());
-                Singleton.currentState().getUser().getBasket().setFreeFoodExist(false);
-                Singleton.currentState().getUser().getBasket().resetRegisterBasket(product, slug);
+                SingletonV2.currentState().getUser().getBasket().setProductItems(new ArrayList<ProductItem>());
+                SingletonV2.currentState().getUser().getBasket().setFreeFoodExist(false);
+                SingletonV2.currentState().getUser().getBasket().resetRegisterBasket(product, slug);
             }
         });
         builder.setNeutralButton("Отмена", new DialogInterface.OnClickListener() {

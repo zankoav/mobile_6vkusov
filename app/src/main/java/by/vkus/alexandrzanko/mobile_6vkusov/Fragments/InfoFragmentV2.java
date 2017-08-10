@@ -21,7 +21,7 @@ import retrofit2.Response;
      * Created by alexandrzanko on 29/11/16.
      */
 
-    public class InfoFragment extends Fragment {
+    public class InfoFragmentV2 extends Fragment {
 
 
         private final String TAG = this.getClass().getSimpleName();

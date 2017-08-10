@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.OrderAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 
 import org.json.JSONException;
@@ -87,7 +87,7 @@ public class AlertCommentsDialog extends DialogFragment {
                         String url = getContext().getResources().getString(R.string.api_send_comment);
                         try {
                             params.put("id", order.getId());
-                            params.put("session", Singleton.currentState().getUser().getProfile().getString("session"));
+                            params.put("session", SingletonV2.currentState().getUser().getProfile().getString("session"));
                             params.put("type", like);
                             params.put("text", input.getText());
                             new JsonHelperLoad(url,params, self.adapter, null).execute();

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import by.vkus.alexandrzanko.mobile_6vkusov.Activities.ProductsActivity;
+import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.ProductsActivityV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.MenuAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MenuRestaurant;
@@ -26,7 +26,7 @@ import java.util.List;
  * Created by alexandrzanko on 29/11/16.
  */
 
-public class MenusFragment extends Fragment {
+public class MenusFragmentV2 extends Fragment {
 
     private String slug;
 
@@ -55,12 +55,12 @@ public class MenusFragment extends Fragment {
                 menus = response.body();
                 Log.i(TAG, "onResponse: code" + response.code());
                 if(menus != null){
-                    adapter = new MenuAdapter(MenusFragment.this.getActivity(), menus);
+                    adapter = new MenuAdapter(MenusFragmentV2.this.getActivity(), menus);
                     listView.setAdapter(adapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent intent = new Intent(MenusFragment.this.getActivity(), ProductsActivity.class);
+                            Intent intent = new Intent(MenusFragmentV2.this.getActivity(), ProductsActivityV2.class);
                             String categorySlug = menus.get(position).getSlug();
                             String categoryName = menus.get(position).getName();
                             intent.putExtra(EXTRA_SLUG, categorySlug);

@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 
 public class MComment {
 
@@ -64,7 +64,7 @@ public class MComment {
     }
 
     public String getAvatar() {
-        return ApiController.BASE_URL + Singleton.currentState().getSettingsApp().getImage_path().getComment() +  avatar;
+        return ApiController.BASE_URL + SingletonV2.currentState().getSettingsApp().getImage_path().getComment() +  avatar;
     }
 
     public void setAvatar(String avatarFile) {

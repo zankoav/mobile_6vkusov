@@ -23,7 +23,7 @@ import java.util.List;
  * Created by alexandrzanko on 29/11/16.
  */
 
-public class CommentsFragment extends Fragment {
+public class CommentsFragmentV2 extends Fragment {
 
     private String slug;
     private CommentsAdapter adapter;
@@ -40,7 +40,7 @@ public class CommentsFragment extends Fragment {
                 if(response.code() == 200){
                     comments = response.body();
                     if(comments != null){
-                        adapter  = new CommentsAdapter(CommentsFragment.this.getActivity(), comments);
+                        adapter  = new CommentsAdapter(CommentsFragmentV2.this.getActivity(), comments);
                         listView.setAdapter(adapter);
                     }
                 }
@@ -48,7 +48,7 @@ public class CommentsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<MComment>> call, Throwable t) {
-                Log.i(TAG, "onFailure: CommentsFragment");
+                Log.i(TAG, "onFailure: CommentsFragmentV2");
             }
         });
     }

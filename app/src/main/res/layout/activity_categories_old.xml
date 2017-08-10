@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBeige"
-    tools:context="by.vkus.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivity">
+    tools:context="by.vkus.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivityV2">
 
     <include layout="@layout/action_bar"/>
 

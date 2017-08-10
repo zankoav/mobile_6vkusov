@@ -36,14 +36,12 @@ import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKList;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.BaseMenuActivity;
-import by.vkus.alexandrzanko.mobile_6vkusov.Activities.CategoriesActivity;
-import by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivity;
+import by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivityV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.UserRegister;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
-import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +50,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class LoginActivity extends BaseMenuActivity implements Callback<UserRegister> {
+public class LoginActivityV2 extends BaseMenuActivity implements Callback<UserRegister> {
 
     static final private int RESET_PASSWORD = 1;
     static final private int REGISTRATION_USER = 2;
@@ -99,7 +97,7 @@ public class LoginActivity extends BaseMenuActivity implements Callback<UserRegi
                             e.printStackTrace();
                         }
                         Call<UserRegister> userCall = ApiController.getApi().loginVk(user.toString());
-                        userCall.enqueue(LoginActivity.this);
+                        userCall.enqueue(LoginActivityV2.this);
                         VKSdk.logout();
                     }
 
@@ -117,7 +115,7 @@ public class LoginActivity extends BaseMenuActivity implements Callback<UserRegi
 
             @Override
             public void onError(VKError error) {
-                Log.i("MainActivity", "onResult: Error");
+                Log.i("MainActivityV2", "onResult: Error");
             }
         };
     }
@@ -135,7 +133,7 @@ public class LoginActivity extends BaseMenuActivity implements Callback<UserRegi
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         Call<UserRegister> userCall = ApiController.getApi().loginFacebook(object.toString());
-                        userCall.enqueue(LoginActivity.this);
+                        userCall.enqueue(LoginActivityV2.this);
                         LoginManager.getInstance().logOut();
                     }
 
@@ -269,7 +267,7 @@ public class LoginActivity extends BaseMenuActivity implements Callback<UserRegi
             return;
         }else{
             Call<UserRegister> userCall = ApiController.getApi().login(email,password);
-            userCall.enqueue(LoginActivity.this);
+            userCall.enqueue(LoginActivityV2.this);
         }
     }
 
@@ -297,23 +295,23 @@ public class LoginActivity extends BaseMenuActivity implements Callback<UserRegi
     public void onResponse(Call<UserRegister> call, Response<UserRegister> response) {
         if (response.code() == 200){
             IUser user = response.body();
-            Singleton.currentState().getSessionStore().setStringValueStorage(Singleton.currentState().getSessionStore().USER_SESSION,user.getSession());
-            Intent intent = new Intent(this, MainActivity.class);
+            SingletonV2.currentState().getSessionStoreV2().setStringValueStorage(SingletonV2.currentState().getSessionStoreV2().USER_SESSION,user.getSession());
+            Intent intent = new Intent(this, MainActivityV2.class);
             this.startActivity(intent);
             finish();
         }else if(response.code() == 399){
-            Toast.makeText(LoginActivity.this, "Такого пользователя не существует", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivityV2.this, "Такого пользователя не существует", Toast.LENGTH_LONG).show();
         }else if(response.code() == 398){
-            Toast.makeText(LoginActivity.this, "Не верно введен пароль или email", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivityV2.this, "Не верно введен пароль или email", Toast.LENGTH_LONG).show();
         }else if(response.code() == 397){
-            Toast.makeText(LoginActivity.this, " Необходимо авторизоваться на почте", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivityV2.this, " Необходимо авторизоваться на почте", Toast.LENGTH_LONG).show();
         }
         showInterface();
     }
 
     @Override
     public void onFailure(Call<UserRegister> call, Throwable t) {
-        Toast.makeText(LoginActivity.this, "Ошибка соединения", Toast.LENGTH_SHORT).show();
+        Toast.makeText(LoginActivityV2.this, "Ошибка соединения", Toast.LENGTH_SHORT).show();
         showInterface();
     }
 }

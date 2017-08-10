@@ -1,4 +1,4 @@
-package by.vkus.alexandrzanko.mobile_6vkusov.Activities;
+package by.vkus.alexandrzanko.mobile_6vkusov.Activities.ProfileActivities;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -14,22 +13,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.UserRegister;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
-import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
-import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChangeUserSettingsActivity extends AppCompatActivity {
+public class ChangeUserSettingsActivityV2 extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -67,8 +61,8 @@ public class ChangeUserSettingsActivity extends AppCompatActivity {
         firstName = (EditText)findViewById(R.id.et_name);
         lastName = (EditText)findViewById(R.id.et_surname);
         changeBtn = (Button)findViewById(R.id.btn_save);
-        firstName.setText(Singleton.currentState().getIUser().getFirstName());
-        lastName.setText(Singleton.currentState().getIUser().getLastName());
+        firstName.setText(SingletonV2.currentState().getIUser().getFirstName());
+        lastName.setText(SingletonV2.currentState().getIUser().getLastName());
     }
 
     public void savePressed(View view) {
@@ -97,25 +91,25 @@ public class ChangeUserSettingsActivity extends AppCompatActivity {
             changeBtn.setEnabled(true);
             return;
         }else{
-            String session = Singleton.currentState().getIUser().getSession();
+            String session = SingletonV2.currentState().getIUser().getSession();
             ApiController.getApi().setUserProfile(session,first_name,last_name).enqueue(new Callback<UserRegister>() {
 
                 @Override
                 public void onResponse(Call<UserRegister> call, Response<UserRegister> response) {
                     if(response.code() == 200){
                         IUser user = response.body();
-                        Singleton.currentState().getIUser().setFirst_name(user.getFirstName());
-                        Singleton.currentState().getIUser().setLast_name(user.getLastName());
-                        Toast.makeText(getApplicationContext(),ChangeUserSettingsActivity.this.getResources().getString(R.string.change_user_profile_success), Toast.LENGTH_SHORT).show();
+                        SingletonV2.currentState().getIUser().setFirst_name(user.getFirstName());
+                        SingletonV2.currentState().getIUser().setLast_name(user.getLastName());
+                        Toast.makeText(getApplicationContext(),ChangeUserSettingsActivityV2.this.getResources().getString(R.string.change_user_profile_success), Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(getApplicationContext(),ChangeUserSettingsActivity.this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),ChangeUserSettingsActivityV2.this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT).show();
                     }
                     changeBtn.setEnabled(true);
                 }
 
                 @Override
                 public void onFailure(Call<UserRegister> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),ChangeUserSettingsActivity.this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),ChangeUserSettingsActivityV2.this.getResources().getString(R.string.error_server), Toast.LENGTH_SHORT).show();
                     changeBtn.setEnabled(true);
                 }
 

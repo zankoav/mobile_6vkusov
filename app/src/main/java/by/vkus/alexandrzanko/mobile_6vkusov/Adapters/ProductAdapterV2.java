@@ -17,11 +17,11 @@ import by.vkus.alexandrzanko.mobile_6vkusov.R;
  * Created by yarolegovich on 07.03.2017.
  */
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class ProductAdapterV2 extends RecyclerView.Adapter<ProductAdapterV2.ViewHolder> {
 
     private List<MProduct> data;
 
-    public ProductAdapter(List<MProduct> data) {
+    public ProductAdapterV2(List<MProduct> data) {
         this.data = data;
     }
 

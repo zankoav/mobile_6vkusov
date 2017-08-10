@@ -1,16 +1,14 @@
-package by.vkus.alexandrzanko.mobile_6vkusov;
+package by.vkus.alexandrzanko.mobile_6vkusov.Trash;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivity;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.Category;
+import by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivityV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.InfoRestaurant;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Product;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Restaurant;
-import by.vkus.alexandrzanko.mobile_6vkusov.Users.General;
-import by.vkus.alexandrzanko.mobile_6vkusov.Users.Register;
+import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 
@@ -85,7 +83,7 @@ public class LocalStorage implements LoadJson{
             if(getStringValueStorage(APP_RESTAURANTS) != null)
             {
                 Log.i(TAG, "loadComplete: ");
-                ((MainActivity)context).loadComplete();
+                ((MainActivityV2)context).loadComplete();
             }
         }else{
             Log.i(TAG,"Error connection");

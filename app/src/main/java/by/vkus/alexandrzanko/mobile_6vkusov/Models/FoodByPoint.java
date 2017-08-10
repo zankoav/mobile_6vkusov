@@ -4,10 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 
 public class FoodByPoint {
 
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -20,6 +23,9 @@ public class FoodByPoint {
     @SerializedName("restaurant_slug")
     @Expose
     private String restaurant_slug;
+    @SerializedName("restaurant_name")
+    @Expose
+    private String restaurant_name;
 
     public String getName() {
         return name;
@@ -38,7 +44,7 @@ public class FoodByPoint {
     }
 
     public String getIcon() {
-        return ApiController.BASE_URL + Singleton.currentState().getSettingsApp().getImage_path().getFood() + icon;
+        return ApiController.BASE_URL + SingletonV2.currentState().getSettingsApp().getImage_path().getFood() + icon;
     }
 
     public void setIcon(String icon) {
@@ -53,4 +59,19 @@ public class FoodByPoint {
         this.restaurant_slug = restaurant_slug;
     }
 
+    public String getRestaurant_name() {
+        return restaurant_name;
+    }
+
+    public void setRestaurant_name(String restaurant_name) {
+        this.restaurant_name = restaurant_name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

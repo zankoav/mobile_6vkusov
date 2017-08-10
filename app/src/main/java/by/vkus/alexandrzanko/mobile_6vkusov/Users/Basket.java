@@ -4,10 +4,8 @@ import android.util.Log;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Product;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.ProductItem;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.Restaurant;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Variant;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
-import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 
 import org.json.JSONArray;
@@ -60,7 +58,7 @@ public class Basket implements LoadJson {
                         if (!empty){
                             this.productItems = new ArrayList<>();
                             slugRestaurant = obj.getString("slug");
-                            String url = Singleton.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_base);
+//                            String url = SingletonV2.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_base);
                             String img_path = obj.getString("img_path") + "/";
                             JSONArray basket = obj.getJSONArray("basket");
                             boolean freeFoodContains = false;
@@ -96,9 +94,9 @@ public class Basket implements LoadJson {
 
                                 Variant variant = new Variant(variantId, variantPrice, variantSize, variantWeight, 0);
 
-                                ProductItem productItem = new ProductItem(idProduct, nameProduct, url + img_path + iconProduct,iconDescription, points, category, variant);
-                                productItem.set_count(count);
-                                productItems.add(productItem);
+//                                ProductItem productItem = new ProductItem(idProduct, nameProduct, url + img_path + iconProduct,iconDescription, points, category, variant);
+//                                productItem.set_count(count);
+//                                productItems.add(productItem);
                                 isFreeFoodExist = freeFoodContains;
                             }
                         }
@@ -136,14 +134,14 @@ public class Basket implements LoadJson {
     }
 
     public void initBasketFromRegisterUser(){
-        if (Singleton.currentState().getUser().getStatus() == STATUS.REGISTER){
-            String url = Singleton.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_basket_items);
+        if (SingletonV2.currentState().getUser().getStatus() == STATUS.REGISTER){
+//            String url = SingletonV2.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_basket_items);
             JSONObject params = new JSONObject();
             try {
-                JSONObject userProfileJson = Singleton.currentState().getUser().getProfile();
+                JSONObject userProfileJson = SingletonV2.currentState().getUser().getProfile();
                 String session = userProfileJson.getString("session");
                 params.put("session", session);
-                new JsonHelperLoad( url, params, this, "add").execute();
+//                new JsonHelperLoad( url, params, this, "add").execute();
             } catch (JSONException e) {
                 Log.i(TAG,"initial Basket error");
                 e.printStackTrace();
@@ -182,7 +180,7 @@ public class Basket implements LoadJson {
         }
         Log.i(TAG, "addProduct: points = " + points);
 
-        String url = Singleton.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_add_variants);
+//        String url = SingletonV2.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_add_variants);
         JSONObject params = new JSONObject();
         try {
             JSONArray variants = new JSONArray();
@@ -196,14 +194,14 @@ public class Basket implements LoadJson {
                 variant.put("count", v.get_count());
                 variants.put(variant);
             }
-            JSONObject userProfileJson = Singleton.currentState().getUser().getProfile();
+            JSONObject userProfileJson = SingletonV2.currentState().getUser().getProfile();
             String session = userProfileJson.getString("session");
             params.put("session", session);
             params.put("variants", variants);
             params.put("slug", slugRestaurant);
             params.put("points", points);
 
-            new JsonHelperLoad( url, params, this, "addProduct").execute();
+//            new JsonHelperLoad( url, params, this, "addProduct").execute();
         } catch (JSONException e) {
             Log.i(TAG,"addProductItemRegister error");
             e.printStackTrace();
@@ -229,7 +227,7 @@ public class Basket implements LoadJson {
     }
 
     public void addProductItemOneRegister(ProductItem item){
-        if(Singleton.currentState().getUser().getStatus() == STATUS.REGISTER) {
+        if(SingletonV2.currentState().getUser().getStatus() == STATUS.REGISTER) {
             boolean points = item.get_points() > 0;
             if (item.get_points() > 0) {
                 if (isFreeFoodExist) {
@@ -238,7 +236,7 @@ public class Basket implements LoadJson {
                     isFreeFoodExist = true;
                 }
             }
-            String url = Singleton.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_add_variants);
+//            String url = SingletonV2.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_add_variants);
             JSONObject params = new JSONObject();
             try {
                 JSONArray variants = new JSONArray();
@@ -247,14 +245,14 @@ public class Basket implements LoadJson {
                 variant.put("id", v.get_id());
                 variant.put("count", 1);
                 variants.put(variant);
-                JSONObject userProfileJson = Singleton.currentState().getUser().getProfile();
+                JSONObject userProfileJson = SingletonV2.currentState().getUser().getProfile();
                 String session = userProfileJson.getString("session");
                 params.put("session", session);
                 params.put("variants", variants);
                 params.put("slug", slugRestaurant);
                 params.put("points", points);
 
-                new JsonHelperLoad(url, params, this, "addProduct").execute();
+//                new JsonHelperLoad(url, params, this, "addProduct").execute();
             } catch (JSONException e) {
                 Log.i(TAG, "addProductItemRegister error");
                 e.printStackTrace();
@@ -312,8 +310,9 @@ public class Basket implements LoadJson {
     }
 
     public double getMinimumPrice() {
-        Restaurant restaurant = Singleton.currentState().getStore().getRestaurantBySlug(slugRestaurant);
-        return restaurant.get_minimal_price();
+//        Restaurant restaurant = SingletonV2.currentState().getStore().getRestaurantBySlug(slugRestaurant);
+//        return restaurant.get_minimal_price();
+        return 1;
     }
 
     public JSONArray getItemsJson() {
@@ -333,16 +332,16 @@ public class Basket implements LoadJson {
     }
 
     public void removeProductItem(ProductItem item){
-        if(Singleton.currentState().getUser().getStatus() == STATUS.REGISTER){
+        if(SingletonV2.currentState().getUser().getStatus() == STATUS.REGISTER){
 
-            String url = Singleton.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_remove_item);
+//            String url = SingletonV2.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_remove_item);
             JSONObject params = new JSONObject();
             try {
-                JSONObject userProfileJson = Singleton.currentState().getUser().getProfile();
+                JSONObject userProfileJson = SingletonV2.currentState().getUser().getProfile();
                 String session = userProfileJson.getString("session");
                 params.put("session", session);
                 params.put("variant_id", item.get_variant().get_id());
-                new JsonHelperLoad( url, params, this, "removeItem").execute();
+//                new JsonHelperLoad( url, params, this, "removeItem").execute();
             } catch (JSONException e) {
                 Log.i(TAG,"initial Basket error");
                 e.printStackTrace();
@@ -355,16 +354,16 @@ public class Basket implements LoadJson {
     }
 
     public void minusProductItem(ProductItem item){
-        if(Singleton.currentState().getUser().getStatus() == STATUS.REGISTER){
+        if(SingletonV2.currentState().getUser().getStatus() == STATUS.REGISTER){
 
-            String url = Singleton.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_remove_variant);
+//            String url = SingletonV2.currentState().getStore().getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_remove_variant);
             JSONObject params = new JSONObject();
             try {
-                JSONObject userProfileJson = Singleton.currentState().getUser().getProfile();
+                JSONObject userProfileJson = SingletonV2.currentState().getUser().getProfile();
                 String session = userProfileJson.getString("session");
                 params.put("session", session);
                 params.put("variant_id", item.get_variant().get_id());
-                new JsonHelperLoad( url, params, this, "minusItem").execute();
+//                new JsonHelperLoad( url, params, this, "minusItem").execute();
             } catch (JSONException e) {
                 Log.i(TAG,"initial Basket error");
                 e.printStackTrace();

@@ -11,8 +11,8 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivity;
-import by.vkus.alexandrzanko.mobile_6vkusov.Activities.RestaurantsCardActivity;
+import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivityV2;
+import by.vkus.alexandrzanko.mobile_6vkusov.Trash.RestaurantsCardActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Restaurant;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
 
@@ -231,7 +231,7 @@ public class RestaurantRecycleAdapter extends RecyclerView.Adapter<RestaurantRec
                     @Override
                     public void onClick(View v) {
                         int position = getAdapterPosition();
-                        Intent intent = new Intent(context, RestaurantActivity.class);
+                        Intent intent = new Intent(context, RestaurantActivityV2.class);
                         intent.putExtra(RestaurantsCardActivity.EXTRA_RESTAURANT, restaurants.get(position).get_slug());
                         context.startActivity(intent);
                     }

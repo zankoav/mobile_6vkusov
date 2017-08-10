@@ -9,8 +9,8 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 
 public interface IUser {
     STATUS getStatus();
-    BasketUser getBasket();
-
+    void setCurrentOrderRestaurantSlug(String currentOrderRestaurantSlug);
+    String getCurrentOrderRestaurantSlug();
     String getFirstName();
     String getLastName();
     String getEmail();
@@ -19,7 +19,6 @@ public interface IUser {
     Integer getPhoneCode();
     Integer getPhoneNumber();
     String getAvatar();
-    void setBasketUser(BasketUser basket);
     void setPhone_number(Integer phone_number);
     void setAvatar(String avatar);
     void setPhone_code(Integer phone_code);

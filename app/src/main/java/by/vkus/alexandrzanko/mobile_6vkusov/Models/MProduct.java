@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 
 public class MProduct {
 
@@ -42,7 +42,7 @@ public class MProduct {
     }
 
     public String getIcon() {
-        return ApiController.BASE_URL + Singleton.currentState().getSettingsApp().getImage_path().getFood() + icon;
+        return ApiController.BASE_URL + SingletonV2.currentState().getSettingsApp().getImage_path().getFood() + icon;
     }
 
     public void setIcon(String icon) {

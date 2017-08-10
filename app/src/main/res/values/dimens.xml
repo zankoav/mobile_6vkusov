@@ -24,7 +24,7 @@
 
     <!-- ADAPTERS -->
 
-    <!-- ProductAdapter (product_item_layout.xml) -->
+    <!-- ProductAdapterV2 (product_item_layout.xml) -->
         <dimen name="parent_product_item_layout">12dp</dimen>
         <dimen name="paddingLeftRight_product_add_basket">30dp</dimen>
         <dimen name="product_description_textSize">12sp</dimen>
@@ -36,7 +36,7 @@
 
 
 
-    <!-- ProductAdapter End -->
+    <!-- ProductAdapterV2 End -->
 
     <!-- ADAPTERS END -->
 

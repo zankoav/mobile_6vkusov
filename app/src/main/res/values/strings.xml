@@ -6,9 +6,9 @@
     <string name="menu_title">Меню</string>
     <!--Для MenuActivity END-->
 
-    <!--Для CategoriesActivity-->
+    <!--Для CategoriesActivityV2-->
     <string name="categories_title">Категории</string>
-    <!--Для CategoriesActivity END-->
+    <!--Для CategoriesActivityV2 END-->
 
     <!--Для CheckOutActivity-->
     <string name="order_title">Оформление заказа</string>
@@ -31,7 +31,7 @@
     <string name="basket_button_get_order">Оформить заказ</string>
     <!--Для BasketActivity END-->
 
-    <!--Для RestaurantActivity-->
+    <!--Для RestaurantActivityV2-->
     <string name="rest_menu">Меню</string>
     <string name="rest_info">Доп.инфо</string>
     <string name="rest_comments">Отзывы</string>
@@ -48,9 +48,9 @@
     <string name="restaurants_delivery">Минимальный заказ:</string>
     <!--Для RestaurantsActivity END-->
 
-    <!--Для ProfileActivity-->
+    <!--Для ProfileActivityV2-->
     <string name="profile_title">Профиль</string>
-    <!--Для ProfileActivity END-->
+    <!--Для ProfileActivityV2 END-->
 
     <!--Для RememberActivity-->
     <string name="remember_email">Email</string>
@@ -58,7 +58,7 @@
     <string name="remember_send">Отправить</string>
     <!--Для RememberActivity END-->
 
-    <!--Для LoginActivity-->
+    <!--Для LoginActivityV2-->
     <string name="login_email">Email</string>
     <string name="login_password">Пароль</string>
     <string name="login_or">или</string>
@@ -67,19 +67,19 @@
     <string name="login_remember">Забыли пароль?</string>
     <string name="login_social_text">войдите через социальную сеть</string>
     <string name="login_button_maybe_reg">У Вас еще нет аккаунта? ЗАРЕГИСТРИРОВАТЬСЯ</string>
-    <!--Для LoginActivity END-->
+    <!--Для LoginActivityV2 END-->
 
     <!--Для OurPointsActivity-->
     <string name="our_points_title">Обменять баллы</string>
     <!--Для OurPointsActivity END-->
 
-    <!--Для InfoActivity-->
+    <!--Для InfoActivityV2-->
     <string name="info_title">О программе</string>
-    <!--Для InfoActivity END-->
+    <!--Для InfoActivityV2 END-->
 
-    <!--Для FreeFoodActivity-->
+    <!--Для FreeFoodActivityV2-->
     <string name="free_food_title">Еда за баллы</string>
-    <!--Для FreeFoodActivity END-->
+    <!--Для FreeFoodActivityV2 END-->
 
     <!--Для FavoritesRestaurantsActivity-->
     <string name="favorites_restaurants_title">Любимые рестораны</string>
@@ -102,9 +102,9 @@
     <!--Для RegistrationActivity END-->
 
 
-    <!--ChangeUserSettingsActivity-->
+    <!--ChangeUserSettingsActivityV2-->
     <string name="change_user_profile_success">Данные успешно сохранены</string>
-    <!--ChangeUserSettingsActivity  END-->
+    <!--ChangeUserSettingsActivityV2  END-->
 
 
     <!--Для REST API-->
@@ -171,11 +171,11 @@
 
     <!-- ADAPTERS -->
 
-    <!-- ProductAdapter (product_item_layout.xml) -->
+    <!-- ProductAdapterV2 (product_item_layout.xml) -->
     <string name="product_add_basket">Заказать</string>
 
 
-    <!-- ProductAdapter End -->
+    <!-- ProductAdapterV2 End -->
 
     <!-- PromoAdapter (product_item_layout.xml) -->
     <string name="promo_free_food">К ресторану</string>

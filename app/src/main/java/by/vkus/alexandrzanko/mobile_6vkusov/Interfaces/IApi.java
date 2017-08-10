@@ -36,6 +36,46 @@ public interface IApi {
     Call<List<MComment>> getCommentsByRestaurantSlug(@Field("slug") String slug);
 
     @FormUrlEncoded
+    @POST("/rest/api/get_restaurants_by_slug")
+    Call<List<MRestaurant>> getRestaurantsBySlug(@Field("slug") String slug);
+
+    @FormUrlEncoded
+    @POST("/rest/api/get_favorite_restaurants_by_user")
+    Call<List<MRestaurant>> getFavoriteRestaurantsByUser(@Field("session") String session);
+
+    @FormUrlEncoded
+    @POST("/rest/api/get_count_order_items_by_user")
+    Call<Integer> getCountOrderItemsByUser(@Field("session") String session);
+
+    @FormUrlEncoded
+    @POST("/rest/api/create_new_order_by_register_user")
+    Call<Boolean> createNewOrderByRegisterUser(@Field("session") String session, @Field("id") int idVariant);
+
+    @FormUrlEncoded
+    @POST("/rest/api/add_item_order_by_register_user")
+    Call<Boolean> addItemOrderByRegisterUser(@Field("session") String session, @Field("id") int idVariant);
+
+    @FormUrlEncoded
+    @POST("/rest/api/add_free_food_order_by_register_user")
+    Call<Boolean> addFreeFoodOrderByRegisterUser(@Field("session") String session, @Field("id") int idVariant);
+
+    @FormUrlEncoded
+    @POST("/rest/api/create_new_order_free_food_by_register_user")
+    Call<Boolean> createNewOrderFreeFoodByRegisterUser(@Field("session") String session, @Field("id") int idVariant);
+
+    @FormUrlEncoded
+    @POST("/rest/api/get_favorite_restaurants_by_slugs")
+    Call<List<MRestaurant>> getFavoriteRestaurantsBySlugs(@Field("slugs") String slugs);
+
+    @FormUrlEncoded
+    @POST("/rest/api/check_favorite_restaurants_by_user")
+    Call<Boolean> checkFavoriteRestaurantsByUser(@Field("session") String session, @Field("slug") String slug);
+
+    @FormUrlEncoded
+    @POST("/rest/api/change_favorite_restaurants_by_user")
+    Call<Boolean> changeFavoriteRestaurantsByUser(@Field("session") String session, @Field("slug") String slug);
+
+    @FormUrlEncoded
     @POST("/rest/api/get_menu_by_restaurant_slug")
     Call<List<MenuRestaurant>> getMenuByRestaurantSlug(@Field("slug") String slug);
 

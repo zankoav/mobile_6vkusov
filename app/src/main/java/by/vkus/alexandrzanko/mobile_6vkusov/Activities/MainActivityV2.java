@@ -9,12 +9,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityV2 extends AppCompatActivity {
 
-    private Singleton singleton = Singleton.currentState();
+    private SingletonV2 singletonV2 = SingletonV2.currentState();
     public ImageView lunchScreen, logoView, logoViewCircle;
     private Animation anim;
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         logoViewCircle = (ImageView)findViewById(R.id.search_view_circle);
         anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.android_rotate_animation);
         anim.setRepeatCount(10);
-        singleton.initStore(this);
+        singletonV2.initStore(this);
         showAnimation();
     }
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadComplete(){
-        Intent intent = new Intent(this, CategoriesActivity.class);
+        Intent intent = new Intent(this, CategoriesActivityV2.class);
         this.startActivity(intent);
         this.finish();
     }

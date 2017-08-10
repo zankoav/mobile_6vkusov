@@ -1,15 +1,15 @@
 package by.vkus.alexandrzanko.mobile_6vkusov;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivity;
+import by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivityV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.UserGeneral;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.UserRegister;
 import by.vkus.alexandrzanko.mobile_6vkusov.Settings.SettingsApp;
+import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.UserInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,46 +19,38 @@ import retrofit2.Response;
  * Created by alexandrzanko on 3/1/17.
  */
 
-public class Singleton{
+public class SingletonV2 {
 
-    private final String TAG = this.getClass().getSimpleName();
-
-    private static Singleton instance;
+    private static SingletonV2 instance;
 
     private IUser iUser;
     public IUser getIUser() {
         return iUser;
     }
-    private SessionStore sessionStore;
+    private SessionStoreV2 sessionStoreV2;
     private SettingsApp settingsApp;
     public SettingsApp getSettingsApp() {
         return settingsApp;
     }
-    public SessionStore getSessionStore() {
-        return sessionStore;
+    public SessionStoreV2 getSessionStoreV2() {
+        return sessionStoreV2;
     }
 
+    private SingletonV2(){}
 
-
-    private LocalStorage store;
-    private UserInterface user;
-
-
-    private Singleton(){}
-
-    public static Singleton currentState(){
+    public static SingletonV2 currentState(){
         if(instance == null){
-            instance = new Singleton();
+            instance = new SingletonV2();
         }
         return instance;
     }
 
     public void initStore(Context context) {
-        ((MainActivity)context).lunchScreen.setVisibility(View.VISIBLE);
-        ((MainActivity)context).logoViewCircle.setVisibility(View.VISIBLE);
-        ((MainActivity)context).showAnimation();
-        ((MainActivity)context).logoView.setVisibility(View.VISIBLE);
-        this.sessionStore = new SessionStore(context);
+        ((MainActivityV2)context).lunchScreen.setVisibility(View.VISIBLE);
+        ((MainActivityV2)context).logoViewCircle.setVisibility(View.VISIBLE);
+        ((MainActivityV2)context).showAnimation();
+        ((MainActivityV2)context).logoView.setVisibility(View.VISIBLE);
+        this.sessionStoreV2 = new SessionStoreV2(context);
         final Context contextF = context;
         ApiController.getApi().getSettings().enqueue(new Callback<SettingsApp>() {
             @Override
@@ -70,7 +62,7 @@ public class Singleton{
                 Toast.makeText(contextF, "Ошибка соединения", Toast.LENGTH_SHORT).show();
             }
         });
-        String session = sessionStore.getStringValueStorage(sessionStore.USER_SESSION);
+        String session = sessionStoreV2.getStringValueStorage(sessionStoreV2.USER_SESSION);
         if (session != null){
             ApiController.getApi().getUserBySession(session).enqueue(new Callback<UserRegister>() {
                 @Override
@@ -81,32 +73,37 @@ public class Singleton{
                     }else{
                         iUser = new UserGeneral();
                     }
+                    loadUserBasket(contextF);
                 }
+
                 @Override
                 public void onFailure(Call<UserRegister> call, Throwable t) {
                     iUser = new UserGeneral();
+                    loadUserBasket(contextF);
                 }
             });
         }else{
             this.iUser = new UserGeneral();
+            loadUserBasket(contextF);
+        }
+    }
+
+    private void loadUserBasket(Context context) {
+
+        if(iUser.getStatus().equals(STATUS.REGISTER)){
+
+        }else{
+
         }
 
 
+        ((MainActivityV2)context).loadComplete();
 
-        store = new LocalStorage(context);
     }
 
-
-
-
+    private UserInterface user;
     public UserInterface getUser() {
         return user;
     }
-
     public void setUser(UserInterface user) {this.user = user;}
-
-    public LocalStorage getStore() {
-        return store;
-    }
-
 }

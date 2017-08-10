@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.BasketAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.Basket;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
 
@@ -35,9 +35,9 @@ public class BasketActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.activity_basket);
         addToolBarToScreen();
-        lv = (ListView)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.listView_basket);
-        adapter = new BasketAdapter(this, Singleton.currentState().getUser().getBasket().getProductItems());
-        lv.setAdapter(adapter);
+//        lv = (ListView)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.listView_basket);
+//        adapter = new BasketAdapter(this, SingletonV2.currentState().getUser().getBasket().getProductItems());
+//        lv.setAdapter(adapter);
         initViews();
 
     }
@@ -78,26 +78,26 @@ public class BasketActivity extends AppCompatActivity{
     }
 
     public void checkOutUpdateView(){
-        Basket basket = Singleton.currentState().getUser().getBasket();
-        double price = basket.getPrice();
-        double deliveryPrice = basket.getDeliveryPrice();
-        double totalPrice = price - deliveryPrice;
-        int points = basket.getPoints();
-        double minimumPrice = basket.getMinimumPrice();
-
-        tvPrice.setText(Validation.twoNumbersAfterAfterPoint(price) + "");
-        tvDeliveryPrice.setText((deliveryPrice > 0 ? Validation.twoNumbersAfterAfterPoint(deliveryPrice) : "бесплатно") + "");
-        tvTotalPrice.setText(Validation.twoNumbersAfterAfterPoint(totalPrice) + "");
-        tvPoints.setText(points + "");
-
-        if (minimumPrice > totalPrice){
-            btnSender.setEnabled(false);
-            btnSender.setBackgroundResource(R.drawable.shape_corner);
-            btnSender.setText("Мин. стоимость заказа " + Validation.twoNumbersAfterAfterPoint(minimumPrice) + " руб.");
-        }else{
-            btnSender.setEnabled(true);
-            btnSender.setBackgroundResource(R.drawable.shape_corner_green);
-            btnSender.setText("Оформить заказ");
-        }
+//        Basket basket = SingletonV2.currentState().getUser().getBasket();
+//        double price = basket.getPrice();
+//        double deliveryPrice = basket.getDeliveryPrice();
+//        double totalPrice = price - deliveryPrice;
+//        int points = basket.getPoints();
+//        double minimumPrice = basket.getMinimumPrice();
+//
+//        tvPrice.setText(Validation.twoNumbersAfterAfterPoint(price) + "");
+//        tvDeliveryPrice.setText((deliveryPrice > 0 ? Validation.twoNumbersAfterAfterPoint(deliveryPrice) : "бесплатно") + "");
+//        tvTotalPrice.setText(Validation.twoNumbersAfterAfterPoint(totalPrice) + "");
+//        tvPoints.setText(points + "");
+//
+//        if (minimumPrice > totalPrice){
+//            btnSender.setEnabled(false);
+//            btnSender.setBackgroundResource(R.drawable.shape_corner);
+//            btnSender.setText("Мин. стоимость заказа " + Validation.twoNumbersAfterAfterPoint(minimumPrice) + " руб.");
+//        }else{
+//            btnSender.setEnabled(true);
+//            btnSender.setBackgroundResource(R.drawable.shape_corner_green);
+//            btnSender.setText("Оформить заказ");
+//        }
     }
 }

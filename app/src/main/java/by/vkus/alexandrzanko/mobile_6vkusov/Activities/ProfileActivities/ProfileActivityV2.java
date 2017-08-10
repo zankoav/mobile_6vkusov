@@ -1,43 +1,38 @@
-package by.vkus.alexandrzanko.mobile_6vkusov.Activities;
+package by.vkus.alexandrzanko.mobile_6vkusov.Activities.ProfileActivities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.andremion.counterfab.CounterFab;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import by.vkus.alexandrzanko.mobile_6vkusov.Activities.BaseMenuActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.OrderFragment;
-import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ProfileFragment;
+import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ProfileFragmentV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ViewPageAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
+import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class ProfileActivity extends BaseMenuActivity {
+public class ProfileActivityV2 extends BaseMenuActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private Singleton singleton;
+    private SingletonV2 singletonV2;
 
-    private ProfileFragment profileFragment;
+    private ProfileFragmentV2 profileFragmentV2;
     private OrderFragment orderFragment;
 
     private TextView userName, userEmail, userPhone;
@@ -48,26 +43,25 @@ public class ProfileActivity extends BaseMenuActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        userName.setText(singleton.getIUser().getFirstName());
-        userEmail.setText(singleton.getIUser().getEmail());
-        if(singleton.getIUser().getPhoneNumber() != null){
+
+        userName.setText(singletonV2.getIUser().getFirstName());
+        userEmail.setText(singletonV2.getIUser().getEmail());
+        if(singletonV2.getIUser().getPhoneNumber() != null){
             userPhone.setText(
                     "+375"+
-                            singleton.getIUser().getPhoneCode()+
-                            singleton.getIUser().getPhoneNumber()
+                            singletonV2.getIUser().getPhoneCode()+
+                            singletonV2.getIUser().getPhoneNumber()
             );
         }
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
         initViews(this.getString(R.string.rest_menu));
 
-        this.singleton = Singleton.currentState();
+        this.singletonV2 = SingletonV2.currentState();
 
         userName = (TextView)findViewById(R.id.user_name);
         userEmail = (TextView)findViewById(R.id.user_email);
@@ -84,9 +78,9 @@ public class ProfileActivity extends BaseMenuActivity {
         buttonUnderlineText(btnChangeInfo);
         buttonUnderlineText(btnCallFriends);
 
-        Log.i(TAG, "onCreate: " + singleton.getIUser().getAvatar());
+        Log.i(TAG, "onCreate: " + singletonV2.getIUser().getAvatar());
         Picasso.with(this)
-                .load(singleton.getIUser().getAvatar())
+                .load(singletonV2.getIUser().getAvatar())
                 .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
                 .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
                 .into(userIcon);
@@ -98,10 +92,10 @@ public class ProfileActivity extends BaseMenuActivity {
     private void setupViewPager(ViewPager viewPager){
         ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
 
-        profileFragment = new ProfileFragment();
-        //orderFragment = new OrderFragment();
+        profileFragmentV2 = new ProfileFragmentV2();
+        adapter.addFragment(profileFragmentV2, "Предложения");
 
-        adapter.addFragment(profileFragment, "Предложения");
+        //orderFragment = new OrderFragment();
        // adapter.addFragment(orderFragment, "Заказы");
 
         viewPager.setAdapter(adapter);
@@ -112,12 +106,12 @@ public class ProfileActivity extends BaseMenuActivity {
     }
 
     public void callFriend(View view) {
-        Intent intent = new Intent(this, UserCallFriendsActivity.class);
+        Intent intent = new Intent(this, UserCallFriendsActivityV2.class);
         startActivity(intent);
     }
 
     public void changeSettings(View view) {
-        Intent intent = new Intent(this, ChangeUserSettingsActivity.class);
+        Intent intent = new Intent(this, ChangeUserSettingsActivityV2.class);
         startActivity(intent);
     }
 }

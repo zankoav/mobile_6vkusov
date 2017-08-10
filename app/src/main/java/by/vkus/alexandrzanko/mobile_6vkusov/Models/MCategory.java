@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 
 /**
  * Created by alexandrzanko on 7/28/17.
@@ -52,7 +52,7 @@ public class MCategory {
     }
 
     public String getImage() {
-        return ApiController.BASE_URL + Singleton.currentState().getSettingsApp().getImage_path().getCategory() + image;
+        return ApiController.BASE_URL + SingletonV2.currentState().getSettingsApp().getImage_path().getCategory() + image;
     }
 
     public void setImage(String image) {

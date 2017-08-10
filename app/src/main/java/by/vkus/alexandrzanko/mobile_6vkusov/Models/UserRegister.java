@@ -5,11 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 
 public class UserRegister implements IUser{
 
+    @SerializedName("current_order_restaurant_slug")
+    @Expose
+    private String currentOrderRestaurantSlug;
     @SerializedName("first_name")
     @Expose
     private String first_name;
@@ -35,16 +38,19 @@ public class UserRegister implements IUser{
     @Expose
     private String avatar;
 
-    private BasketUser basket;
+    @Override
+    public String getCurrentOrderRestaurantSlug() {
+        return currentOrderRestaurantSlug;
+    }
+
+    @Override
+    public void setCurrentOrderRestaurantSlug(String currentOrderRestaurantSlug) {
+        this.currentOrderRestaurantSlug = currentOrderRestaurantSlug;
+    }
 
     @Override
     public STATUS getStatus() {
         return STATUS.REGISTER;
-    }
-
-    @Override
-    public BasketUser getBasket() {
-        return this.basket;
     }
 
     @Override
@@ -84,12 +90,7 @@ public class UserRegister implements IUser{
 
     @Override
     public String getAvatar() {
-        return ApiController.BASE_URL + Singleton.currentState().getSettingsApp().getImage_path().getUser() +  avatar;
-    }
-
-    @Override
-    public void setBasketUser(BasketUser basket) {
-        this.basket = basket;
+        return ApiController.BASE_URL + SingletonV2.currentState().getSettingsApp().getImage_path().getUser() +  avatar;
     }
 
     @Override
@@ -130,10 +131,6 @@ public class UserRegister implements IUser{
     @Override
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
-    }
-
-    public UserRegister(){
-        basket = new BasketUser();
     }
 
 }

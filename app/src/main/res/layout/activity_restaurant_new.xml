@@ -93,6 +93,7 @@
             android:layout_below="@+id/filter_view">
 
         </android.support.v7.widget.RecyclerView>
+
     </LinearLayout>
 
     <include layout="@layout/action_bar"/>

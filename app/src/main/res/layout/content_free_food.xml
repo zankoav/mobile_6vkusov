@@ -5,12 +5,14 @@
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_marginBottom="55dp">
 
     <ListView
         android:id="@+id/listView_free_food"
         android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent">
     </ListView>
 

@@ -1,4 +1,4 @@
-package by.vkus.alexandrzanko.mobile_6vkusov.Activities;
+package by.vkus.alexandrzanko.mobile_6vkusov.Trash;
 
 import android.animation.Animator;
 import android.content.res.TypedArray;
@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.RestaurantRecycleAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Restaurant;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
@@ -43,7 +43,7 @@ public class RestaurantsCardActivity extends AppCompatActivity implements LoadJs
     private final String SLUG = "slug";
     private final String NAME = "name";
     private final String FAVORITE = "favorite";
-    private Singleton singleton = Singleton.currentState();
+    private SingletonV2 singletonV2 = SingletonV2.currentState();
     private ArrayList<Restaurant> restaurants;
     private LinearLayout filterView, allView;
     private boolean menuFilterOpen = false;
@@ -65,24 +65,24 @@ public class RestaurantsCardActivity extends AppCompatActivity implements LoadJs
     public void onResume() {
         super.onResume();
         if (isFavorite) {
-            Singleton.currentState().getUser().getBasket().initBasketFromRegisterUser();
-            if (Singleton.currentState().getUser().getStatus() == STATUS.REGISTER) {
+            SingletonV2.currentState().getUser().getBasket().initBasketFromRegisterUser();
+            if (SingletonV2.currentState().getUser().getStatus() == STATUS.REGISTER) {
                 JSONObject params = new JSONObject();
                 String url = this.getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_favourites);
                 try {
-                    params.put("session", Singleton.currentState().getUser().getProfile().getString("session"));
+                    params.put("session", SingletonV2.currentState().getUser().getProfile().getString("session"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Log.i(TAG, "onResume: JsonHelperLoad starts");
                 (new JsonHelperLoad(url, params, this, FAVORITE)).execute();
             } else {
-                ArrayList<String> slugs = Singleton.currentState().getStore().getAllSlugs();
-                if (slugs != null) {
-                    restaurants = Singleton.currentState().getStore().getFavoriteRestaurants(slugs);
+//                ArrayList<String> slugs = SingletonV2.currentState().getStore().getAllSlugs();
+//                if (slugs != null) {
+//                    restaurants = SingletonV2.currentState().getStore().getFavoriteRestaurants(slugs);
                     adapter = new RestaurantRecycleAdapter(restaurants,this);
                     recyclerView.setAdapter(adapter);
-                }
+//                }
             }
         }
     }
@@ -98,7 +98,7 @@ public class RestaurantsCardActivity extends AppCompatActivity implements LoadJs
         if (!isFavorite){
             String slug = bundle.getString(SLUG);
             title = bundle.getString(NAME);
-            restaurants = singleton.getStore().getRestaurants(slug);
+//            restaurants = singletonV2.getStore().getRestaurants(slug);
         }
         addToolBarToScreen();
         initViews();
@@ -342,7 +342,7 @@ public class RestaurantsCardActivity extends AppCompatActivity implements LoadJs
                         JSONArray array = obj.getJSONArray("slugs");
                         restaurants = new ArrayList<>();
                         for(int i = 0; i < array.length(); i++){
-                            restaurants.add(Singleton.currentState().getStore().getRestaurantBySlug(array.getString(i)));
+//                            restaurants.add(SingletonV2.currentState().getStore().getRestaurantBySlug(array.getString(i)));
                         }
                         adapter = new RestaurantRecycleAdapter(restaurants,this);
                         recyclerView.setAdapter(adapter);

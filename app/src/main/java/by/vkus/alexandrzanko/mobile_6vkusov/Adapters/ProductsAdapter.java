@@ -15,7 +15,7 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Models.Product;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.ProductItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Variant;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.Basket;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 import com.squareup.picasso.Picasso;
@@ -32,7 +32,7 @@ public class ProductsAdapter extends BaseAdapter{
     private final String slug;
     private Context context;
     private Basket basket;
-    private Singleton singleton;
+    private SingletonV2 singletonV2;
     private String category;
 
     public ProductsAdapter(Context context, ArrayList<Product> listData, String category) {
@@ -40,8 +40,8 @@ public class ProductsAdapter extends BaseAdapter{
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.slug = ((ProductActivity)context).getSlug();
-        this.singleton = Singleton.currentState();
-        this.basket = singleton.getUser().getBasket();
+        this.singletonV2 = SingletonV2.currentState();
+        this.basket = singletonV2.getUser().getBasket();
         this.category = category;
     }
 
@@ -83,14 +83,14 @@ public class ProductsAdapter extends BaseAdapter{
                     .into(holder.productImg);
 
         if (category.equals("Еда за баллы")){
-            if (Singleton.currentState().getUser().getStatus() == STATUS.GENERAL){
+            if (SingletonV2.currentState().getUser().getStatus() == STATUS.GENERAL){
                 holder.addToBasketButton.setEnabled(false);
                 holder.addToBasketButton.setBackgroundResource(R.drawable.shape_corner);
                 holder.addToBasketButton.setTextSize(10);
                 holder.addToBasketButton.setText("Зарегистрируйтесь");
             }else{
-                int points = Singleton.currentState().getUser().getPoints();
-                if (Singleton.currentState().getUser().getBasket().isFreeFoodExist()){
+                int points = SingletonV2.currentState().getUser().getPoints();
+                if (SingletonV2.currentState().getUser().getBasket().isFreeFoodExist()){
                     holder.addToBasketButton.setEnabled(false);
                     holder.addToBasketButton.setBackgroundResource(R.drawable.shape_corner);
                 }
@@ -124,10 +124,10 @@ public class ProductsAdapter extends BaseAdapter{
         holder.addToBasketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Singleton.currentState().getUser().getStatus() == STATUS.REGISTER){
+                if (SingletonV2.currentState().getUser().getStatus() == STATUS.REGISTER){
 
                     basket.addProductItemRegister(product,slug);
-                    if (Singleton.currentState().getUser().getBasket().isFreeFoodExist()){
+                    if (SingletonV2.currentState().getUser().getBasket().isFreeFoodExist()){
                         notifyDataSetChanged();
                     }
 

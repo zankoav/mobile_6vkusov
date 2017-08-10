@@ -17,50 +17,21 @@
         tools:text="Вес 70/80/20 г"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/product_btn_minus"
-        />
-
-    <Button
-        android:id="@+id/product_btn_minus"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:background="@drawable/variant_buttons_shape_corner"
-        android:textColor="@color/colorGray"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        android:text="-"
-        android:layout_toLeftOf="@id/product_count"
-         />
-
-    <TextView
-        android:id="@+id/product_count"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:gravity="center"
-        android:text="0"
-        android:textSize="14sp"
-        android:background="@drawable/variant_buttons_shape_corner"
-        android:textColor="@color/colorGray"
-        android:layout_marginRight="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_centerHorizontal="true"
-
+        android:layout_toLeftOf="@+id/product_btn_plus"
         />
 
     <Button
         android:id="@+id/product_btn_plus"
-        android:layout_width="36dp"
+        android:layout_width="100dp"
         android:layout_height="36dp"
         android:focusable="false"
+        android:textAllCaps="false"
         android:focusableInTouchMode="false"
         android:background="@drawable/variant_buttons_shape_corner"
         android:textColor="@color/colorGray"
-        android:textStyle="bold"
-        android:text="+"
+        android:text="Добавить"
         android:textSize="14sp"
-        android:layout_toRightOf="@+id/product_count"
+        android:layout_centerHorizontal="true"
          />
 
 

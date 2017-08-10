@@ -1,11 +1,5 @@
 package by.vkus.alexandrzanko.mobile_6vkusov.Users;
 
-import android.util.Log;
-
-import by.vkus.alexandrzanko.mobile_6vkusov.LocalStorage;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -31,7 +25,7 @@ public class Register implements UserInterface {
 
     @Override
     public JSONObject getProfile() {
-//        LocalStorage store = Singleton.currentState().getStore();
+//        LocalStorage store = SingletonV2.currentState().getStore();
 //        JSONObject profile = null;
 //        try {
 //            profile = new JSONObject(store.getStringValueStorage(store.APP_PROFILE));

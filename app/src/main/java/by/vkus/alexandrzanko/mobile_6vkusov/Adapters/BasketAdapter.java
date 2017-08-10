@@ -13,7 +13,7 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Activities.BasketActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.ProductItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Variant;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
 
 import com.squareup.picasso.Picasso;
@@ -74,7 +74,7 @@ public class BasketAdapter extends BaseAdapter {
             public void onClick(View view) {
                 productItem.addCount();
                 int count = productItem.get_count();
-                Singleton.currentState().getUser().getBasket().addProductItemOneRegister(productItem);
+                SingletonV2.currentState().getUser().getBasket().addProductItemOneRegister(productItem);
                 holder.countProducts.setText(count + "");
                 holder.productPrice.setText(Validation.twoNumbersAfterAfterPoint(productItem.get_variant().get_price()*count) + " р.");
                 ((BasketActivity)context).checkOutUpdateView();
@@ -89,12 +89,12 @@ public class BasketAdapter extends BaseAdapter {
                 if (count > 0) {
                     holder.countProducts.setText(count + "");
                     holder.productPrice.setText(Validation.twoNumbersAfterAfterPoint(productItem.get_variant().get_price()*count) + " р.");
-                    Singleton.currentState().getUser().getBasket().minusProductItem(productItem);
+                    SingletonV2.currentState().getUser().getBasket().minusProductItem(productItem);
                 }else{
                     listData.remove(productItem);
-                    Singleton.currentState().getUser().getBasket().removeProductItem(productItem);
+                    SingletonV2.currentState().getUser().getBasket().removeProductItem(productItem);
                     notifyDataSetChanged();
-                    Singleton.currentState().getUser().getBasket().getDelegateContext().updateBasket(0);
+                    SingletonV2.currentState().getUser().getBasket().getDelegateContext().updateBasket(0);
                 }
                 ((BasketActivity)context).checkOutUpdateView();
 
@@ -105,9 +105,9 @@ public class BasketAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 listData.remove(productItem);
-                Singleton.currentState().getUser().getBasket().removeProductItem(productItem);
+                SingletonV2.currentState().getUser().getBasket().removeProductItem(productItem);
                 notifyDataSetChanged();
-                Singleton.currentState().getUser().getBasket().getDelegateContext().updateBasket(0);
+                SingletonV2.currentState().getUser().getBasket().getDelegateContext().updateBasket(0);
                 ((BasketActivity)context).checkOutUpdateView();
             }
         });

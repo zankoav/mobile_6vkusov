@@ -21,7 +21,8 @@ import android.widget.Toast;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.ProductItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
+import by.vkus.alexandrzanko.mobile_6vkusov.Trash.RestaurantsCardActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.Basket;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
@@ -55,22 +56,22 @@ public class CheckOutActivity extends AppCompatActivity implements LoadJson {
         flat = (EditText)findViewById(R.id.order_user_flat);
         comment = (EditText)findViewById(R.id.order_user_comments);
 
-        if(Singleton.currentState().getUser().getStatus() == STATUS.REGISTER){
-            JSONObject profile = Singleton.currentState().getUser().getProfile();
-            try {
-                String firstNameUser = profile.getString("firstName");
-                String lastNameUser = profile.getString("lastName");
-                name.setText(firstNameUser + " " + lastNameUser);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                String phoneStr = profile.getString("phone");
-                phone.setText("+375"+phoneStr);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+//        if(SingletonV2.currentState().getUser().getStatus() == STATUS.REGISTER){
+//            JSONObject profile = SingletonV2.currentState().getUser().getProfile();
+//            try {
+//                String firstNameUser = profile.getString("firstName");
+//                String lastNameUser = profile.getString("lastName");
+//                name.setText(firstNameUser + " " + lastNameUser);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                String phoneStr = profile.getString("phone");
+//                phone.setText("+375"+phoneStr);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
         initViews();
     }
 
@@ -149,13 +150,13 @@ public class CheckOutActivity extends AppCompatActivity implements LoadJson {
 //                params.put("payment-method", "тип оплаты");
 //                params.put("change", "сдача");
 //                params.put("delivery-type", "тип доставки, самовывоз, значения 1 или 2");
-                if (Singleton.currentState().getUser().getStatus() == STATUS.GENERAL){
-                    params.put("variants", Singleton.currentState().getUser().getBasket().getItemsJson());
-                }else{
-                    url = this.getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_checkout_cart);
-                    params.put("session", Singleton.currentState().getUser().getProfile().getString("session"));
-                }
-                new JsonHelperLoad(url,params,this, null).execute();
+//                if (SingletonV2.currentState().getUser().getStatus() == STATUS.GENERAL){
+//                    params.put("variants", SingletonV2.currentState().getUser().getBasket().getItemsJson());
+//                }else{
+//                    url = this.getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_checkout_cart);
+//                    params.put("session", SingletonV2.currentState().getUser().getProfile().getString("session"));
+//                }
+//                new JsonHelperLoad(url,params,this, null).execute();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -171,16 +172,16 @@ public class CheckOutActivity extends AppCompatActivity implements LoadJson {
     }
 
     public void checkOutUpdateView(){
-        Basket basket = Singleton.currentState().getUser().getBasket();
-        double price = basket.getPrice();
-        double deliveryPrice = basket.getDeliveryPrice();
-        double totalPrice = price - deliveryPrice;
-        int points = basket.getPoints();
-
-        tvPrice.setText(round(price,2) + "");
-        tvDeliveryPrice.setText((deliveryPrice > 0 ? round(deliveryPrice,2) : "бесплатно") + "");
-        tvTotalPrice.setText(round(totalPrice,2) + "");
-        tvPoints.setText(points + "");
+//        Basket basket = SingletonV2.currentState().getUser().getBasket();
+//        double price = basket.getPrice();
+//        double deliveryPrice = basket.getDeliveryPrice();
+//        double totalPrice = price - deliveryPrice;
+//        int points = basket.getPoints();
+//
+//        tvPrice.setText(round(price,2) + "");
+//        tvDeliveryPrice.setText((deliveryPrice > 0 ? round(deliveryPrice,2) : "бесплатно") + "");
+//        tvTotalPrice.setText(round(totalPrice,2) + "");
+//        tvPoints.setText(points + "");
 
     }
 
@@ -234,37 +235,37 @@ public class CheckOutActivity extends AppCompatActivity implements LoadJson {
 
     @Override
     public void loadComplete(JSONObject obj, String sessionName) {
-        if (obj != null){
-            try {
-                String status = obj.getString("status");
-                if (status.equals("successful")){
-
-                    int orderId = obj.getInt("order");
-                    double totalPrice = obj.getDouble("totalPrice");
-
-                    Singleton.currentState().getUser().getBasket().setProductItems(new ArrayList<ProductItem>());
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("Заказ принят!");
-                    builder.setMessage("Ваш заказ №"+orderId+ ", через несколько минут Вам перезвонит оператор, сумма заказа "+ totalPrice +" рублей");
-                    builder.setPositiveButton("Продолжить", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int arg1) {
-                            Intent intent = getParentActivityIntent();
-                            intent.putExtra(RestaurantsCardActivity.EXTRA_RESTAURANT, Singleton.currentState().getUser().getBasket().getSlugRestaurant());
-                            startActivity(intent);
-                        }
-                    });
-
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-            } catch (JSONException e) {
-                Log.i(TAG, "loadComplete: error" + e);
-                e.printStackTrace();
-            }
-        }else{
-            Log.i(TAG, "loadComplete: obj = null");
-        }
+//        if (obj != null){
+//            try {
+//                String status = obj.getString("status");
+//                if (status.equals("successful")){
+//
+//                    int orderId = obj.getInt("order");
+//                    double totalPrice = obj.getDouble("totalPrice");
+//
+//                    SingletonV2.currentState().getUser().getBasket().setProductItems(new ArrayList<ProductItem>());
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                    builder.setTitle("Заказ принят!");
+//                    builder.setMessage("Ваш заказ №"+orderId+ ", через несколько минут Вам перезвонит оператор, сумма заказа "+ totalPrice +" рублей");
+//                    builder.setPositiveButton("Продолжить", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int arg1) {
+//                            Intent intent = getParentActivityIntent();
+//                            intent.putExtra(RestaurantsCardActivity.EXTRA_RESTAURANT, SingletonV2.currentState().getUser().getBasket().getSlugRestaurant());
+//                            startActivity(intent);
+//                        }
+//                    });
+//
+//                    AlertDialog alert = builder.create();
+//                    alert.show();
+//
+//                }
+//            } catch (JSONException e) {
+//                Log.i(TAG, "loadComplete: error" + e);
+//                e.printStackTrace();
+//            }
+//        }else{
+//            Log.i(TAG, "loadComplete: obj = null");
+//        }
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

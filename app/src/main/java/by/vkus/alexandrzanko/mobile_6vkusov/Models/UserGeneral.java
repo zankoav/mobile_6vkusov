@@ -2,6 +2,8 @@ package by.vkus.alexandrzanko.mobile_6vkusov.Models;
 
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
+import by.vkus.alexandrzanko.mobile_6vkusov.SessionStoreV2;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 
 /**
@@ -10,7 +12,6 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 
 public class UserGeneral implements IUser
 {
-    private BasketUser basket;
 
     @Override
     public STATUS getStatus() {
@@ -18,8 +19,15 @@ public class UserGeneral implements IUser
     }
 
     @Override
-    public BasketUser getBasket() {
-        return this.basket;
+    public String getCurrentOrderRestaurantSlug() {
+        SessionStoreV2 store = SingletonV2.currentState().getSessionStoreV2();
+        return store.getStringValueStorage(store.USER_GENERAL_CURRENT_ORDER_RESTAURANT_SLUG);
+    }
+
+    @Override
+    public void setCurrentOrderRestaurantSlug(String currentOrderRestaurantSlug) {
+        SessionStoreV2 store = SingletonV2.currentState().getSessionStoreV2();
+        store.setStringValueStorage(store.USER_GENERAL_CURRENT_ORDER_RESTAURANT_SLUG, currentOrderRestaurantSlug);
     }
 
     @Override
@@ -63,11 +71,6 @@ public class UserGeneral implements IUser
     }
 
     @Override
-    public void setBasketUser(BasketUser basket) {
-        this.basket = basket;
-    }
-
-    @Override
     public void setPhone_number(Integer phone_number) {
 
     }
@@ -107,7 +110,5 @@ public class UserGeneral implements IUser
 
     }
 
-    public UserGeneral(){
-        basket = new BasketUser();
-    }
+
 }

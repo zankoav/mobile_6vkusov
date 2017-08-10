@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
-import by.vkus.alexandrzanko.mobile_6vkusov.Singleton;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 
 public class MRestaurant {
 
@@ -53,7 +53,7 @@ public class MRestaurant {
     }
 
     public String getLogo() {
-        return  ApiController.BASE_URL + Singleton.currentState().getSettingsApp().getImage_path().getRestaurant() + logo;
+        return  ApiController.BASE_URL + SingletonV2.currentState().getSettingsApp().getImage_path().getRestaurant() + logo;
     }
 
     public void setLogo(String logo) {
