@@ -14,6 +14,7 @@ import android.widget.TextView;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MComment;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -78,11 +79,16 @@ public class CommentsAdapter extends BaseAdapter {
         if(icon != null) {
             holder.likeIcon.setImageDrawable(icon);
         }
-        Picasso.with(context)
+
+        Glide.with(context)
                 .load(comment.getAvatar())
-                .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
-                .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
                 .into(holder.userIcon);
+
+//        Picasso.with(context)
+//                .load(comment.getAvatar())
+//                .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
+//                .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
+//                .into(holder.userIcon);
 
         return convertView;
     }

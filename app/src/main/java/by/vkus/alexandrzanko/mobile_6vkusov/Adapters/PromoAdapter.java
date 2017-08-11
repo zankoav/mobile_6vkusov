@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andremion.counterfab.CounterFab;
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -92,11 +93,14 @@ public class PromoAdapter extends BaseAdapter {
         holder.restaurantBtn.setText(food.getRestaurant_name());
         buttonUnderlineText(holder.restaurantBtn);
 
-        Picasso.with(context)
+        Glide.with(context)
                 .load(food.getIcon())
-                .placeholder(R.drawable.product) //показываем что-то, пока не загрузится указанная картинка
-                .error(R.drawable.product) // показываем что-то, если не удалось скачать картинку
                 .into(holder.productImg);
+//        Picasso.with(context)
+//                .load(food.getIcon())
+//                .placeholder(R.drawable.product) //показываем что-то, пока не загрузится указанная картинка
+//                .error(R.drawable.product) // показываем что-то, если не удалось скачать картинку
+//                .into(holder.productImg);
 
 
         if (SingletonV2.currentState().getIUser().getStatus().equals(STATUS.REGISTER)){

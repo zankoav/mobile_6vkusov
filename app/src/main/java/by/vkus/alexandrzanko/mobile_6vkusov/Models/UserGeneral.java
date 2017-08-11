@@ -27,7 +27,11 @@ public class UserGeneral implements IUser
     @Override
     public void setCurrentOrderRestaurantSlug(String currentOrderRestaurantSlug) {
         SessionStoreV2 store = SingletonV2.currentState().getSessionStoreV2();
-        store.setStringValueStorage(store.USER_GENERAL_CURRENT_ORDER_RESTAURANT_SLUG, currentOrderRestaurantSlug);
+        if(currentOrderRestaurantSlug == null){
+            store.clearKeyStorage(store.USER_GENERAL_CURRENT_ORDER_RESTAURANT_SLUG);
+        }else{
+            store.setStringValueStorage(store.USER_GENERAL_CURRENT_ORDER_RESTAURANT_SLUG, currentOrderRestaurantSlug);
+        }
     }
 
     @Override

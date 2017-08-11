@@ -10,7 +10,7 @@
         android:src="@drawable/rest_icon"
         android:layout_width="@dimen/product_icon_width"
         android:layout_height="@dimen/product_icon_height"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitCenter"/>
 
     <TextView
         android:id="@+id/free_food_name"

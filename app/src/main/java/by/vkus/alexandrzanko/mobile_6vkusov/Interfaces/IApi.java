@@ -5,8 +5,10 @@ import java.util.List;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.FoodByPoint;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MCategory;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MComment;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.MOrderItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MProduct;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MRestaurant;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.MRestaurantDeliveryInfo;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MenuRestaurant;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.UserRegister;
 import by.vkus.alexandrzanko.mobile_6vkusov.Settings.SettingsApp;
@@ -48,12 +50,24 @@ public interface IApi {
     Call<Integer> getCountOrderItemsByUser(@Field("session") String session);
 
     @FormUrlEncoded
+    @POST("/rest/api/get_info_delivery_restaurant")
+    Call<MRestaurantDeliveryInfo> getInfoDeliveryRestaurant(@Field("session") String session, @Field("restaurant_slug") String restaurant_slug);
+
+    @FormUrlEncoded
     @POST("/rest/api/create_new_order_by_register_user")
     Call<Boolean> createNewOrderByRegisterUser(@Field("session") String session, @Field("id") int idVariant);
 
     @FormUrlEncoded
     @POST("/rest/api/add_item_order_by_register_user")
     Call<Boolean> addItemOrderByRegisterUser(@Field("session") String session, @Field("id") int idVariant);
+
+    @FormUrlEncoded
+    @POST("/rest/api/minus_item_order_by_register_user")
+    Call<Boolean> minusItemOrderByRegisterUser(@Field("session") String session, @Field("id") int idVariant);
+
+    @FormUrlEncoded
+    @POST("/rest/api/remove_item_order_by_register_user")
+    Call<Boolean> removeItemOrderByRegisterUser(@Field("session") String session, @Field("id") int orderItemId);
 
     @FormUrlEncoded
     @POST("/rest/api/add_free_food_order_by_register_user")
@@ -66,6 +80,14 @@ public interface IApi {
     @FormUrlEncoded
     @POST("/rest/api/get_favorite_restaurants_by_slugs")
     Call<List<MRestaurant>> getFavoriteRestaurantsBySlugs(@Field("slugs") String slugs);
+
+    @FormUrlEncoded
+    @POST("/rest/api/get_order_items_for_general_by_restaurant_slug")
+    Call<List<MOrderItem>> getOrderItemsForGeneralByRestaurantsSlug(@Field("slug") String slug, @Field("variants") String variants);
+
+    @FormUrlEncoded
+    @POST("/rest/api/get_order_items_by_register_user")
+    Call<List<MOrderItem>> getOrderItemsByRegisterUser(@Field("session") String session);
 
     @FormUrlEncoded
     @POST("/rest/api/check_favorite_restaurants_by_user")

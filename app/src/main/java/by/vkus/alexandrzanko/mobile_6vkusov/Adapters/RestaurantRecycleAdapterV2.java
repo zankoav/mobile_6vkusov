@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -126,11 +127,15 @@ public class RestaurantRecycleAdapterV2 extends RecyclerView.Adapter<RestaurantR
             dislikesTV.setText(restaurant.getDislikes() + "");
             workTimeTV.setText(restaurant.getWorking_time() + "");
 
-            Picasso.with(context)
+
+            Glide.with(context)
                     .load(restaurant.getLogo())
-                    .placeholder(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.rest_icon) //показываем что-то, пока не загрузится указанная картинка
-                    .error(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.rest_icon) // показываем что-то, если не удалось скачать картинку
                     .into(imageView);
+//            Picasso.with(context)
+//                    .load(restaurant.getLogo())
+//                    .placeholder(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.rest_icon) //показываем что-то, пока не загрузится указанная картинка
+//                    .error(by.vkus.alexandrzanko.mobile_6vkusov.R.drawable.rest_icon) // показываем что-то, если не удалось скачать картинку
+//                    .into(imageView);
         }
 
     }

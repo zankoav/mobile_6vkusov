@@ -35,6 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.andremion.counterfab.CounterFab;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
@@ -98,11 +99,15 @@ public class RestaurantActivityV2 extends AppCompatActivity {
                 nameRest.setText(mRestaurant.getName());
                 imgView = (ImageView)findViewById(R.id.restaurant_icon);
 
-                Picasso.with(RestaurantActivityV2.this)
+                Glide.with(RestaurantActivityV2.this)
                         .load(mRestaurant.getLogo())
-                        .placeholder(R.drawable.rest_icon) //показываем что-то, пока не загрузится указанная картинка
-                        .error(R.drawable.rest_icon) // показываем что-то, если не удалось скачать картинку
                         .into(imgView);
+
+//                Picasso.with(RestaurantActivityV2.this)
+//                        .load(mRestaurant.getLogo())
+//                        .placeholder(R.drawable.rest_icon) //показываем что-то, пока не загрузится указанная картинка
+//                        .error(R.drawable.rest_icon) // показываем что-то, если не удалось скачать картинку
+//                        .into(imgView);
 
                 kitchenType = (TextView)findViewById(R.id.user_email);
                 kitchenType.setText(mRestaurant.getKitchens());
