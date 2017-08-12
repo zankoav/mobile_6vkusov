@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/parent_product_item_layout">
+
+    <ImageView
+        android:id="@+id/discount_icon"
+        android:src="@drawable/rest_icon"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:id="@+id/discount_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:maxLines="2"
+        android:padding="6dp"
+        android:textAlignment="center"
+        android:text="ЛАЗЕРНАЯ ЭПИЛЯЦИЯ В САЛОНЕ ШАЙНЭСТ (ОДНА ЗОНА НА ВЫБОР)"
+        android:layout_below="@+id/discount_icon"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorHeader" />
+
+    <TextView
+        android:id="@+id/discount_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:textSize="@dimen/product_description_textSize"
+        android:text="Лазерная эпиляция позволяет быстро и безболезненно избавиться от нежелательных волос и навсегда забыть о ежедневном бритье и восковой депиляции. Всего несколько посещений – и ваша кожа на лице и ногах, в подмышечных впадинах и области бикини навсегда станет гладкой и привлекательной. Информация по стоимости - https://www.shine-est.b"
+        android:ellipsize="end"
+        android:layout_below="@+id/discount_name" />
+
+    <TextView
+        android:id="@+id/discount_points"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:textSize="14sp"
+        android:text="100 баллов"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/colorOdnoklasniki"
+        android:layout_below="@+id/discount_description" />
+
+    <Button
+        android:id="@+id/discount_get"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="12dp"
+        android:text="Добавить"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/shape_corner_green"
+        android:layout_below="@+id/discount_description"/>
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="-6dp"
+        android:layout_marginRight="-17dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_flag"
+        android:layout_alignParentRight="true"
+        />
+    <TextView
+        android:id="@+id/discount_label"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        tools:text="50%"
+        android:textStyle="bold"
+        android:lines="1"
+        android:gravity="center"
+        android:layout_marginTop="6dp"
+        android:layout_alignParentRight="true"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        />
+
+</RelativeLayout>

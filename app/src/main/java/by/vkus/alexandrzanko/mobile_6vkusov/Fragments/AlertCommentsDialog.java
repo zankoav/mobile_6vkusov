@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.OrderAdapter;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrder;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
@@ -31,7 +33,7 @@ public class AlertCommentsDialog extends DialogFragment {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    public void setOrder(OrderItem order) {
+    public void setOrder(MOrder order) {
         this.order = order;
     }
 
@@ -39,7 +41,7 @@ public class AlertCommentsDialog extends DialogFragment {
         this.adapter = adapter;
     }
 
-    private OrderItem order;
+    private MOrder order;
     private int like = 1;
     private OrderAdapter adapter;
     private AlertCommentsDialog self = this;
@@ -83,17 +85,18 @@ public class AlertCommentsDialog extends DialogFragment {
                 .setPositiveButton("Отправить", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        JSONObject params = new JSONObject();
-                        String url = getContext().getResources().getString(R.string.api_send_comment);
-                        try {
-                            params.put("id", order.getId());
-                            params.put("session", SingletonV2.currentState().getUser().getProfile().getString("session"));
-                            params.put("type", like);
-                            params.put("text", input.getText());
-                            new JsonHelperLoad(url,params, self.adapter, null).execute();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        Log.i(TAG, "onClick: send comment");
+//                        JSONObject params = new JSONObject();
+//                        String url = getContext().getResources().getString(R.string.api_send_comment);
+//                        try {
+//                            params.put("id", order.getId());
+//                            params.put("session", SingletonV2.currentState().getIUser().getSession());
+//                            params.put("type", like);
+//                            params.put("text", input.getText());
+//                            new JsonHelperLoad(url,params, self.adapter, null).execute();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
                     }
                 })
                 .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {

@@ -2,6 +2,7 @@ package by.vkus.alexandrzanko.mobile_6vkusov.Interfaces;
 
 import java.util.List;
 
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.Discounts.MOurDiscountCategory;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.FoodByPoint;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MCategory;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MComment;
@@ -10,6 +11,7 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Models.MProduct;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MRestaurant;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MRestaurantDeliveryInfo;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MenuRestaurant;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrder;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.UserRegister;
 import by.vkus.alexandrzanko.mobile_6vkusov.Settings.SettingsApp;
 import retrofit2.Call;
@@ -32,6 +34,13 @@ public interface IApi {
 
     @GET("/rest/api/settings")
     Call<SettingsApp> getSettings();
+
+    @GET("/rest/api/get_our_points")
+    Call<List<MOurDiscountCategory>> getOurPoints();
+
+    @FormUrlEncoded
+    @POST("/rest/api/get_orders_user")
+    Call<List<MOrder>> getOrdersUser(@Field("session") String session);
 
     @FormUrlEncoded
     @POST("/rest/api/get_comments_by_restaurant_slug")

@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItemFood;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrderFood;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alexandrzanko on 5/3/17.
@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 public class OrderFoodAdapter extends BaseAdapter {
 
-    private ArrayList<OrderItemFood> listData;
+    private List<MOrderFood> listData;
     private LayoutInflater layoutInflater;
 
-    public OrderFoodAdapter(Context context, ArrayList<OrderItemFood> listData) {
+    public OrderFoodAdapter(Context context, List<MOrderFood> listData) {
         this.listData = listData;
         this.layoutInflater = LayoutInflater.from(context);
     }
@@ -52,7 +52,7 @@ public class OrderFoodAdapter extends BaseAdapter {
 
         convertView.setTag(holder);
 
-        final OrderItemFood item = listData.get(position);
+        final MOrderFood item = listData.get(position);
         holder.productCount.setText(item.getCount() + "");
         holder.productName.setText(item.getName() + "");
 

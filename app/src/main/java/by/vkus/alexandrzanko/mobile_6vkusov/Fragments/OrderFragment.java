@@ -10,31 +10,34 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.OrderAdapter;
+import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrder;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItemFood;
 import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
-import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alexandrzanko on 5/2/17.
  */
 
-public class OrderFragment extends Fragment implements LoadJson {
+public class OrderFragment extends Fragment {
 
     private OrderAdapter adapter;
-    private ArrayList<OrderItem> orders;
+    private List<MOrder> orders;
     private ListView listView;
 
     private final String TAG = this.getClass().getSimpleName();
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,61 +57,25 @@ public class OrderFragment extends Fragment implements LoadJson {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        String url = getContext().getResources().getString(by.vkus.alexandrzanko.mobile_6vkusov.R.string.api_orders);
-        JSONObject params = new JSONObject();
-        try {
-            JSONObject userProfileJson = SingletonV2.currentState().getUser().getProfile();
-            String session = userProfileJson.getString("session");
-            params.put("session", session);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return;
-        }
-        (new JsonHelperLoad(url,params,this,"orders")).execute();
-    }
-
-    @Override
-    public void loadComplete(JSONObject obj, String sessionName) {
-        Log.i(TAG, "loadComplete: obj = "  + obj);
-        if(obj != null){
-            String status = "error";
-            try {
-                status = obj.getString("status");
-                if (status.equals("successful")){
-                    this.orders = new ArrayList<>();
-                    //String image_path = obj.getString("image_path");
-                    JSONArray orders = obj.getJSONArray("orders");
-                    for (int i = 0; i < orders.length(); i++){
-                        JSONObject orderJson = orders.getJSONObject(i);
-                        //String restaurant_name = orderJson.getString("restaurant_name");
-                        String restaurant_slug = orderJson.getString("restaurant_slug");
-                        //String restaurant_icon = orderJson.getString("restaurant_icon");
-                        double total_price = orderJson.getDouble("total_price");
-                        int id = orderJson.getInt("id");
-                        int created = orderJson.getInt("created");
-                        boolean comment_exists = orderJson.getBoolean("comment_exists");
-                        JSONArray foods = orderJson.getJSONArray("food");
-                        ArrayList<OrderItemFood> arrayFoods = new ArrayList<>();
-
-                        for (int j = 0; j < foods.length(); j++){
-                            JSONObject foodJson = foods.getJSONObject(j);
-                            String food_name = foodJson.getString("name");
-                            int food_count = foodJson.getInt("count");
-                            OrderItemFood food = new OrderItemFood(food_count, food_name);
-                            arrayFoods.add(food);
-                        }
-
-                        OrderItem order = new OrderItem(arrayFoods, restaurant_slug, comment_exists, total_price, id, created);
-                        this.orders.add(order);
-                    }
+        String session = SingletonV2.currentState().getIUser().getSession();
+        ApiController.getApi().getOrdersUser(session).enqueue(new Callback<List<MOrder>>() {
+            @Override
+            public void onResponse(Call<List<MOrder>> call, Response<List<MOrder>> response) {
+                if(response.code() == 200){
+                    orders = response.body();
+                    adapter = new OrderAdapter(OrderFragment.this,orders);
+                    listView.setAdapter(adapter);
+                }else{
+                    Log.i(TAG, "onResponse: code = " + response.code());
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
-        }
-        adapter = new OrderAdapter(this,orders);
-        listView.setAdapter(adapter);
-    }
 
+            @Override
+            public void onFailure(Call<List<MOrder>> call, Throwable t) {
+                Log.i(TAG, "onFailure: ");
+            }
+        });
+
+    }
 
 }

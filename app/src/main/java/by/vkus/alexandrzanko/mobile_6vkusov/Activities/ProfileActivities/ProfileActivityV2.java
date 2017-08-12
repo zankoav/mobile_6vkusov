@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.andremion.counterfab.CounterFab;
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.BaseMenuActivity;
@@ -78,11 +79,8 @@ public class ProfileActivityV2 extends BaseMenuActivity {
         buttonUnderlineText(btnChangeInfo);
         buttonUnderlineText(btnCallFriends);
 
-        Log.i(TAG, "onCreate: " + singletonV2.getIUser().getAvatar());
-        Picasso.with(this)
+        Glide.with(this)
                 .load(singletonV2.getIUser().getAvatar())
-                .placeholder(R.drawable.user) //показываем что-то, пока не загрузится указанная картинка
-                .error(R.drawable.user) // показываем что-то, если не удалось скачать картинку
                 .into(userIcon);
 
         setupViewPager(viewPager);
@@ -95,8 +93,8 @@ public class ProfileActivityV2 extends BaseMenuActivity {
         profileFragmentV2 = new ProfileFragmentV2();
         adapter.addFragment(profileFragmentV2, "Предложения");
 
-        //orderFragment = new OrderFragment();
-       // adapter.addFragment(orderFragment, "Заказы");
+        orderFragment = new OrderFragment();
+        adapter.addFragment(orderFragment, "Заказы");
 
         viewPager.setAdapter(adapter);
     }

@@ -21,6 +21,17 @@
             android:minHeight="?attr/actionBarSize"
             android:background="@drawable/line_gradient"
             app:layout_scrollFlags="scroll|enterAlways"/>
+        
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabTextColor="@color/colorTabLight"
+            app:tabIndicatorColor="@color/colorWhite"
+            app:tabSelectedTextColor="@color/colorWhite"
+            android:background="@drawable/line_gradient_tabs"
+            app:tabGravity="fill"
+            app:tabMode="scrollable"/>
 
     </android.support.design.widget.AppBarLayout>
 

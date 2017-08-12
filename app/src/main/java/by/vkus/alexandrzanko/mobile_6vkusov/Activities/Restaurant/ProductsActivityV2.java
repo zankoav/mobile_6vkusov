@@ -72,6 +72,7 @@ public class ProductsActivityV2 extends AppCompatActivity implements DiscreteScr
                 @Override
                 public void onResponse(Call<Integer> call, Response<Integer> response) {
                     if(response.code() == 200){
+
                         fab.setCount(response.body());
                     }
                 }

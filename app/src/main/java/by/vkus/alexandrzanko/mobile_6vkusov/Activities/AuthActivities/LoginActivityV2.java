@@ -293,6 +293,7 @@ public class LoginActivityV2 extends BaseMenuActivity implements Callback<UserRe
 
     @Override
     public void onResponse(Call<UserRegister> call, Response<UserRegister> response) {
+        Log.i(TAG, "onResponse: code " + response.code());
         if (response.code() == 200){
             IUser user = response.body();
             SingletonV2.currentState().getSessionStoreV2().setStringValueStorage(SingletonV2.currentState().getSessionStoreV2().USER_SESSION,user.getSession());

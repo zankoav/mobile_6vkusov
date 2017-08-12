@@ -9,9 +9,11 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_our_points">
 
-    <TextView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_points"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello from points"/>
+        android:background="@color/colorWhite"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </RelativeLayout>

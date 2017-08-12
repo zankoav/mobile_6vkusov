@@ -96,12 +96,6 @@ public class PromoAdapter extends BaseAdapter {
         Glide.with(context)
                 .load(food.getIcon())
                 .into(holder.productImg);
-//        Picasso.with(context)
-//                .load(food.getIcon())
-//                .placeholder(R.drawable.product) //показываем что-то, пока не загрузится указанная картинка
-//                .error(R.drawable.product) // показываем что-то, если не удалось скачать картинку
-//                .into(holder.productImg);
-
 
         if (SingletonV2.currentState().getIUser().getStatus().equals(STATUS.REGISTER)){
             holder.addToBasketButton.setText("Добавить");

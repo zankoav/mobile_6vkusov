@@ -14,34 +14,39 @@ import android.widget.TextView;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.AlertCommentsDialog;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.OrderFragment;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrder;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrderFood;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItemFood;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
+
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alexandrzanko on 5/2/17.
  */
 
-public class OrderAdapter extends BaseAdapter  implements LoadJson {
+public class OrderAdapter extends BaseAdapter{
 
-    private ArrayList<OrderItem> listData;
+    private List<MOrder> listData;
     private LayoutInflater layoutInflater;
     public OrderFragment context;
     private OrderAdapter self = this;
     public Button send;
-    public OrderItem current;
+    public MOrder current;
 
     private final String TAG = this.getClass().getSimpleName();
 
 
-    public OrderAdapter(OrderFragment context, ArrayList<OrderItem> listData) {
+    public OrderAdapter(OrderFragment context, List<MOrder> listData) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(context.getContext());
         this.context = context;
@@ -53,7 +58,7 @@ public class OrderAdapter extends BaseAdapter  implements LoadJson {
     }
 
     @Override
-    public Object getItem(int position) {
+    public MOrder getItem(int position) {
         return listData.get(position);
     }
 
@@ -77,72 +82,68 @@ public class OrderAdapter extends BaseAdapter  implements LoadJson {
 
         convertView.setTag(holder);
 
-        final OrderItem item = listData.get(position);
+        final MOrder item = listData.get(position);
 
-        if (item != null && item.getRestaurant() != null) {
-            if (!item.isComment_exists()) {
-                holder.commentBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        send = holder.commentBtn;
-                        current = item;
-                        send.setEnabled(false);
-                        FragmentManager manager = context.getActivity().getSupportFragmentManager();
-                        AlertCommentsDialog myDialogFragment = new AlertCommentsDialog();
-                        myDialogFragment.setAdapter(self);
-                        myDialogFragment.setOrder(item);
-                        myDialogFragment.show(manager, "dialog");
-                    }
-                });
-            } else {
-                holder.commentBtn.setEnabled(false);
-                holder.commentBtn.setVisibility(View.GONE);
-            }
-
-            holder.orderPrice.setText(item.getTotal_price() + "");
-            holder.orderDate.setText(item.getCreated());
-            holder.orderName.setText(item.getRestaurant().get_name());
-
-            Picasso.with(context.getContext())
-                    .load(item.getRestaurant().get_iconURL())
-                    .placeholder(R.drawable.rest_icon) //показываем что-то, пока не загрузится указанная картинка
-                    .error(R.drawable.rest_icon) // показываем что-то, если не удалось скачать картинку
-                    .into(holder.restImg);
-
-
-            final ArrayList<OrderItemFood> items = item.getFoods();
-            OrderFoodAdapter adapter = new OrderFoodAdapter(this.context.getContext(), items);
-            holder.itemsListView.setAdapter(adapter);
-            float density = context.getResources().getDisplayMetrics().density;
-            ViewGroup.LayoutParams params = holder.itemsListView.getLayoutParams();
-            params.height = Math.round(30 * density * items.size());
-            holder.itemsListView.setLayoutParams(params);
+        if (!item.isComment_exists()) {
+            holder.commentBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    send = holder.commentBtn;
+                    current = item;
+                    send.setEnabled(false);
+                    FragmentManager manager = context.getActivity().getSupportFragmentManager();
+                    AlertCommentsDialog myDialogFragment = new AlertCommentsDialog();
+                    myDialogFragment.setAdapter(self);
+                    myDialogFragment.setOrder(item);
+                    myDialogFragment.show(manager, "dialog");
+                }
+            });
+        } else {
+            holder.commentBtn.setEnabled(false);
+            holder.commentBtn.setVisibility(View.GONE);
         }
 
+        holder.orderPrice.setText(item.getTotal_price() + "");
+        holder.orderDate.setText(item.getCreated());
+        holder.orderName.setText(item.getRestaurant_name());
+
+        Glide.with(context.getContext())
+                .load(item.getRestaurant_icon())
+                .placeholder(R.drawable.rest_icon)
+                .error(R.drawable.rest_icon)
+                .into(holder.restImg);
+
+//        final List<MOrderFood> items = item.getFood();
+//        OrderFoodAdapter adapter = new OrderFoodAdapter(this.context.getContext(), items);
+//        holder.itemsListView.setAdapter(adapter);
+//        float density = context.getResources().getDisplayMetrics().density;
+//        ViewGroup.LayoutParams params = holder.itemsListView.getLayoutParams();
+//        params.height = Math.round(30 * density * items.size());
+//        holder.itemsListView.setLayoutParams(params);
         return convertView;
     }
 
-    @Override
-    public void loadComplete(JSONObject obj, String sessionName) {
-        Log.i(TAG, "loadComplete: obj = " + obj.toString());
-        if (obj != null){
-            String status = null;
-            try {
-                status = obj.getString("status");
-                if (status.equals("successful")){
-                    current.setComment_exists(true);
-                    this.notifyDataSetChanged();
-                }else{
-                    send.setEnabled(true);
-                }
-            } catch (JSONException e) {
-                send.setEnabled(true);
-                e.printStackTrace();
-            }
-        }else{
-            send.setEnabled(true);
-        }
-    }
+//    @Override
+//    public void loadComplete(JSONObject obj, String sessionName) {
+//        Log.i(TAG, "loadComplete: obj = " + obj.toString());
+//        if (obj != null){
+//            String status = null;
+//            try {
+//                status = obj.getString("status");
+//                if (status.equals("successful")){
+//                    current.setComment_exists(true);
+//                    this.notifyDataSetChanged();
+//                }else{
+//                    send.setEnabled(true);
+//                }
+//            } catch (JSONException e) {
+//                send.setEnabled(true);
+//                e.printStackTrace();
+//            }
+//        }else{
+//            send.setEnabled(true);
+//        }
+//    }
 
     static class ViewHolder {
         ImageView restImg;

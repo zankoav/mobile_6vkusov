@@ -1,16 +1,19 @@
-package by.vkus.alexandrzanko.mobile_6vkusov.Models;
+package by.vkus.alexandrzanko.mobile_6vkusov.Trash;
+
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.Product;
+import by.vkus.alexandrzanko.mobile_6vkusov.Models.Variant;
 
 /**
  * Created by alexandrzanko on 1/25/17.
  */
 
-public class Order {
+public class GGOrder {
 
     private Product product;
     private int count;
     private Variant variant;
 
-    public Order(Product product, Variant variant, int count){
+    public GGOrder(Product product, Variant variant, int count){
         this.product = product;
         this.count = count;
         this.variant = variant;
@@ -38,8 +41,8 @@ public class Order {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Order){
-            Order order = (Order)obj;
+        if (obj instanceof GGOrder){
+            GGOrder order = (GGOrder)obj;
             return variant.equals(order.getVariant()) && product.equals(order.getProduct());
         }else{
             return false;

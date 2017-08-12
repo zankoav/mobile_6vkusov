@@ -25,7 +25,6 @@ public class OrderItem {
 
     public OrderItem(ArrayList<OrderItemFood> foods, String slug, boolean comment_exists, double total_price, int id, int created) {
         this.foods = foods;
-//        this.restaurant = SingletonV2.currentState().getStore().getRestaurantBySlug(slug);
         this.comment_exists = comment_exists;
         this.total_price = total_price;
         this.id = id;

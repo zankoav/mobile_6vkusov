@@ -30,6 +30,7 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.LoginActiv
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.ProfileActivities.ProfileActivityV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantsActivityV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
+import by.vkus.alexandrzanko.mobile_6vkusov.Application;
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.SessionStoreV2;
@@ -63,12 +64,16 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
     protected void onResume() {
         super.onResume();
 
+
         if(SingletonV2.currentState().getIUser().getStatus().equals(STATUS.REGISTER)){
             ApiController.getApi().getCountOrderItemsByUser(SingletonV2.currentState().getIUser().getSession()).enqueue(new Callback<Integer>() {
                 @Override
                 public void onResponse(Call<Integer> call, Response<Integer> response) {
                     if(response.code() == 200){
+                        Log.i(TAG, "onResponse: " + response.body());
                         fab.setCount(response.body());
+                    }else if(response.code() == 302){
+                        fab.setCount(0);
                     }
                 }
 
@@ -95,6 +100,7 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
                 }
             }
         }
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
