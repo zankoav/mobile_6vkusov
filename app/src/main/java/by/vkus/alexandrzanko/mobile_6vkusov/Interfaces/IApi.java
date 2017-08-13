@@ -39,8 +39,24 @@ public interface IApi {
     Call<List<MOurDiscountCategory>> getOurPoints();
 
     @FormUrlEncoded
+    @POST("/rest/api/get_discount_step1")
+    Call<Boolean> getDiscountStep1(@Field("session") String session, @Field("discount_id") int discount_id);
+
+    @FormUrlEncoded
+    @POST("/rest/api/get_discount_step2")
+    Call<Boolean> getDiscountStep2(@Field("session") String session, @Field("discount_id") int discount_id);
+
+    @FormUrlEncoded
     @POST("/rest/api/get_orders_user")
     Call<List<MOrder>> getOrdersUser(@Field("session") String session);
+
+    @FormUrlEncoded
+    @POST("/rest/api/checkout_order_by_register_user")
+    Call<Integer> checkoutOrderByRegisterUser(@Field("session") String session, @Field("user_data") String user_data);
+
+    @FormUrlEncoded
+    @POST("/rest/api/checkout_order_by_general_user")
+    Call<Integer> checkoutOrderByGeneralUser(@Field("slug") String slug, @Field("variants") String variants, @Field("user_data") String user_data);
 
     @FormUrlEncoded
     @POST("/rest/api/send_comment_by_order")

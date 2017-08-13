@@ -118,9 +118,6 @@ public class BasketActivity extends AppCompatActivity{
     }
 
     private void loadBasketByGeneralUser() {
-
-
-
         SessionStoreV2 store = SingletonV2.currentState().getSessionStoreV2();
         String variants = store.getStringValueStorage(store.USER_GENERAL_CURRENT_ORDER_VARIANTS);
         String restaurant_slug = user.getCurrentOrderRestaurantSlug();
@@ -179,21 +176,23 @@ public class BasketActivity extends AppCompatActivity{
 
     public void orderButtonPressed(View view) {
         Intent intent = new Intent(BasketActivity.this, CheckOutActivity.class);
+        double price = getPrice();
+        double totalPrice = getTotalPrice(price);
+        String points = String.valueOf(getPoints(price));
+
+        intent.putExtra("price", String.valueOf(Validation.twoNumbersAfterAfterPoint(price)));
+        intent.putExtra("totalPrice", String.valueOf(Validation.twoNumbersAfterAfterPoint(totalPrice)));
+        intent.putExtra("points", points);
+
         startActivity(intent);
     }
 
     public void checkOutUpdateView(){
-        double price = 0;
-        for (int i = 0; i < orderItems.size(); i++){
-            if(orderItems.get(i).isSolidByPoints()){
-                continue;
-            }
-            price += orderItems.get(i).getPrice()* orderItems.get(i).getCount();
-        }
-        int points = (int)(price*5);
-        double totalPrice = price - deliveryInfo.getDeliveryPrice();
+        double price = getPrice();
+        int points = getPoints(price);
+        double totalPrice = getTotalPrice(price);
 
-        tvPrice.setText(Validation.twoNumbersAfterAfterPoint(price) + "");
+        tvPrice.setText(Validation.twoNumbersAfterAfterPoint(price));
         tvPoints.setText(points + "");
         tvDeliveryPrice.setText((deliveryInfo.getDeliveryPrice() > 0 ? Validation.twoNumbersAfterAfterPoint(deliveryInfo.getDeliveryPrice()) : "бесплатно") + "");
         tvTotalPrice.setText(Validation.twoNumbersAfterAfterPoint(totalPrice) + "");
@@ -207,5 +206,24 @@ public class BasketActivity extends AppCompatActivity{
             btnSender.setBackgroundResource(R.drawable.shape_corner_green);
             btnSender.setText("Оформить заказ");
         }
+    }
+
+    private int getPoints(double price){
+        return (int)(price*5);
+    }
+
+    private double getTotalPrice(double price){
+        return price - deliveryInfo.getDeliveryPrice();
+    }
+
+    private double getPrice(){
+        double price = 0;
+        for (int i = 0; i < orderItems.size(); i++){
+            if(orderItems.get(i).isSolidByPoints()){
+                continue;
+            }
+            price += orderItems.get(i).getPrice()* orderItems.get(i).getCount();
+        }
+        return price;
     }
 }

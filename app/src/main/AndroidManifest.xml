@@ -70,11 +70,16 @@
         <activity
             android:name=".Activities.ProfileActivities.ChangeUserSettingsActivityV2"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.OurPintsV2" />
-        <activity android:name=".Activities.InfoActivityV2" />
-        <activity android:name=".Activities.FreeFoodActivityV2" />
-        <activity android:name=".Activities.Restaurant.ProductsActivityV2" />
-        <activity android:name=".Activities.Restaurant.RestaurantsActivityV2"></activity>
+        <activity android:name=".Activities.OurPintsV2"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.InfoActivityV2"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.FreeFoodActivityV2"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.Restaurant.ProductsActivityV2"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.Restaurant.RestaurantsActivityV2"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
