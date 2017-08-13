@@ -1,8 +1,13 @@
 package by.vkus.alexandrzanko.mobile_6vkusov;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.MainActivityV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
@@ -99,6 +104,13 @@ public class SingletonV2 {
 
         ((MainActivityV2)context).loadComplete();
 
+    }
+
+    public String getDate_time(long date_time) {
+        long time = date_time * 1000;
+        Date date = new Date(time);
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        return formatter.format(date);
     }
 
     private UserInterface user;

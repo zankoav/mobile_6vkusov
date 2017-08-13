@@ -43,6 +43,10 @@ public interface IApi {
     Call<List<MOrder>> getOrdersUser(@Field("session") String session);
 
     @FormUrlEncoded
+    @POST("/rest/api/send_comment_by_order")
+    Call<String> sendCommentByOrder(@Field("session") String session, @Field("id_order") int id_order, @Field("type_comment") int type_comment, @Field("message") String message);
+
+    @FormUrlEncoded
     @POST("/rest/api/get_comments_by_restaurant_slug")
     Call<List<MComment>> getCommentsByRestaurantSlug(@Field("slug") String slug);
 

@@ -19,7 +19,9 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrderFood;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItemFood;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
+import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
+import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
 
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
@@ -102,9 +104,10 @@ public class OrderAdapter extends BaseAdapter{
             holder.commentBtn.setEnabled(false);
             holder.commentBtn.setVisibility(View.GONE);
         }
-
-        holder.orderPrice.setText(item.getTotal_price() + "");
-        holder.orderDate.setText(item.getCreated());
+        String totalPrice = Validation.twoNumbersAfterAfterPoint(item.getTotal_price());
+        holder.orderPrice.setText(totalPrice);
+        String date = SingletonV2.currentState().getDate_time(item.getCreated());
+        holder.orderDate.setText(date);
         holder.orderName.setText(item.getRestaurant_name());
 
         Glide.with(context.getContext())
@@ -113,13 +116,13 @@ public class OrderAdapter extends BaseAdapter{
                 .error(R.drawable.rest_icon)
                 .into(holder.restImg);
 
-//        final List<MOrderFood> items = item.getFood();
-//        OrderFoodAdapter adapter = new OrderFoodAdapter(this.context.getContext(), items);
-//        holder.itemsListView.setAdapter(adapter);
-//        float density = context.getResources().getDisplayMetrics().density;
-//        ViewGroup.LayoutParams params = holder.itemsListView.getLayoutParams();
-//        params.height = Math.round(30 * density * items.size());
-//        holder.itemsListView.setLayoutParams(params);
+        final List<MOrderFood> items = item.getFood();
+        OrderFoodAdapter adapter = new OrderFoodAdapter(this.context.getContext(), items);
+        holder.itemsListView.setAdapter(adapter);
+        float density = context.getResources().getDisplayMetrics().density;
+        ViewGroup.LayoutParams params = holder.itemsListView.getLayoutParams();
+        params.height = Math.round(30 * density * items.size());
+        holder.itemsListView.setLayoutParams(params);
         return convertView;
     }
 

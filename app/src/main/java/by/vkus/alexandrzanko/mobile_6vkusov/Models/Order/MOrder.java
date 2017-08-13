@@ -26,7 +26,7 @@ public class MOrder {
     private int id;
     @SerializedName("created")
     @Expose
-    private int created;
+    private long created;
     @SerializedName("comment_exists")
     @Expose
     private boolean comment_exists;
@@ -74,11 +74,11 @@ public class MOrder {
         this.id = id;
     }
 
-    public int getCreated() {
+    public long getCreated() {
         return created;
     }
 
-    public void setCreated(int created) {
+    public void setCreated(long created) {
         this.created = created;
     }
 

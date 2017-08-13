@@ -2,25 +2,32 @@ package by.vkus.alexandrzanko.mobile_6vkusov.Fragments;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.app.AlertDialog;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.OrderAdapter;
+import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrder;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItem;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,18 +92,29 @@ public class AlertCommentsDialog extends DialogFragment {
                 .setPositiveButton("Отправить", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.i(TAG, "onClick: send comment");
-//                        JSONObject params = new JSONObject();
-//                        String url = getContext().getResources().getString(R.string.api_send_comment);
-//                        try {
-//                            params.put("id", order.getId());
-//                            params.put("session", SingletonV2.currentState().getIUser().getSession());
-//                            params.put("type", like);
-//                            params.put("text", input.getText());
-//                            new JsonHelperLoad(url,params, self.adapter, null).execute();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
+                        int orderId =  order.getId();
+                        String session = SingletonV2.currentState().getIUser().getSession();
+                        int typeComment = like;
+                        String message = input.getText().toString();
+                        ApiController.getApi().sendCommentByOrder(session,orderId,typeComment,message).enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                if(response.code() == 200) {
+                                    order.setComment_exists(true);
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(adapter.context.getActivity(),"Спасибо! Отзыв отправлен на валидацию", Toast.LENGTH_LONG).show();
+                                }else if(response.code() == 308){
+                                    Toast.makeText(adapter.context.getActivity(),"Ожидает валидации", Toast.LENGTH_LONG).show();
+                                }else{
+                                    Log.i(TAG, "onResponse: code = " + response.code());
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                                Log.i(TAG, "onFailure: ");
+                            }
+                        });
                     }
                 })
                 .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {

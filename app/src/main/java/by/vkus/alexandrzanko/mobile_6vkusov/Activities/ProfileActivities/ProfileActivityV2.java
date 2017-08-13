@@ -81,6 +81,8 @@ public class ProfileActivityV2 extends BaseMenuActivity {
 
         Glide.with(this)
                 .load(singletonV2.getIUser().getAvatar())
+                .placeholder(R.drawable.user)
+                .error(R.drawable.user)
                 .into(userIcon);
 
         setupViewPager(viewPager);
