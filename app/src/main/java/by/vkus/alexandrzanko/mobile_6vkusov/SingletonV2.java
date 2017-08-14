@@ -1,7 +1,6 @@
 package by.vkus.alexandrzanko.mobile_6vkusov;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 

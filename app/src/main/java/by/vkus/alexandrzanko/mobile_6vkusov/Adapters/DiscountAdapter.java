@@ -1,6 +1,5 @@
 package by.vkus.alexandrzanko.mobile_6vkusov.Adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,9 +22,7 @@ import java.util.List;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.LoginActivityV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.BaseMenuActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
-import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Discounts.Discount;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.FoodByPoint;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;

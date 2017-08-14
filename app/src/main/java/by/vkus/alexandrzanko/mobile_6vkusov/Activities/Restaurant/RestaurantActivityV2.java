@@ -36,15 +36,11 @@ import retrofit2.Response;
 
 import com.andremion.counterfab.CounterFab;
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 

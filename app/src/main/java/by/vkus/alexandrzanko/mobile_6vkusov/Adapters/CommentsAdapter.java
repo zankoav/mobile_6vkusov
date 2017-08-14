@@ -15,7 +15,6 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Models.MComment;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

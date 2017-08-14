@@ -1,6 +1,5 @@
 package by.vkus.alexandrzanko.mobile_6vkusov.Interfaces;
 
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.BasketUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 
 /**

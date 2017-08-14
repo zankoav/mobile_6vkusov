@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.andremion.counterfab.CounterFab;
-
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.PromoAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.FoodByPoint;

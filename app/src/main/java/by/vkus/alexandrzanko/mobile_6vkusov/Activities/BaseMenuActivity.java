@@ -24,13 +24,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Set;
-
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.AuthActivities.LoginActivityV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.ProfileActivities.ProfileActivityV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantsActivityV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
-import by.vkus.alexandrzanko.mobile_6vkusov.Application;
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.SessionStoreV2;

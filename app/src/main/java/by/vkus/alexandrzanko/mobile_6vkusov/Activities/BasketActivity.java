@@ -23,7 +23,6 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Models.MRestaurantDeliveryInfo;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.SessionStoreV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
-import by.vkus.alexandrzanko.mobile_6vkusov.Users.Basket;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
 import retrofit2.Call;
@@ -51,14 +50,24 @@ public class BasketActivity extends AppCompatActivity{
     private TextView tvPrice, tvDeliveryPrice, tvTotalPrice, tvPoints ;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (orderItems != null && adapter != null){
+            orderItems.clear();
+            adapter.notifyDataSetChanged();
+        }
+        user = SingletonV2.currentState().getIUser();
+        loadDeliveryInfo();
+        initViews();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.activity_basket);
         addToolBarToScreen();
         user = SingletonV2.currentState().getIUser();
-        loadDeliveryInfo();
         lv = (ListView)findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.listView_basket);
-        initViews();
     }
 
     private void loadDeliveryInfo(){

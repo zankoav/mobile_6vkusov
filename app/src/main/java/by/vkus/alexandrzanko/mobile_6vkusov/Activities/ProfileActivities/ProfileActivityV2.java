@@ -5,27 +5,19 @@ import android.graphics.Paint;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.andremion.counterfab.CounterFab;
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.BaseMenuActivity;
-import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.OrderFragment;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ProfileFragmentV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ViewPageAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
-import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ProfileActivityV2 extends BaseMenuActivity {
 

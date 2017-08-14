@@ -2,7 +2,6 @@ package by.vkus.alexandrzanko.mobile_6vkusov.Adapters;
 
 import android.support.v4.app.FragmentManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +15,12 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.AlertCommentsDialog;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.OrderFragment;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrder;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrderFood;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItem;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItemFood;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
-import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.Validation;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**

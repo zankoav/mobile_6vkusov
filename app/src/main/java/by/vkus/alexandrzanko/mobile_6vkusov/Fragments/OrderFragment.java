@@ -12,19 +12,11 @@ import android.widget.ListView;
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.OrderAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrder;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItem;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItemFood;
 import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
-import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.LoadJson;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**

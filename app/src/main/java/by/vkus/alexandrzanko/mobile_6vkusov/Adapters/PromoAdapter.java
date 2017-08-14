@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.andremion.counterfab.CounterFab;
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -28,7 +27,6 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantsAct
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
-import by.vkus.alexandrzanko.mobile_6vkusov.Trash.RestaurantsCardActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.FoodByPoint;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.Users.STATUS;

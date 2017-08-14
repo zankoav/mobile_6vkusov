@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Activities.Restaurant.RestaurantActivityV2;

@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MenuRestaurant;

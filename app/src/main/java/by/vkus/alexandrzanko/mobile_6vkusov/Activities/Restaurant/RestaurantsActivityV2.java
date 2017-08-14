@@ -7,8 +7,6 @@ import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 
-import org.json.JSONObject;
-
 import java.util.List;
 import java.util.Set;
 

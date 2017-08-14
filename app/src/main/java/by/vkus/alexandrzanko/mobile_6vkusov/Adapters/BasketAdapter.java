@@ -14,8 +14,6 @@ import by.vkus.alexandrzanko.mobile_6vkusov.Activities.BasketActivity;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Interfaces.IUser;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.MOrderItem;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.ProductItem;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.Variant;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.SessionStoreV2;
 import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
@@ -26,15 +24,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 
 /**

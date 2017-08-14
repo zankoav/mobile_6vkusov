@@ -1,23 +1,18 @@
 package by.vkus.alexandrzanko.mobile_6vkusov.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.ProductsAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.DiscountFragment;
-import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ProductFragment;
 import by.vkus.alexandrzanko.mobile_6vkusov.Fragments.ViewPageAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Discounts.MOurDiscountCategory;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.Product;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import retrofit2.Call;
 import retrofit2.Callback;

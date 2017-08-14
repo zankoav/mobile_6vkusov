@@ -1,16 +1,12 @@
 package by.vkus.alexandrzanko.mobile_6vkusov.Activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
-
-import com.andremion.counterfab.CounterFab;
 
 import java.util.List;
 
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.PromoAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
-import by.vkus.alexandrzanko.mobile_6vkusov.Application;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.FoodByPoint;
 import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import retrofit2.Call;

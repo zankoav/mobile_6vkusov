@@ -6,12 +6,84 @@
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_our_points">
+    tools:showIn="@layout/app_bar_info">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/title_app"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello from info"/>
+        android:textSize="22sp"
+        android:textColor="@color/colorHeader"
+        android:layout_margin="4dp"
+        android:textStyle="bold"
+        android:text="6 Вкусов"/>
+
+    <TextView
+        android:id="@+id/title_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_margin="4dp"
+        android:layout_below="@+id/title_app"
+        android:text="Компания:"/>
+
+    <TextView
+        android:id="@+id/title_company_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_margin="4dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/title_app"
+        android:layout_toRightOf="@+id/title_company"
+        android:text="\u00ABНетбикс\u00BB"/>
+
+    <TextView
+        android:id="@+id/title_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_margin="4dp"
+        android:layout_below="@+id/title_company"
+        android:text="Версия:"/>
+
+
+    <TextView
+        android:id="@+id/title_version_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_margin="4dp"
+        android:layout_below="@+id/title_company"
+        android:layout_toRightOf="@+id/title_version"
+        android:text="2.0"/>
+
+    <TextView
+        android:id="@+id/title_dev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="100dp"
+
+        android:layout_below="@+id/title_version"
+        android:text="Разрабодчик:"/>
+
+    <TextView
+        android:id="@+id/title_dev_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_margin="4dp"
+        android:layout_below="@+id/title_version"
+        android:layout_toRightOf="@+id/title_dev"
+        android:text="zankoav@mail.ru"/>
+
 
 </RelativeLayout>

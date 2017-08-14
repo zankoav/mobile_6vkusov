@@ -2,14 +2,12 @@ package by.vkus.alexandrzanko.mobile_6vkusov.Fragments;
 
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.app.AlertDialog;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,16 +19,10 @@ import android.widget.Toast;
 import by.vkus.alexandrzanko.mobile_6vkusov.Adapters.OrderAdapter;
 import by.vkus.alexandrzanko.mobile_6vkusov.ApiController;
 import by.vkus.alexandrzanko.mobile_6vkusov.Models.Order.MOrder;
-import by.vkus.alexandrzanko.mobile_6vkusov.Models.OrderItem;
-import by.vkus.alexandrzanko.mobile_6vkusov.R;
 import by.vkus.alexandrzanko.mobile_6vkusov.SingletonV2;
-import by.vkus.alexandrzanko.mobile_6vkusov.Utilites.JsonLoader.JsonHelperLoad;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by alexandrzanko on 5/4/17.
