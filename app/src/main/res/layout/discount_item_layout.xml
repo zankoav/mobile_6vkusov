@@ -61,10 +61,8 @@
         android:layout_below="@+id/discount_description"/>
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="-6dp"
-        android:layout_marginRight="-17dp"
+        android:layout_width="50dp"
+        android:layout_height="70dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_flag"
         android:layout_alignParentRight="true"
