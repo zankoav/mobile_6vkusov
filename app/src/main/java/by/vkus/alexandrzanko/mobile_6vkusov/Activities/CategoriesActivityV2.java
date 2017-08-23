@@ -29,10 +29,9 @@ public class CategoriesActivityV2 extends BaseMenuActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(by.vkus.alexandrzanko.mobile_6vkusov.R.layout.activity_categories);
+        setContentView(R.layout.activity_categories);
         this.loadCategories();
         this.initViews(this.getString(R.string.categories_title));
-        Log.i(TAG, "onCreate: session" + SingletonV2.currentState().getIUser().getSession());
         listView = (ListView) findViewById(by.vkus.alexandrzanko.mobile_6vkusov.R.id.category_list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

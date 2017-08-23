@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andremion.counterfab.CounterFab;
@@ -54,14 +55,14 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
     }
 
     public void hideBasket(){
-        fab.setVisibility(View.GONE);
+        if(fab != null){
+            fab.setVisibility(View.GONE);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-
         if(SingletonV2.currentState().getIUser().getStatus().equals(STATUS.REGISTER)){
             ApiController.getApi().getCountOrderItemsByUser(SingletonV2.currentState().getIUser().getSession()).enqueue(new Callback<Integer>() {
                 @Override
@@ -100,6 +101,13 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        RelativeLayout clickView = (RelativeLayout)navigationView.getHeaderView(0);
+        clickView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginButtonClick();
+            }
+        });
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         CircleImageView userLogo = (CircleImageView) headerView.findViewById(R.id.menu_iv_user);
@@ -234,10 +242,9 @@ public abstract class BaseMenuActivity extends AppCompatActivity implements Navi
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
 
-
     }
 
-    public void loginButtonClick(View view) {
+    public void loginButtonClick() {
         STATUS status = SingletonV2.currentState().getIUser().getStatus();
         Intent intent = status == STATUS.GENERAL? new Intent(this, LoginActivityV2.class): new Intent(this,ProfileActivityV2.class);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

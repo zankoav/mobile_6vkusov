@@ -99,7 +99,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/colorButtons"
         app:backgroundTint="@color/colorButtons"
         android:src="@drawable/ic_shopping_cart"/>
 
