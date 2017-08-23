@@ -7,7 +7,7 @@ android {
         applicationId "by.vkus.alexandrzanko.mobile_6vkusov"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 5
+        versionCode 6
         versionName "2.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
